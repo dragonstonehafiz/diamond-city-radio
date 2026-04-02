@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'theme/pip_boy_settings_notifier.dart';
+import 'theme/pip_boy_theme.dart';
+import 'theme/pip_boy_colors.dart';
+import 'utils/sfx_player.dart';
+import 'widgets/pip_boy_tab_bar.dart';
+import 'widgets/pip_boy_scanline_overlay.dart';
+import 'widgets/pip_boy_status_bar.dart';
+import 'screens/player_screen.dart';
+import 'screens/queue_screen.dart';
+import 'screens/settings_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize SFX player before running the app
+  await SfxPlayer().init();
+
+  runApp(const DiamondCityRadioApp());
+}
+
+class DiamondCityRadioApp extends StatelessWidget {
+  const DiamondCityRadioApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => PipBoySettingsNotifier()..load(),
+      child: Consumer<PipBoySettingsNotifier>(
+        builder: (context, settingsNotifier, _) {
+          return MaterialApp(
+            title: 'Diamond City Radio',
+            theme: buildPipBoyTheme(settingsNotifier.accent),
+            home: const HomeScreen(),
+            debugShowCheckedModeBanner: false,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedTabIndex = 0;
+
+  final List<String> _tabLabels = ['PLAYER', 'QUEUE', 'SETTINGS'];
+
+  @override
+  void initState() {
+    super.initState();
+    // Start hum loop if enabled
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final settings = context.read<PipBoySettingsNotifier>();
+      if (settings.humEnabled) {
+        SfxPlayer().playLoop();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<PipBoySettingsNotifier>();
+    return Scaffold(
+      backgroundColor: PipBoyColors.background,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 360),
+          child: Column(
+            children: [
+              // Top navigation tabs
+              PipBoyTabBar(
+                labels: _tabLabels,
+                selectedIndex: _selectedTabIndex,
+                onTabSelected: (index) {
+                  setState(() {
+                    _selectedTabIndex = index;
+                  });
+                },
+              ),
+              // Main content area with scanline overlay
+              Expanded(
+                child: PipBoyScanlineOverlay(
+                  enabled: settings.scanlinesEnabled,
+                  child: IndexedStack(
+                    index: _selectedTabIndex,
+                    children: [
+                      _buildPlayerTab(),
+                      _buildQueueTab(),
+                      _buildSettingsTab(),
+                    ],
+                  ),
+                ),
+              ),
+              // Bottom status bar
+              const PipBoyStatusBar(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlayerTab() {
+    return const PlayerScreen();
+  }
+
+  Widget _buildQueueTab() {
+    return const QueueScreen();
+  }
+
+  Widget _buildSettingsTab() {
+    return const SettingsScreen();
+  }
+}
