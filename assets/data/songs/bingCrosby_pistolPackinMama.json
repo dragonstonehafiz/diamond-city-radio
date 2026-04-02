@@ -1,0 +1,14 @@
+{
+  "id": "bingCrosby_pistolPackinMama",
+  "name": "Pistol Packin' Mama",
+  "length": 179.63,
+  "song": "bingCrosby_pistolPackinMama.ogg",
+  "intros": [
+    "bingCrosby2.ogg",
+    "bingCrosby_pistolPackinMama1.ogg"
+  ],
+  "outros": [
+    "bingCrosby1.ogg"
+  ],
+  "artist": "Bing Crosby"
+}

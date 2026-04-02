@@ -1,0 +1,15 @@
+{
+  "id": "raySmith_rightBehindYouBaby",
+  "name": "Right Behind You Baby",
+  "length": 142.86,
+  "song": "raySmith_rightBehindYouBaby.ogg",
+  "intros": [
+    "raySmith_rightBehindYouBaby1.ogg",
+    "raySmith_rightBehindYouBaby2.ogg",
+    "raySmith_rightBehindYouBaby3.ogg"
+  ],
+  "outros": [
+    "raySmith1.ogg"
+  ],
+  "artist": "Ray Smith"
+}

@@ -6,83 +6,77 @@ import '../theme/pip_boy_colors.dart';
 import '../theme/pip_boy_typography.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_divider.dart';
+import '../audio/radio_player_service.dart';
 
 class QueueScreen extends StatelessWidget {
   const QueueScreen({super.key});
 
+  Widget _buildSetPanel({
+    required String title,
+    required List<RadioQueueItem> items,
+    required Color accentColor,
+    required RadioPlayerService playerService,
+    int activeIndex = -1,
+  }) {
+    return Column(
+      children: [
+        PipBoyPanel(
+          title: title,
+          child: Column(
+            children: [
+              for (int i = 0; i < items.length; i++) ...[
+                _QueueItem(
+                  item: items[i],
+                  isActive: i == activeIndex,
+                  accentColor: accentColor,
+                  playerService: playerService,
+                ),
+                if (i < items.length - 1)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: PipBoyConstants.spacingS,
+                    ),
+                    child: PipBoyDivider(
+                      margin: EdgeInsets.zero,
+                    ),
+                  ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: PipBoyConstants.spacingL),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<PipBoySettingsNotifier>();
-
-    final currentSetItems = [
-      ('INTRO', 'Intro Clip'),
-      ('SONG', 'Accentuate The Positive'),
-      ('SONG', 'Ain\'t Misbehavin\''),
-      ('OUTRO', 'Outro Clip'),
-      ('REPORT', 'News Report'),
-    ];
-
-    final nextSetItems = [
-      ('SONG', 'Blue Skies'),
-      ('SONG', 'Mr. Sandman'),
-    ];
+    final settings = context.watch<PipBoySettingsNotifier>();
+    final player = context.watch<RadioPlayerService>();
 
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(PipBoyConstants.spacingM),
         child: Column(
           children: [
-            // Current set
-            PipBoyPanel(
+            _buildSetPanel(
               title: 'CURRENT SET',
-              child: Column(
-                children: [
-                  for (int i = 0; i < currentSetItems.length; i++) ...[
-                    _QueueItem(
-                      type: currentSetItems[i].$1,
-                      title: currentSetItems[i].$2,
-                      isActive: i == 0,
-                      accentColor: notifier.accent,
-                    ),
-                    if (i < currentSetItems.length - 1)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: PipBoyConstants.spacingS,
-                        ),
-                        child: PipBoyDivider(
-                          margin: EdgeInsets.zero,
-                        ),
-                      ),
-                  ],
-                ],
-              ),
+              items: player.sets[0],
+              accentColor: settings.accent,
+              playerService: player,
+              activeIndex: player.currentIndex,
             ),
-            const SizedBox(height: PipBoyConstants.spacingL),
-
-            // Next set
-            PipBoyPanel(
+            _buildSetPanel(
               title: 'NEXT SET',
-              child: Column(
-                children: [
-                  for (int i = 0; i < nextSetItems.length; i++) ...[
-                    _QueueItem(
-                      type: nextSetItems[i].$1,
-                      title: nextSetItems[i].$2,
-                      isActive: false,
-                      accentColor: notifier.accent,
-                    ),
-                    if (i < nextSetItems.length - 1)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: PipBoyConstants.spacingS,
-                        ),
-                        child: PipBoyDivider(
-                          margin: EdgeInsets.zero,
-                        ),
-                      ),
-                  ],
-                ],
-              ),
+              items: player.sets[1],
+              accentColor: settings.accent,
+              playerService: player,
+            ),
+            _buildSetPanel(
+              title: 'NEXT SET',
+              items: player.sets[2],
+              accentColor: settings.accent,
+              playerService: player,
             ),
           ],
         ),
@@ -92,16 +86,16 @@ class QueueScreen extends StatelessWidget {
 }
 
 class _QueueItem extends StatelessWidget {
-  final String type;
-  final String title;
+  final RadioQueueItem item;
   final bool isActive;
   final Color accentColor;
+  final RadioPlayerService playerService;
 
   const _QueueItem({
-    required this.type,
-    required this.title,
+    required this.item,
     required this.isActive,
     required this.accentColor,
+    required this.playerService,
   });
 
   @override
@@ -109,6 +103,7 @@ class _QueueItem extends StatelessWidget {
     final displayColor = isActive
         ? accentColor
         : PipBoyColors.dimmed(accentColor, factor: 0.6);
+    final trackName = playerService.getTrackName(item);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
@@ -124,11 +119,11 @@ class _QueueItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  type,
+                  item.clipType.label,
                   style: PipBoyTypography.caption(displayColor),
                 ),
                 Text(
-                  title,
+                  trackName,
                   style: PipBoyTypography.body(displayColor),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

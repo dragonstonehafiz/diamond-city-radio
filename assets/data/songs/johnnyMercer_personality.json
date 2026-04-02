@@ -1,0 +1,15 @@
+{
+  "id": "johnnyMercer_personality",
+  "name": "Personality",
+  "length": 165.62,
+  "song": "johnnyMercer_personality.ogg",
+  "intros": [
+    "johnnyMercer_personality1.ogg",
+    "johnnyMercer_personality2.ogg",
+    "johnnyMercer_personality3.ogg"
+  ],
+  "outros": [
+    "johnnyMercer_personality1.ogg"
+  ],
+  "artist": "Johnny Mercer"
+}

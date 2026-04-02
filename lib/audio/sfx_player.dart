@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'asset_paths.dart';
+import '../data/asset_paths.dart';
 
 enum PipBoySfx {
   hum,
@@ -23,16 +23,12 @@ class SfxPlayer {
 
   /// Map enum values to asset paths
   static String _getAssetPath(PipBoySfx sfx) {
-    switch (sfx) {
-      case PipBoySfx.hum:
-        return AppAudioPaths.sfxHum;
-      case PipBoySfx.mapRollover:
-        return AppAudioPaths.sfxMapRollover;
-      case PipBoySfx.rotaryHorizontal:
-        return AppAudioPaths.sfxRotaryHorizontal;
-      case PipBoySfx.rotaryVertical:
-        return AppAudioPaths.sfxRotaryVertical;
-    }
+    return switch (sfx) {
+      PipBoySfx.hum => AppAudioPaths.sfxHum,
+      PipBoySfx.mapRollover => AppAudioPaths.sfxMapRollover,
+      PipBoySfx.rotaryHorizontal => AppAudioPaths.sfxRotaryHorizontal,
+      PipBoySfx.rotaryVertical => AppAudioPaths.sfxRotaryVertical,
+    };
   }
 
   /// Pre-cache all SFX files into the audio engine.

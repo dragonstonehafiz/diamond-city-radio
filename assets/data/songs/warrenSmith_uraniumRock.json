@@ -1,0 +1,15 @@
+{
+  "id": "warrenSmith_uraniumRock",
+  "name": "Uranium Rock",
+  "length": 125.61,
+  "song": "warrenSmith_uraniumRock.ogg",
+  "intros": [
+    "warrenSmith_uraniumRock1.ogg",
+    "warrenSmith_uraniumRock2.ogg",
+    "warrenSmith_uraniumRock3.ogg"
+  ],
+  "outros": [
+    "warrenSmith1.ogg"
+  ],
+  "artist": "Warren Smith"
+}

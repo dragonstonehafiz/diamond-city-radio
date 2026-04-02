@@ -9,13 +9,22 @@ import '../widgets/pip_boy_icon.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';
 import '../widgets/pip_boy_divider.dart';
+import '../audio/radio_player_service.dart';
 
 class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key});
 
+  String _formatDuration(Duration duration) {
+    final minutes = duration.inMinutes;
+    final seconds = duration.inSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<PipBoySettingsNotifier>();
+    final settings = context.watch<PipBoySettingsNotifier>();
+    final player = context.watch<RadioPlayerService>();
+    final currentItem = player.currentItem;
 
     return SingleChildScrollView(
       child: Padding(
@@ -31,8 +40,8 @@ class PlayerScreen extends StatelessWidget {
                 vertical: PipBoyConstants.spacingXS,
               ),
               child: Text(
-                '♪  SONG',
-                style: PipBoyTypography.body(notifier.accent),
+                currentItem?.clipType.label ?? '♪ SONG',
+                style: PipBoyTypography.body(settings.accent),
               ),
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
@@ -53,8 +62,8 @@ class PlayerScreen extends StatelessWidget {
 
             // Track name
             Text(
-              'Accentuate The Positive',
-              style: PipBoyTypography.heading(notifier.accent),
+              currentItem != null ? player.getTrackName(currentItem) : '—',
+              style: PipBoyTypography.heading(settings.accent),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -62,19 +71,30 @@ class PlayerScreen extends StatelessWidget {
 
             // Artist
             Text(
-              'Bing Crosby',
+              currentItem != null ? player.getArtist(currentItem) : '—',
               style: PipBoyTypography.subheading(
-                PipBoyColors.dimmed(notifier.accent, factor: 0.7),
+                PipBoyColors.dimmed(settings.accent, factor: 0.7),
               ),
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
 
             // Progress bar
-            PipBoyProgressBar(
-              value: 0.35,
-              leftLabel: '0:24',
-              rightLabel: '1:08',
-              interactive: false,
+            StreamBuilder<Duration>(
+              stream: player.positionStream,
+              builder: (context, posSnapshot) {
+                final position = posSnapshot.data ?? Duration.zero;
+                final duration = player.duration ?? Duration.zero;
+                final value = duration.inMilliseconds > 0
+                    ? position.inMilliseconds / duration.inMilliseconds
+                    : 0.0;
+
+                return PipBoyProgressBar(
+                  value: value.clamp(0.0, 1.0),
+                  leftLabel: _formatDuration(position),
+                  rightLabel: _formatDuration(duration),
+                  interactive: false,
+                );
+              },
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
 
@@ -89,18 +109,18 @@ class PlayerScreen extends StatelessWidget {
                 PipBoyButton(
                   icon: Icons.skip_previous,
                   variant: PipBoyButtonVariant.ghost,
-                  onPressed: () {},
+                  onPressed: () => player.prev(),
                 ),
                 PipBoyButton(
-                  icon: Icons.play_arrow,
+                  icon: player.isPlaying ? Icons.pause : Icons.play_arrow,
                   variant: PipBoyButtonVariant.ghost,
-                  isActive: true,
-                  onPressed: () {},
+                  isActive: player.isPlaying,
+                  onPressed: () => player.togglePlayPause(),
                 ),
                 PipBoyButton(
                   icon: Icons.skip_next,
                   variant: PipBoyButtonVariant.ghost,
-                  onPressed: () {},
+                  onPressed: () => player.next(),
                 ),
               ],
             ),

@@ -1,0 +1,17 @@
+{
+  "id": "billieHoliday_easyLiving",
+  "name": "Easy Living",
+  "length": 182.28,
+  "song": "billieHoliday_easyLiving.ogg",
+  "intros": [
+    "billieHoliday_easyLiving1.ogg",
+    "billieHoliday_easyLiving2.ogg",
+    "billieHoliday_easyLiving3.ogg",
+    "billieHoliday_easyLiving4.ogg"
+  ],
+  "outros": [
+    "billieHoliday1.ogg",
+    "billieHoliday2.ogg"
+  ],
+  "artist": "Billie Holiday"
+}

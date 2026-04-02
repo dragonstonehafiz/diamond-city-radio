@@ -1,0 +1,17 @@
+{
+  "id": "billieHoliday_crazyHeCallsMe",
+  "name": "Crazy He Calls Me",
+  "length": 183.53,
+  "song": "billieHoliday_crazyHeCallsMe.ogg",
+  "intros": [
+    "billieHoliday_crazyHeCallsMe1.ogg",
+    "billieHoliday_crazyHeCallsMe2.ogg",
+    "billieHoliday_crazyHeCallsMe3.ogg",
+    "billieHoliday_crazyHeCallsMe4.ogg"
+  ],
+  "outros": [
+    "billieHoliday1.ogg",
+    "billieHoliday2.ogg"
+  ],
+  "artist": "Billie Holiday"
+}

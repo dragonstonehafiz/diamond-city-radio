@@ -1,0 +1,17 @@
+{
+  "id": "bettyHutton_itsAMan",
+  "name": "It's A Man",
+  "length": 143.23,
+  "song": "bettyHutton_itsAMan.ogg",
+  "intros": [
+    "bettyHutton_itsAMan1.ogg",
+    "bettyHutton_itsAMan2.ogg",
+    "bettyHutton_itsAMan3.ogg",
+    "bettyHutton_itsAMan4.ogg"
+  ],
+  "outros": [
+    "bettyHutton1.ogg",
+    "bettyHutton2.ogg"
+  ],
+  "artist": "Betty Hutton"
+}

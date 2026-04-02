@@ -1,0 +1,16 @@
+{
+  "id": "bingCrosby_tooRaLooRaLooRa",
+  "name": "Too Ra Loo Ra Loo Ral",
+  "length": 197.82,
+  "song": "bingCrosby_tooRaLooRaLooRa.ogg",
+  "intros": [
+    "bingCrosby1.ogg",
+    "bingCrosby2.ogg"
+  ],
+  "outros": [
+    "bingCrosby1.ogg",
+    "general2.ogg",
+    "general3.ogg"
+  ],
+  "artist": "Bing Crosby"
+}

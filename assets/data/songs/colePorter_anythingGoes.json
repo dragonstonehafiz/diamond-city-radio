@@ -1,0 +1,16 @@
+{
+  "id": "colePorter_anythingGoes",
+  "name": "Anything Goes",
+  "length": 187.97,
+  "song": "colePorter_anythingGoes.ogg",
+  "intros": [
+    "colePorter_anythingGoes1.ogg",
+    "colePorter_anythingGoes2.ogg",
+    "colePorter_anythingGoes3.ogg",
+    "colePorter_anythingGoes4.ogg"
+  ],
+  "outros": [
+    "colePorter_anythingGoes1.ogg"
+  ],
+  "artist": "Cole Porter"
+}

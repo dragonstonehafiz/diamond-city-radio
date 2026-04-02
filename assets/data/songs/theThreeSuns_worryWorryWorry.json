@@ -1,0 +1,15 @@
+{
+  "id": "theThreeSuns_worryWorryWorry",
+  "name": "Worry Worry Worry",
+  "length": 151.38,
+  "song": "theThreeSuns_worryWorryWorry.ogg",
+  "intros": [
+    "theThreeSuns_worryWorryWorry1.ogg",
+    "theThreeSuns_worryWorryWorry2.ogg",
+    "theThreeSuns_worryWorryWorry3.ogg"
+  ],
+  "outros": [
+    "general1.ogg"
+  ],
+  "artist": "The Three Suns"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "billyWard_sixtyMinuteMan",
+  "name": "Sixty Minute Man",
+  "length": 147.43,
+  "song": "billyWard_sixtyMinuteMan.ogg",
+  "intros": [
+    "billyWard_sixtyMinuteMan1.ogg",
+    "billyWard_sixtyMinuteMan2.ogg",
+    "billyWard_sixtyMinuteMan3.ogg"
+  ],
+  "outros": [
+    "billyWard1.ogg"
+  ],
+  "artist": "Billy Ward"
+}

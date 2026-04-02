@@ -1,0 +1,15 @@
+{
+  "id": "theFiveStars_atomBombBaby",
+  "name": "Atom Bomb Baby",
+  "length": 136.78,
+  "song": "theFiveStars_atomBombBaby.ogg",
+  "intros": [
+    "theFiveStars_atomBombBaby1.ogg",
+    "theFiveStars_atomBombBaby2.ogg",
+    "theFiveStars_atomBombBaby3.ogg"
+  ],
+  "outros": [
+    "theFiveStars1.ogg"
+  ],
+  "artist": "The Five Stars"
+}

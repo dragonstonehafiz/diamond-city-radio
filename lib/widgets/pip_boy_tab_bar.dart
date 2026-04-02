@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/pip_boy_settings_notifier.dart';
 import '../theme/pip_boy_constants.dart';
 import '../theme/pip_boy_typography.dart';
-import '../utils/sfx_player.dart';
+import '../audio/sfx_player.dart';
 import 'pip_boy_divider.dart';
 
 class PipBoyTabBar extends StatelessWidget {

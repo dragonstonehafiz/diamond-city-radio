@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/pip_boy_settings_notifier.dart';
 import '../theme/pip_boy_constants.dart';
 import '../theme/pip_boy_typography.dart';
-import '../utils/sfx_player.dart';
+import '../audio/sfx_player.dart';
 import '../widgets/pip_boy_button.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';

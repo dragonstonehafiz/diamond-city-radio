@@ -1,0 +1,17 @@
+{
+  "id": "bobCrosby_wayBackHome",
+  "name": "Way Back Home",
+  "length": 172.03,
+  "song": "bobCrosby_wayBackHome.ogg",
+  "intros": [
+    "bobCrosby_wayBackHome1.ogg",
+    "bobCrosby_wayBackHome2.ogg",
+    "bobCrosby_wayBackHome3.ogg"
+  ],
+  "outros": [
+    "bobCrosby1.ogg",
+    "bobCrosby2.ogg",
+    "bobCrosby3.ogg"
+  ],
+  "artist": "Bob Crosby"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "bettyHutton_hesADemon",
+  "name": "He's a Demon He's a Devil He's a Doll",
+  "length": 193.75,
+  "song": "bettyHutton_hesADemon.ogg",
+  "intros": [
+    "bettyHutton_itsAMan1.ogg",
+    "bettyHutton_itsAMan2.ogg",
+    "bettyHutton_itsAMan3.ogg",
+    "bettyHutton_itsAMan4.ogg"
+  ],
+  "outros": [
+    "bettyHutton1.ogg",
+    "bettyHutton2.ogg"
+  ],
+  "artist": "Betty Hutton"
+}

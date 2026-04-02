@@ -1,0 +1,20 @@
+{
+  "id": "bobCrosby_dearHeartsAndGentlePeople",
+  "name": "Dear Hearts and Gentle People",
+  "length": 130.28,
+  "song": "bobCrosby_dearHeartsAndGentlePeople.ogg",
+  "intros": [
+    "bobCrosby1.ogg",
+    "bobCrosby2.ogg",
+    "bobCrosby3.ogg",
+    "bobCrosby4.ogg",
+    "bobCrosby5.ogg",
+    "bobCrosby_dearHeartsAndGentlePeople1.ogg"
+  ],
+  "outros": [
+    "bobCrosby1.ogg",
+    "bobCrosby2.ogg",
+    "bobCrosby3.ogg"
+  ],
+  "artist": "Bob Crosby"
+}

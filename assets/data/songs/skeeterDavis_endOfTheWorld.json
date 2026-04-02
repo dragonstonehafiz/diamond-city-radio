@@ -1,0 +1,16 @@
+{
+  "id": "skeeterDavis_endOfTheWorld",
+  "name": "End of the World",
+  "length": 156.38,
+  "song": "skeeterDavis_endOfTheWorld.ogg",
+  "intros": [
+    "skeeterDavis_endOfTheWorld1.ogg",
+    "skeeterDavis_endOfTheWorld2.ogg",
+    "skeeterDavis_endOfTheWorld3.ogg"
+  ],
+  "outros": [
+    "skeeterDavis1.ogg",
+    "skeeterDavis2.ogg"
+  ],
+  "artist": "Skeeter Davis"
+}

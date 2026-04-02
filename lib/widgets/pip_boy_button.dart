@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../theme/pip_boy_settings_notifier.dart';
 import '../theme/pip_boy_constants.dart';
 import '../theme/pip_boy_typography.dart';
-import '../utils/sfx_player.dart';
+import '../audio/sfx_player.dart';
 import 'pip_boy_icon.dart';
 
 enum PipBoyButtonVariant { filled, outlined, ghost }
@@ -95,14 +95,14 @@ class _PipBoyButtonState extends State<PipBoyButton>
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (widget.icon != null) ...[
+        if (widget.icon != null)
           PipBoyIcon(
             icon: widget.icon!,
             size: 20,
             disabled: isDisabled,
           ),
+        if (widget.icon != null && widget.label != null)
           const SizedBox(width: 8),
-        ],
         if (widget.label != null)
           Text(
             widget.label!,
