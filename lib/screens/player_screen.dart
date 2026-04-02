@@ -79,20 +79,25 @@ class PlayerScreen extends StatelessWidget {
             const SizedBox(height: PipBoyConstants.spacingL),
 
             // Progress bar
-            StreamBuilder<Duration>(
-              stream: player.positionStream,
-              builder: (context, posSnapshot) {
-                final position = posSnapshot.data ?? Duration.zero;
-                final duration = player.duration ?? Duration.zero;
-                final value = duration.inMilliseconds > 0
-                    ? position.inMilliseconds / duration.inMilliseconds
-                    : 0.0;
+            StreamBuilder<Duration?>(
+              stream: player.durationStream,
+              builder: (context, durSnapshot) {
+                final duration = durSnapshot.data ?? Duration.zero;
+                return StreamBuilder<Duration>(
+                  stream: player.positionStream,
+                  builder: (context, posSnapshot) {
+                    final position = posSnapshot.data ?? Duration.zero;
+                    final value = duration.inMilliseconds > 0
+                        ? position.inMilliseconds / duration.inMilliseconds
+                        : 0.0;
 
-                return PipBoyProgressBar(
-                  value: value.clamp(0.0, 1.0),
-                  leftLabel: _formatDuration(position),
-                  rightLabel: _formatDuration(duration),
-                  interactive: false,
+                    return PipBoyProgressBar(
+                      value: value.clamp(0.0, 1.0),
+                      leftLabel: _formatDuration(position),
+                      rightLabel: _formatDuration(duration),
+                      interactive: false,
+                    );
+                  },
                 );
               },
             ),
