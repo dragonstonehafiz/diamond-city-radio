@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../theme/pip_boy_settings_notifier.dart';
 import '../theme/pip_boy_constants.dart';
 import '../theme/pip_boy_typography.dart';
-import '../utils/sfx_player.dart';
 
 class PipBoyProgressBar extends StatefulWidget {
   final double value;
@@ -11,6 +10,7 @@ class PipBoyProgressBar extends StatefulWidget {
   final String? rightLabel;
   final bool interactive;
   final ValueChanged<double>? onSeek;
+  final VoidCallback? onSeekEnd;
 
   const PipBoyProgressBar({
     super.key,
@@ -19,6 +19,7 @@ class PipBoyProgressBar extends StatefulWidget {
     this.rightLabel,
     this.interactive = false,
     this.onSeek,
+    this.onSeekEnd,
   });
 
   @override
@@ -28,7 +29,6 @@ class PipBoyProgressBar extends StatefulWidget {
 class _PipBoyProgressBarState extends State<PipBoyProgressBar> {
   void _handleHorizontalDragStart(DragStartDetails details) {
     if (!widget.interactive) return;
-    SfxPlayer().play(PipBoySfx.mapRollover);
   }
 
   void _handleHorizontalDragUpdate(DragUpdateDetails details) {
@@ -42,6 +42,7 @@ class _PipBoyProgressBarState extends State<PipBoyProgressBar> {
 
   void _handleHorizontalDragEnd(DragEndDetails details) {
     if (!widget.interactive) return;
+    widget.onSeekEnd?.call();
   }
 
   @override

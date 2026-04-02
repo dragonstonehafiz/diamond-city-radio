@@ -122,6 +122,9 @@ class SettingsScreen extends StatelessWidget {
                       settings.setSfxVolume(newValue);
                       SfxPlayer().setVolume(newValue);
                     },
+                    onSeekEnd: () {
+                      SfxPlayer().play(PipBoySfx.mapRollover);
+                    },
                   ),
                 ],
               ),
