@@ -243,6 +243,11 @@ class RadioPlayerService extends ChangeNotifier {
     }
   }
 
+  Future<void> seek(Duration position) async {
+    await _player.seek(position);
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _playerStateSubscription.cancel();

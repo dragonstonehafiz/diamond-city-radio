@@ -95,7 +95,13 @@ class PlayerScreen extends StatelessWidget {
                       value: value.clamp(0.0, 1.0),
                       leftLabel: _formatDuration(position),
                       rightLabel: _formatDuration(duration),
-                      interactive: false,
+                      interactive: true,
+                      onSeek: (seekValue) {
+                        final seekPosition = Duration(
+                          milliseconds: (seekValue * duration.inMilliseconds).toInt(),
+                        );
+                        player.seek(seekPosition);
+                      },
                     );
                   },
                 );
