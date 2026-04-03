@@ -70,8 +70,11 @@
 ## Screens
 
 **PlayerScreen** (`lib/screens/player_screen.dart`)
-- Radio now-playing display: clip badge, Vault Boy placeholder, track name/artist, progress bar, prev/play/next buttons
+- Radio now-playing display: clip badge, dynamic image/icon, track name/artist, seekable progress bar, prev/play/next buttons
 - Uses `RadioPlayerService` for playback state
+- Progress bar: duration reactive via nested `StreamBuilder` on `player.durationStream`; `interactive: true` with `onSeek` callback to `player.seek()`
+- Display logic via `_buildDisplayImage()`: shows report image if available, white icon (tinted with accent color) for intros/outros, music note icon for songs
+- AppConfig `appIconPath` configures intro/outro icon path
 
 **QueueScreen** (`lib/screens/queue_screen.dart`)
 - Three panels: CURRENT SET (active item marked with `>`), NEXT SET, AFTER NEXT SET
@@ -88,16 +91,19 @@
 ## Models
 
 **SongModel** (`lib/models/song_model.dart`)
-- Fields: `id`, `name`, `artist`, `length`, `songFile`, `intros` (List), `outros` (List)
+- Fields: `id`, `name`, `artist`, `songFile`, `intros` (List), `outros` (List)
 - Getters: `hasIntros`, `hasOutros`
 - Factory: `fromJson()`
+- Duration pulled at runtime from audio file via `just_audio`
 
 **ReportModel** (`lib/models/report_model.dart`)
-- Fields: `id`, `path`, `length`
+- Fields: `id`, `path`, `title`, optional `image`
 - Factory: `fromJson()`
+- `image` path relative to `assets/` (e.g., `images/reports/BlindBetrayal.png`)
+- Duration pulled at runtime from audio file via `just_audio`
 
 **AppConfig** (`lib/models/app_config.dart`)
-- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10)
+- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/icon_white.png`)
 - Factory: `fromJson()`
 
 ---
@@ -110,7 +116,7 @@
 
 **ReportRepository** (`lib/data/report_repository.dart`)
 - Holds all reports indexed by ID
-- Methods: `getById(String id)`, `getRandom()`
+- Methods: `getById(String id)`, `getRandom()` — returns random report using `Random().nextInt()`
 
 **AppAudioPaths** (`lib/data/asset_paths.dart`)
 - SFX paths (audioplayers, no `assets/` prefix): `sfxBase`, `sfxHum`, `sfxMapRollover`, `sfxRotaryHorizontal`, `sfxRotaryVertical`
@@ -134,24 +140,26 @@
 - Enum: `RadioClipType` (intro, song, outro, report)
 - Class: `RadioQueueItem` — stores only `itemId` and `clipType`, display info resolved at playback time
 - Fields: `_sets` (3-set buffer: [current, next, after-next]), `_currentIndex`
-- Methods: `init()`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`
+- Methods: `init()`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`
 - Getters: `sets`, `currentItem`, `currentIndex`, `isPlaying`, `duration`, `position`
-- Public methods for UI: `getTrackName(item)`, `getArtist(item)`
+- Streams: `durationStream`, `positionStream` — duration updates reactively as file loads
+- Public methods for UI: `getTrackName(item)`, `getArtist(item)`, `seek(position)` for progress bar seeking
 - **Key behavior**: When current set ends, rotates sets and builds new set 3 via `_buildNextSet()` callback
-- **Intro/outro handling**: When an intro/outro file doesn't exist (404), auto-skips to next track
+- **Intro/outro handling**: Randomly selects from all valid files (checked via `_assetExists()`) each playback; auto-skips to next track if none found
+- **Report audio path**: Resolved from `report.path` field
 
 ---
 
 ## Radio Layer (Data Loading & Set Management)
 
 **SongLoader** (`lib/radio/song_loader.dart`)
-- Loads config, reports, and all songs from JSON assets in parallel
+- Loads reports and all songs from JSON assets in parallel
 - Dynamically enumerates song JSON files via `AssetManifest` — no hardcoded filenames
 - Returns `LoadedData` container
-- Includes fallback defaults if loading fails
+- Includes fallback empty lists if loading fails
 
 **LoadedData** (`lib/radio/song_loader.dart`)
-- Container: `songs`, `reports`, `config`
+- Container: `songs`, `reports`
 
 **SongBank** (`lib/radio/song_bank.dart`)
 - Rotating pool of songs for set building
@@ -171,10 +179,15 @@
 
 ## Main
 
+**main()** (`lib/main.dart`)
+- Initializes JustAudioBackground, SfxPlayer, then loads AppConfig and songs/reports in parallel via `Future.wait()`
+- AppConfig loaded via `_loadConfig()` helper; songs/reports loaded via `SongLoader`
+- Initializes SongBank, builds initial 3 sets, then runs app
+
 **DiamondCityRadioApp** (`lib/main.dart`)
-- Root widget: provides `PipBoySettingsNotifier` and `RadioPlayerService` via MultiProvider
+- Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
 - Builds MaterialApp with dynamic theme from settings notifier
-- Constructor: `initialSets`, `songRepo`, `reportRepo`, `buildNextSet` callback
+- Constructor: `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `buildNextSet` callback
 
 **HomeScreen** (`lib/main.dart`)
 - Main layout: `PipBoyTabBar` (top) + `IndexedStack` (three tabs) + `PipBoyStatusBar` (bottom)
