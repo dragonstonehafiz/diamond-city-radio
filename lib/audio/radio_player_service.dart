@@ -103,24 +103,32 @@ class RadioPlayerService extends ChangeNotifier {
       case RadioClipType.intro:
         final song = _songs.getById(item.itemId);
         if (song != null && song.intros.isNotEmpty) {
-          // Try to find a valid intro file that exists
+          // Find all valid intro files that exist
+          final validPaths = <String>[];
           for (final file in song.intros) {
             final path = '${AppAudioPaths.introsBase}$file';
             if (await _assetExists(path)) {
-              return path;
+              validPaths.add(path);
             }
+          }
+          if (validPaths.isNotEmpty) {
+            return validPaths[Random().nextInt(validPaths.length)];
           }
         }
         return '';
       case RadioClipType.outro:
         final song = _songs.getById(item.itemId);
         if (song != null && song.outros.isNotEmpty) {
-          // Try to find a valid outro file that exists
+          // Find all valid outro files that exist
+          final validPaths = <String>[];
           for (final file in song.outros) {
             final path = '${AppAudioPaths.outrosBase}$file';
             if (await _assetExists(path)) {
-              return path;
+              validPaths.add(path);
             }
+          }
+          if (validPaths.isNotEmpty) {
+            return validPaths[Random().nextInt(validPaths.length)];
           }
         }
         return '';

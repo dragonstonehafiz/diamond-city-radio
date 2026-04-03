@@ -65,7 +65,7 @@ class PlayerScreen extends StatelessWidget {
 
     return PipBoyIcon(
       icon: Icons.music_note,
-      size: size,
+      size: size > 80 ? 80 : size,
     );
   }
 
