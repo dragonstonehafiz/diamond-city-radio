@@ -1,5 +1,6 @@
 {
   "songs_per_set": 3,
   "refill_threshold": 5,
-  "refill_count": 10
+  "refill_count": 10,
+  "app_icon_path": "images/icons/icon_white.png"
 }

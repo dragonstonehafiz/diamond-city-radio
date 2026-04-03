@@ -10,6 +10,8 @@ import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';
 import '../widgets/pip_boy_divider.dart';
 import '../audio/radio_player_service.dart';
+import '../data/report_repository.dart';
+import '../models/app_config.dart';
 
 class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key});
@@ -18,6 +20,53 @@ class PlayerScreen extends StatelessWidget {
     final minutes = duration.inMinutes;
     final seconds = duration.inSeconds % 60;
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  Widget _buildDisplayImage(
+    BuildContext context,
+    RadioQueueItem? currentItem,
+    RadioPlayerService player, {
+    required double size,
+  }) {
+    if (currentItem?.clipType == RadioClipType.report) {
+      final reports = context.read<ReportRepository>();
+      final report = reports.getById(currentItem!.itemId);
+      if (report?.image != null) {
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: size,
+            maxHeight: size,
+          ),
+          child: Image.asset(
+            'assets/${report!.image}',
+            fit: BoxFit.contain,
+          ),
+        );
+      }
+    }
+
+    if (currentItem?.clipType == RadioClipType.intro ||
+        currentItem?.clipType == RadioClipType.outro) {
+      final settings = context.watch<PipBoySettingsNotifier>();
+      final config = context.read<AppConfig>();
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: size,
+          maxHeight: size,
+        ),
+        child: Image.asset(
+          'assets/${config.appIconPath}',
+          fit: BoxFit.contain,
+          color: settings.accent,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+      );
+    }
+
+    return PipBoyIcon(
+      icon: Icons.music_note,
+      size: size,
+    );
   }
 
   @override
@@ -46,16 +95,13 @@ class PlayerScreen extends StatelessWidget {
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
 
-            // Vault Boy graphic placeholder
+            // Display image or default icon
             PipBoyPanel(
               outlined: true,
               height: 180,
               padding: EdgeInsets.zero,
               child: Center(
-                child: PipBoyIcon(
-                  icon: Icons.radio,
-                  size: 80,
-                ),
+                child: _buildDisplayImage(context, currentItem, player, size: 150),
               ),
             ),
             const SizedBox(height: PipBoyConstants.spacingL),

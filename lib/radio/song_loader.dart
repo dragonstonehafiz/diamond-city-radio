@@ -3,48 +3,28 @@ import 'package:flutter/services.dart';
 import '../data/asset_paths.dart';
 import '../models/song_model.dart';
 import '../models/report_model.dart';
-import '../models/app_config.dart';
 
 class LoadedData {
   final List<SongModel> songs;
   final List<ReportModel> reports;
-  final AppConfig config;
 
   const LoadedData({
     required this.songs,
     required this.reports,
-    required this.config,
   });
 }
 
 class SongLoader {
   Future<LoadedData> load() async {
     final results = await Future.wait([
-      _loadConfig(),
       _loadReports(),
       _loadAllSongs(),
     ]);
 
     return LoadedData(
-      config: results[0] as AppConfig,
-      reports: results[1] as List<ReportModel>,
-      songs: results[2] as List<SongModel>,
+      reports: results[0] as List<ReportModel>,
+      songs: results[1] as List<SongModel>,
     );
-  }
-
-  Future<AppConfig> _loadConfig() async {
-    try {
-      final jsonStr = await rootBundle.loadString(AppDataPaths.config);
-      final json = jsonDecode(jsonStr) as Map<String, dynamic>;
-      return AppConfig.fromJson(json);
-    } catch (e) {
-      print('[SongLoader] Error loading config: $e');
-      return const AppConfig(
-        songsPerSet: 3,
-        refillThreshold: 5,
-        refillCount: 10,
-      );
-    }
   }
 
   Future<List<ReportModel>> _loadReports() async {

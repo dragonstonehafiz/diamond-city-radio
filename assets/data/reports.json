@@ -1,18 +1,105 @@
 [
-  { "id": "freedomTrail", "path": "freedomTrail.ogg" },
-  { "id": "fireSupport", "path": "fireSupport.ogg" },
-  { "id": "takingIndependence", "path": "takingIndependence.ogg" },
-  { "id": "theBigDig", "path": "theBigDig.ogg" },
-  { "id": "lastVoyageOfUSSConstitution", "path": "lastVoyageOfUSSConstitution.ogg" },
-  { "id": "kidInAFridge", "path": "kidInAFridge.ogg" },
-  { "id": "theSilverShroud", "path": "theSilverShroud.ogg" },
-  { "id": "blindBetrayal", "path": "blindBetrayal.ogg" },
-  { "id": "theSecretOfCabotHouse", "path": "theSecretOfCabotHouse.ogg" },
-  { "id": "hereThereBeMonsters", "path": "hereThereBeMonsters.ogg" },
-  { "id": "theMolecularLevel", "path": "theMolecularLevel.ogg" },
-  { "id": "humanError", "path": "humanError.ogg" },
-  { "id": "synthRetention", "path": "synthRetention.ogg" },
-  { "id": "libertyReprimed", "path": "libertyReprimed.ogg" },
-  { "id": "curtainCall", "path": "curtainCall.ogg" },
-  { "id": "holeInTheWall", "path": "holeInTheWall.ogg" }
+  {
+    "id": "freedomTrail",
+    "path": "freedomTrail.ogg",
+    "title": "QUEST: Road to Freedom",
+    "image": "images/reports/FreedomTrail.png"
+  },
+  {
+    "id": "fireSupport",
+    "path": "fireSupport.ogg",
+    "title": "QUEST: Fire Support",
+    "image": "images/reports/FireSupport.png"
+  },
+  {
+    "id": "takingIndependence",
+    "path": "takingIndependence.ogg",
+    "title": "QUEST: Taking Independence",
+    "image": "images/reports/TakingIndependence.png"
+  },
+  {
+    "id": "theBigDig",
+    "path": "theBigDig.ogg",
+    "title": "QUEST: The Big Dig",
+    "image": "images/reports/TheBigDig.png"
+  },
+  {
+    "id": "lastVoyageOfUSSConstitution",
+    "path": "lastVoyageOfUSSConstitution.ogg",
+    "title": "QUEST: Last Voyage of USS Constitution",
+    "image": "images/reports/LastVoyageOfTheUSSConstitution.png"
+  },
+  {
+    "id": "kidInAFridge",
+    "path": "kidInAFridge.ogg",
+    "title": "QUEST: Kid In A Fridge",
+    "image": "images/reports/KidInAFridge.png"
+  },
+  {
+    "id": "theSilverShroud",
+    "path": "theSilverShroud.ogg",
+    "title": "QUEST: The Silver Shroud",
+    "image": "images/reports/TheSilverShroud.png"
+  },
+  {
+    "id": "blindBetrayal",
+    "path": "blindBetrayal.ogg",
+    "title": "QUEST: Blind Betrayal",
+    "image": "images/reports/BlindBetrayal.png"
+  },
+  {
+    "id": "theSecretOfCabotHouse",
+    "path": "theSecretOfCabotHouse.ogg",
+    "title": "QUEST: The Secret of Cabot House",
+    "image": "images/reports/TheSecretOfCabotHouse.png"
+  },
+  {
+    "id": "hereThereBeMonsters",
+    "path": "hereThereBeMonsters.ogg",
+    "title": "QUEST: Here There Be Monsters",
+    "image": "images/reports/HereThereBeMonsters.png"
+  },
+  {
+    "id": "theMolecularLevel",
+    "path": "theMolecularLevel.ogg",
+    "title": "QUEST: The Molecular Level",
+    "image": "images/reports/TheMolecularLevel.png"
+  },
+  {
+    "id": "humanError",
+    "path": "humanError.ogg",
+    "title": "QUEST: Human Error",
+    "image": "images/reports/HumanError.png"
+  },
+  {
+    "id": "synthRetention",
+    "path": "synthRetention.ogg",
+    "title": "QUEST: Synth Retention",
+    "image": "images/reports/SynthRetention.png"
+  },
+  {
+    "id": "libertyReprimed",
+    "path": "libertyReprimed.ogg",
+    "title": "QUEST: Liberty Reprimed",
+    "image": "images/reports/LibertyReprimed.png"
+  },
+  {
+    "id": "curtainCall",
+    "path": "curtainCall.ogg",
+    "title": "QUEST: Curtain Call",
+    "image": "images/reports/CurtainCall.png"
+  },
+  {
+    "id": "holeInTheWall",
+    "path": "holeInTheWall.ogg",
+    "title": "QUEST: Hole In The Wall",
+    "image": "images/reports/HoleInTheWall.png"
+  },
+  { 
+    "id": "instituteDestroyed",
+    "path": "instituteDestroyed.ogg",
+    "title": "QUEST: The Nuclear Option",
+    "image": "TheNuclearOption.png"
+  }
+  
 ]

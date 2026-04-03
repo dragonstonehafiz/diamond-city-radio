@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'theme/pip_boy_settings_notifier.dart';
@@ -11,7 +12,11 @@ import 'radio/song_bank.dart';
 import 'radio/set_builder.dart';
 import 'data/song_repository.dart';
 import 'data/report_repository.dart';
+import 'data/asset_paths.dart';
+import 'models/app_config.dart';
+import 'radio/song_loader.dart' show LoadedData;
 import 'widgets/pip_boy_tab_bar.dart';
+import 'dart:convert';
 import 'widgets/pip_boy_scanline_overlay.dart';
 import 'widgets/pip_boy_status_bar.dart';
 import 'screens/player_screen.dart';
@@ -32,9 +37,14 @@ void main() async {
   // Initialize SFX player before running the app
   await SfxPlayer().init();
 
-  // Load songs, reports, and config
-  final loader = SongLoader();
-  final data = await loader.load();
+  // Load songs, reports, and config in parallel
+  final results = await Future.wait([
+    _loadConfig(),
+    SongLoader().load(),
+  ]);
+
+  final config = results[0] as AppConfig;
+  final data = results[1] as LoadedData;
 
   // Create repositories
   final songRepo = SongRepository(data.songs);
@@ -42,19 +52,20 @@ void main() async {
 
   // Initialize song bank
   final bank = SongBank();
-  await bank.init(songRepo, data.config);
+  await bank.init(songRepo, config);
 
   // Build initial 3 sets
-  final set1 = SetBuilder.buildSet(bank, songRepo, reportRepo, data.config);
-  final set2 = SetBuilder.buildSet(bank, songRepo, reportRepo, data.config);
-  final set3 = SetBuilder.buildSet(bank, songRepo, reportRepo, data.config);
+  final set1 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
+  final set2 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
+  final set3 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
 
   runApp(
     DiamondCityRadioApp(
       initialSets: [set1, set2, set3],
       songRepo: songRepo,
       reportRepo: reportRepo,
-      buildNextSet: () => SetBuilder.buildSet(bank, songRepo, reportRepo, data.config),
+      appConfig: config,
+      buildNextSet: () => SetBuilder.buildSet(bank, songRepo, reportRepo, config),
     ),
   );
 }
@@ -63,12 +74,14 @@ class DiamondCityRadioApp extends StatelessWidget {
   final List<List<RadioQueueItem>> initialSets;
   final SongRepository songRepo;
   final ReportRepository reportRepo;
+  final AppConfig appConfig;
   final List<RadioQueueItem> Function() buildNextSet;
 
   const DiamondCityRadioApp({
     required this.initialSets,
     required this.songRepo,
     required this.reportRepo,
+    required this.appConfig,
     required this.buildNextSet,
     super.key,
   });
@@ -77,6 +90,8 @@ class DiamondCityRadioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(create: (_) => reportRepo),
+        Provider(create: (_) => appConfig),
         ChangeNotifierProvider(create: (_) => PipBoySettingsNotifier()..load()),
         ChangeNotifierProvider(
           create: (_) => RadioPlayerService()
@@ -174,5 +189,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildSettingsTab() {
     return const SettingsScreen();
+  }
+}
+
+Future<AppConfig> _loadConfig() async {
+  try {
+    final jsonStr = await rootBundle.loadString(AppDataPaths.config);
+    final json = jsonDecode(jsonStr) as Map<String, dynamic>;
+    return AppConfig.fromJson(json);
+  } catch (e) {
+    print('[main] Error loading config: $e');
+    return AppConfig.fromJson({});
   }
 }
