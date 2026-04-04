@@ -1,13 +1,15 @@
 import '../audio/radio_player_service.dart';
 import '../models/song_model.dart';
 import 'song_bank.dart';
+import 'report_bank.dart';
 import '../data/song_repository.dart';
 import '../data/report_repository.dart';
 import '../models/app_config.dart';
 
 class SetBuilder {
   static List<RadioQueueItem> buildSet(
-    SongBank bank,
+    SongBank songBank,
+    ReportBank reportBank,
     SongRepository songs,
     ReportRepository reports,
     AppConfig config,
@@ -15,8 +17,8 @@ class SetBuilder {
 
     // Draw songs from bank
     final drawn = <SongModel>[];
-    for (int i = 0; i < config.songsPerSet && bank.bankLength > 0; i++) {
-      drawn.add(bank.draw());
+    for (int i = 0; i < config.songsPerSet && songBank.bankLength > 0; i++) {
+      drawn.add(songBank.draw());
     }
 
     if (drawn.isEmpty) {
@@ -54,13 +56,12 @@ class SetBuilder {
     }
 
     // Report
-    final report = reports.getRandom();
-    if (report != null) {
-      queue.add(RadioQueueItem(
-        itemId: report.id,
-        clipType: RadioClipType.report,
-      ));
-    }
+    assert(reportBank.bankLength > 0, 'ReportBank.draw() called with empty bank');
+    final report = reportBank.draw();
+    queue.add(RadioQueueItem(
+      itemId: report.id,
+      clipType: RadioClipType.report,
+    ));
 
     return queue;
   }

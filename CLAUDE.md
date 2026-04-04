@@ -91,15 +91,16 @@
 ## Models
 
 **SongModel** (`lib/models/song_model.dart`)
-- Fields: `id`, `name`, `artist`, `songFile`, `intros` (List), `outros` (List)
+- Fields: `id`, `name`, `artist`, `songFile` (full asset path), `intros` (List of full asset paths), `outros` (List of full asset paths)
 - Getters: `hasIntros`, `hasOutros`
-- Factory: `fromJson()`
+- Factory: `fromJson()` — maps JSON `song` field to `songFile`, JSON arrays to lists
+- Example paths: `songFile: "assets/audio/songs/bettyHutton_hesADemon.ogg"`, `intros: ["assets/audio/intros/bettyHutton_itsAMan1.ogg", ...]`
 - Duration pulled at runtime from audio file via `just_audio`
 
 **ReportModel** (`lib/models/report_model.dart`)
-- Fields: `id`, `path`, `title`, optional `image`
+- Fields: `id`, `path` (full asset path to audio file), `title`, optional `image` (full asset path)
 - Factory: `fromJson()`
-- `image` path relative to `assets/` (e.g., `images/reports/BlindBetrayal.png`)
+- Example paths: `path: "assets/audio/reports/freedomTrail.ogg"`, `image: "assets/images/reports/FreedomTrail.png"`
 - Duration pulled at runtime from audio file via `just_audio`
 
 **AppConfig** (`lib/models/app_config.dart`)
@@ -116,14 +117,14 @@
 
 **ReportRepository** (`lib/data/report_repository.dart`)
 - Holds all reports indexed by ID
-- Methods: `getById(String id)`, `getRandom()` — returns random report using `Random().nextInt()`
+- Methods: `getById(String id)`, `getAllReports()`, `getRandom()` — returns random report using `Random().nextInt()`
 
 **AppAudioPaths** (`lib/data/asset_paths.dart`)
 - SFX paths (audioplayers, no `assets/` prefix): `sfxBase`, `sfxHum`, `sfxMapRollover`, `sfxRotaryHorizontal`, `sfxRotaryVertical`
-- Audio paths (just_audio, full `assets/...` prefix): `songsBase`, `introsBase`, `outrosBase`, `reportsBase`
 
 **AppDataPaths** (`lib/data/asset_paths.dart`)
-- JSON data paths: `config`, `reports`, `songsDir`
+- JSON data paths: `config` (`assets/data/config.json`), `reports` (`assets/data/reports.json`), `songsDir` (`assets/data/songs/`)
+- Song, intro, outro, and report audio file paths are stored as full asset paths within the JSON data (e.g., `"assets/audio/songs/..."`, `"assets/audio/intros/..."`, etc.)
 
 ---
 
@@ -145,8 +146,11 @@
 - Streams: `durationStream`, `positionStream` — duration updates reactively as file loads
 - Public methods for UI: `getTrackName(item)`, `getArtist(item)`, `seek(position)` for progress bar seeking
 - **Key behavior**: When current set ends, rotates sets and builds new set 3 via `_buildNextSet()` callback
-- **Intro/outro handling**: Randomly selects from all valid files (checked via `_assetExists()`) each playback; auto-skips to next track if none found
-- **Report audio path**: Resolved from `report.path` field
+- **Path resolution** via `_resolveAssetPath()`: 
+  - Songs: returns `songFile` from SongModel
+  - Intros/outros: randomly selects from available list after validating each exists via `_assetExists()`; auto-skips to next track if none valid
+  - Reports: returns `path` from ReportModel
+- Audio files are loaded via `AudioSource.asset()` which expects full asset paths
 
 ---
 
@@ -169,9 +173,18 @@
 - On first launch: shuffles all songs into bank
 - On app restart: restores from SharedPreferences
 
+**ReportBank** (`lib/radio/report_bank.dart`)
+- Rotating pool of reports for set building (mirrors SongBank exactly)
+- Fields: `_reportBank` (pool), `_playedReports` (recently-used), `_config`
+- Persists state to SharedPreferences as ID lists (survives app restart)
+- Methods: `init()`, `draw()` (removes from pool, adds to played), `_checkRefill()`, `_refill()` (rotates old reports back)
+- On first launch: shuffles all reports into bank
+- On app restart: restores from SharedPreferences
+
 **SetBuilder** (`lib/radio/set_builder.dart`)
-- Static method: `buildSet(bank, songs, reports, config)`
-- Draws N songs from bank, ensures first has intros + last has outros (swaps if needed)
+- Static method: `buildSet(songBank, reportBank, songs, reports, config)`
+- Draws N songs from songBank, ensures first has intros + last has outros (swaps if needed)
+- Draws report from reportBank (ensures even distribution)
 - Builds queue: [intro, ...songs, outro, report]
 - Returns `List<RadioQueueItem>` with only `itemId` + `clipType` (no paths)
 
@@ -182,12 +195,12 @@
 **main()** (`lib/main.dart`)
 - Initializes JustAudioBackground, SfxPlayer, then loads AppConfig and songs/reports in parallel via `Future.wait()`
 - AppConfig loaded via `_loadConfig()` helper; songs/reports loaded via `SongLoader`
-- Initializes SongBank, builds initial 3 sets, then runs app
+- Initializes SongBank and ReportBank, builds initial 3 sets, then runs app
 
 **DiamondCityRadioApp** (`lib/main.dart`)
 - Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
 - Builds MaterialApp with dynamic theme from settings notifier
-- Constructor: `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `buildNextSet` callback
+- Constructor: `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`, `buildNextSet` callback
 
 **HomeScreen** (`lib/main.dart`)
 - Main layout: `PipBoyTabBar` (top) + `IndexedStack` (three tabs) + `PipBoyStatusBar` (bottom)

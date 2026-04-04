@@ -12,5 +12,7 @@ class ReportRepository {
 
   ReportModel? getById(String id) => _reportsById[id];
 
+  List<ReportModel> getAllReports() => _allReports;
+
   ReportModel? getRandom() => _allReports.isEmpty ? null : _allReports[_random.nextInt(_allReports.length)];
 }

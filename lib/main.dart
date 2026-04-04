@@ -9,6 +9,7 @@ import 'audio/sfx_player.dart';
 import 'audio/radio_player_service.dart';
 import 'radio/song_loader.dart';
 import 'radio/song_bank.dart';
+import 'radio/report_bank.dart';
 import 'radio/set_builder.dart';
 import 'data/song_repository.dart';
 import 'data/report_repository.dart';
@@ -50,14 +51,16 @@ void main() async {
   final songRepo = SongRepository(data.songs);
   final reportRepo = ReportRepository(data.reports);
 
-  // Initialize song bank
-  final bank = SongBank();
-  await bank.init(songRepo, config);
+  // Initialize song and report banks
+  final songBank = SongBank();
+  await songBank.init(songRepo, config);
+  final reportBank = ReportBank();
+  await reportBank.init(reportRepo, config);
 
   // Build initial 3 sets
-  final set1 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
-  final set2 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
-  final set3 = SetBuilder.buildSet(bank, songRepo, reportRepo, config);
+  final set1 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
+  final set2 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
+  final set3 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
 
   runApp(
     DiamondCityRadioApp(
@@ -65,7 +68,9 @@ void main() async {
       songRepo: songRepo,
       reportRepo: reportRepo,
       appConfig: config,
-      buildNextSet: () => SetBuilder.buildSet(bank, songRepo, reportRepo, config),
+      songBank: songBank,
+      reportBank: reportBank,
+      buildNextSet: () => SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config),
     ),
   );
 }
@@ -75,6 +80,8 @@ class DiamondCityRadioApp extends StatelessWidget {
   final SongRepository songRepo;
   final ReportRepository reportRepo;
   final AppConfig appConfig;
+  final SongBank songBank;
+  final ReportBank reportBank;
   final List<RadioQueueItem> Function() buildNextSet;
 
   const DiamondCityRadioApp({
@@ -82,6 +89,8 @@ class DiamondCityRadioApp extends StatelessWidget {
     required this.songRepo,
     required this.reportRepo,
     required this.appConfig,
+    required this.songBank,
+    required this.reportBank,
     required this.buildNextSet,
     super.key,
   });
