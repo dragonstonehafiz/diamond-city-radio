@@ -1,14 +1,14 @@
 {
   "id": "ellaFitzgerald_intoEachLifeSomeRainMustFall",
   "name": "Into Each Life Some Rain Must Fall",
-  "song": "ellaFitzgerald_intoEachLifeSomeRainMustFall.ogg",
+  "song": "assets/audio/songs/ellaFitzgerald_intoEachLifeSomeRainMustFall.ogg",
   "intros": [
-    "ellaFitzgerald_intoEachLifeSomeRainMustFall1.ogg",
-    "ellaFitzgerald_intoEachLifeSomeRainMustFall2.ogg",
-    "ellaFitzgerald_intoEachLifeSomeRainMustFall3.ogg"
+    "assets/audio/intros/ellaFitzgerald_intoEachLifeSomeRainMustFall1.ogg",
+    "assets/audio/intros/ellaFitzgerald_intoEachLifeSomeRainMustFall2.ogg",
+    "assets/audio/intros/ellaFitzgerald_intoEachLifeSomeRainMustFall3.ogg"
   ],
   "outros": [
-    "ellaFitzgerald_intoEachLifeSomeRainMustFall1.ogg"
+    "assets/audio/outros/ellaFitzgerald_intoEachLifeSomeRainMustFall1.ogg"
   ],
   "artist": "Ella Fitzgerald"
 }

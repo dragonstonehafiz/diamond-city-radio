@@ -1,9 +1,9 @@
 {
   "id": "magnolia_trainTrain",
   "name": "Train Train",
-  "song": "magnolia_trainTrain.ogg",
+  "song": "assets/audio/songs/magnolia_trainTrain.ogg",
   "intros": [
-    "magnolia_trainTrain1.ogg"
+    "assets/audio/intros/magnolia_trainTrain1.ogg"
   ],
   "outros": [],
   "artist": "Magnolia"

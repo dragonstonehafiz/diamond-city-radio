@@ -1,11 +1,11 @@
 {
   "id": "fatsWaller_aintMisbehavin",
   "name": "Ain't Misbehavin'",
-  "song": "fatsWaller_aintMisbehavin.ogg",
+  "song": "assets/audio/songs/fatsWaller_aintMisbehavin.ogg",
   "intros": [],
   "outros": [
-    "general1.ogg",
-    "general2.ogg"
+    "assets/audio/outros/general1.ogg",
+    "assets/audio/outros/general2.ogg"
   ],
   "artist": "Fats Waller"
 }

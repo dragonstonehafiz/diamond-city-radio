@@ -1,16 +1,16 @@
 {
   "id": "billieHoliday_crazyHeCallsMe",
   "name": "Crazy He Calls Me",
-  "song": "billieHoliday_crazyHeCallsMe.ogg",
+  "song": "assets/audio/songs/billieHoliday_crazyHeCallsMe.ogg",
   "intros": [
-    "billieHoliday_crazyHeCallsMe1.ogg",
-    "billieHoliday_crazyHeCallsMe2.ogg",
-    "billieHoliday_crazyHeCallsMe3.ogg",
-    "billieHoliday_crazyHeCallsMe4.ogg"
+    "assets/audio/intros/billieHoliday_crazyHeCallsMe1.ogg",
+    "assets/audio/intros/billieHoliday_crazyHeCallsMe2.ogg",
+    "assets/audio/intros/billieHoliday_crazyHeCallsMe3.ogg",
+    "assets/audio/intros/billieHoliday_crazyHeCallsMe4.ogg"
   ],
   "outros": [
-    "billieHoliday1.ogg",
-    "billieHoliday2.ogg"
+    "assets/audio/outros/billieHoliday1.ogg",
+    "assets/audio/outros/billieHoliday2.ogg"
   ],
   "artist": "Billie Holiday"
 }

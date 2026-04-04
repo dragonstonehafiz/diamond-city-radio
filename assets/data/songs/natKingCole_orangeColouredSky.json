@@ -1,14 +1,14 @@
 {
   "id": "natKingCole_orangeColouredSky",
   "name": "Orange Coloured Sky",
-  "song": "natKingCole_orangeColouredSky.ogg",
+  "song": "assets/audio/songs/natKingCole_orangeColouredSky.ogg",
   "intros": [
-    "natKingCole_orangeColouredSky1.ogg",
-    "natKingCole_orangeColouredSky2.ogg",
-    "natKingCole_orangeColouredSky3.ogg"
+    "assets/audio/intros/natKingCole_orangeColouredSky1.ogg",
+    "assets/audio/intros/natKingCole_orangeColouredSky2.ogg",
+    "assets/audio/intros/natKingCole_orangeColouredSky3.ogg"
   ],
   "outros": [
-    "natKingCole1.ogg"
+    "assets/audio/outros/natKingCole1.ogg"
   ],
   "artist": "Nat King Cole"
 }

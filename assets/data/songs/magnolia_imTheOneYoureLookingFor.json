@@ -1,9 +1,9 @@
 {
   "id": "magnolia_imTheOneYoureLookingFor",
   "name": "I'm the One You're Looking For",
-  "song": "magnolia_imTheOneYoureLookingFor.ogg",
+  "song": "assets/audio/songs/magnolia_imTheOneYoureLookingFor.ogg",
   "intros": [
-    "magnolia_imTheOneYoureLookingFor.ogg"
+    "assets/audio/intros/magnolia_imTheOneYoureLookingFor.ogg"
   ],
   "outros": [],
   "artist": "Magnolia"

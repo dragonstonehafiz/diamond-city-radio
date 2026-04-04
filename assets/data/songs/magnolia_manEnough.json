@@ -1,9 +1,9 @@
 {
   "id": "magnolia_manEnough",
   "name": "Man Enough",
-  "song": "magnolia_manEnough.ogg",
+  "song": "assets/audio/songs/magnolia_manEnough.ogg",
   "intros": [
-    "magnolia_manEnough.ogg"
+    "assets/audio/intros/magnolia_manEnough.ogg"
   ],
   "outros": [],
   "artist": "Magnolia"

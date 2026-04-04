@@ -1,9 +1,9 @@
 {
   "id": "magnolia_babyItsJustYou",
   "name": "Baby It's Just You",
-  "song": "magnolia_babyItsJustYou.ogg",
+  "song": "assets/audio/songs/magnolia_babyItsJustYou.ogg",
   "intros": [
-    "magnolia_babyItsJustYou1.ogg"
+    "assets/audio/intros/magnolia_babyItsJustYou1.ogg"
   ],
   "outros": [],
   "artist": "Magnolia"

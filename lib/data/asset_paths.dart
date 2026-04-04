@@ -1,11 +1,6 @@
 class AppAudioPaths {
   // SFX: audioplayers auto-prepends 'assets/', so don't include it
   static const String sfxBase = 'audio/sfx/';
-  // Audio: just_audio needs full path with 'assets/'
-  static const String songsBase = 'assets/audio/songs/';
-  static const String introsBase = 'assets/audio/intros/';
-  static const String outrosBase = 'assets/audio/outros/';
-  static const String reportsBase = 'assets/audio/reports/';
 
   static const String sfxHum = '${sfxBase}UI_PipBoy_Hum_LP.wav';
   static const String sfxMapRollover =

@@ -1,14 +1,14 @@
 {
   "id": "louisJordan_keepAKnockin",
   "name": "Keep A Knockin'",
-  "song": "louisJordan_keepAKnockin.ogg",
+  "song": "assets/audio/songs/louisJordan_keepAKnockin.ogg",
   "intros": [
-    "louisJordan_keepAKnockin1.ogg",
-    "louisJordan_keepAKnockin2.ogg",
-    "louisJordan_keepAKnockin3.ogg"
+    "assets/audio/intros/louisJordan_keepAKnockin1.ogg",
+    "assets/audio/intros/louisJordan_keepAKnockin2.ogg",
+    "assets/audio/intros/louisJordan_keepAKnockin3.ogg"
   ],
   "outros": [
-    "louisJordan_keepAKnockin1.ogg"
+    "assets/audio/outros/louisJordan_keepAKnockin1.ogg"
   ],
   "artist": "Louis Jordan"
 }

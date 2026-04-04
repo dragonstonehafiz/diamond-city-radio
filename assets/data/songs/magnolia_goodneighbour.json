@@ -1,9 +1,9 @@
 {
   "id": "magnolia_goodneighbour",
   "name": "Good Neighbour",
-  "song": "magnolia_goodneigbour.ogg",
+  "song": "assets/audio/songs/magnolia_goodneigbour.ogg",
   "intros": [
-    "magnolia_goodneighbour1.ogg"
+    "assets/audio/intros/magnolia_goodneighbour1.ogg"
   ],
   "outros": [],
   "artist": "Magnolia"

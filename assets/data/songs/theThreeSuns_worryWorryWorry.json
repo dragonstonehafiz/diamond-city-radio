@@ -1,14 +1,14 @@
 {
   "id": "theThreeSuns_worryWorryWorry",
   "name": "Worry Worry Worry",
-  "song": "theThreeSuns_worryWorryWorry.ogg",
+  "song": "assets/audio/songs/theThreeSuns_worryWorryWorry.ogg",
   "intros": [
-    "theThreeSuns_worryWorryWorry1.ogg",
-    "theThreeSuns_worryWorryWorry2.ogg",
-    "theThreeSuns_worryWorryWorry3.ogg"
+    "assets/audio/intros/theThreeSuns_worryWorryWorry1.ogg",
+    "assets/audio/intros/theThreeSuns_worryWorryWorry2.ogg",
+    "assets/audio/intros/theThreeSuns_worryWorryWorry3.ogg"
   ],
   "outros": [
-    "general1.ogg"
+    "assets/audio/outros/general1.ogg"
   ],
   "artist": "The Three Suns"
 }

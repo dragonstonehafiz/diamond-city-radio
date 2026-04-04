@@ -1,14 +1,14 @@
 {
   "id": "royBrown_goodRockinTonight",
   "name": "Good Rockin Tonight",
-  "song": "royBrown_goodRockinTonight.ogg",
+  "song": "assets/audio/songs/royBrown_goodRockinTonight.ogg",
   "intros": [
-    "royBrown_goodRockinTonight1.ogg",
-    "royBrown_goodRockinTonight2.ogg",
-    "royBrown_goodRockinTonight3.ogg"
+    "assets/audio/intros/royBrown_goodRockinTonight1.ogg",
+    "assets/audio/intros/royBrown_goodRockinTonight2.ogg",
+    "assets/audio/intros/royBrown_goodRockinTonight3.ogg"
   ],
   "outros": [
-    "royBrown_goodRockinTonight1.ogg"
+    "assets/audio/outros/royBrown_goodRockinTonight1.ogg"
   ],
   "artist": "Roy Brown"
 }

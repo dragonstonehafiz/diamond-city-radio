@@ -1,14 +1,14 @@
 {
   "id": "bigMaybelle_wholeLottaShakin",
   "name": "Whole 'Lotta Shakin'",
-  "song": "bigMaybelle_wholeLottaShakin.ogg",
+  "song": "assets/audio/songs/bigMaybelle_wholeLottaShakin.ogg",
   "intros": [
-    "bigMaybelle_wholeLottaShakin1.ogg",
-    "bigMaybelle_wholeLottaShakin2.ogg",
-    "bigMaybelle_wholeLottaShakin3.ogg"
+    "assets/audio/intros/bigMaybelle_wholeLottaShakin1.ogg",
+    "assets/audio/intros/bigMaybelle_wholeLottaShakin2.ogg",
+    "assets/audio/intros/bigMaybelle_wholeLottaShakin3.ogg"
   ],
   "outros": [
-    "bigMaybelle_wholeLottaShakin1.ogg"
+    "assets/audio/outros/bigMaybelle_wholeLottaShakin1.ogg"
   ],
   "artist": "Big Maybelle"
 }

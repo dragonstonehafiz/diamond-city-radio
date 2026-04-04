@@ -1,11 +1,11 @@
 {
   "id": "bingCrosby_wellDidYouEvah",
   "name": "Well Did You Evah",
-  "song": "bingCrosby_wellDidYouEvah.ogg",
+  "song": "assets/audio/songs/bingCrosby_wellDidYouEvah.ogg",
   "intros": [],
   "outros": [
-    "general4.ogg",
-    "general5.ogg"
+    "assets/audio/outros/general4.ogg",
+    "assets/audio/outros/general5.ogg"
   ],
   "artist": "Bing Crosby"
 }

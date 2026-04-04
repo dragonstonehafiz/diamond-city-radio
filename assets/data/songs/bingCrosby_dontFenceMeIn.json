@@ -1,11 +1,11 @@
 {
   "id": "bingCrosby_dontFenceMeIn",
   "name": "Don't Fence Me In",
-  "song": "bingCrosby_dontFenceMeIn.ogg",
+  "song": "assets/audio/songs/bingCrosby_dontFenceMeIn.ogg",
   "intros": [],
   "outros": [
-    "general3.ogg",
-    "general4.ogg"
+    "assets/audio/outros/general3.ogg",
+    "assets/audio/outros/general4.ogg"
   ],
   "artist": "Bing Crosby"
 }

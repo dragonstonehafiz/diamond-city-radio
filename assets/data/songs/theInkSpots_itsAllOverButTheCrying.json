@@ -1,14 +1,14 @@
 {
   "id": "theInkSpots_itsAllOverButTheCrying",
   "name": "It's All Over But The Crying",
-  "song": "theInkSpots_itsAllOverButTheCrying.ogg",
+  "song": "assets/audio/songs/theInkSpots_itsAllOverButTheCrying.ogg",
   "intros": [
-    "theInkSpots_itsAllOverButTheCrying1.ogg",
-    "theInkSpots_itsAllOverButTheCrying2.ogg",
-    "theInkSpots_itsAllOverButTheCrying3.ogg"
+    "assets/audio/intros/theInkSpots_itsAllOverButTheCrying1.ogg",
+    "assets/audio/intros/theInkSpots_itsAllOverButTheCrying2.ogg",
+    "assets/audio/intros/theInkSpots_itsAllOverButTheCrying3.ogg"
   ],
   "outros": [
-    "theInkSpots_itsAllOverButTheCrying1.ogg"
+    "assets/audio/outros/theInkSpots_itsAllOverButTheCrying1.ogg"
   ],
   "artist": "The Ink Spots"
 }

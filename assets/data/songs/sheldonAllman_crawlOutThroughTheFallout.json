@@ -1,14 +1,14 @@
 {
   "id": "sheldonAllman_crawlOutThroughTheFallout",
   "name": "Crawl Out Through the Fallout",
-  "song": "sheldonAllman_crawlOutThroughTheFallout.ogg",
+  "song": "assets/audio/songs/sheldonAllman_crawlOutThroughTheFallout.ogg",
   "intros": [
-    "sheldonAllman_crawlOutThroughTheFallout1.ogg",
-    "sheldonAllman_crawlOutThroughTheFallout2.ogg",
-    "sheldonAllman_crawlOutThroughTheFallout3.ogg"
+    "assets/audio/intros/sheldonAllman_crawlOutThroughTheFallout1.ogg",
+    "assets/audio/intros/sheldonAllman_crawlOutThroughTheFallout2.ogg",
+    "assets/audio/intros/sheldonAllman_crawlOutThroughTheFallout3.ogg"
   ],
   "outros": [
-    "sheldonAllman_crawlOutThroughTheFallout1.ogg"
+    "assets/audio/outros/sheldonAllman_crawlOutThroughTheFallout1.ogg"
   ],
   "artist": "Sheldon Allman"
 }

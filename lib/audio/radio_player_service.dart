@@ -99,16 +99,15 @@ class RadioPlayerService extends ChangeNotifier {
     switch (item.clipType) {
       case RadioClipType.song:
         final song = _songs.getById(item.itemId);
-        return song != null ? '${AppAudioPaths.songsBase}${song.songFile}' : '';
+        return song != null ? song.songFile : '';
       case RadioClipType.intro:
         final song = _songs.getById(item.itemId);
         if (song != null && song.intros.isNotEmpty) {
           // Find all valid intro files that exist
           final validPaths = <String>[];
           for (final file in song.intros) {
-            final path = '${AppAudioPaths.introsBase}$file';
-            if (await _assetExists(path)) {
-              validPaths.add(path);
+            if (await _assetExists(file)) {
+              validPaths.add(file);
             }
           }
           if (validPaths.isNotEmpty) {
@@ -122,9 +121,8 @@ class RadioPlayerService extends ChangeNotifier {
           // Find all valid outro files that exist
           final validPaths = <String>[];
           for (final file in song.outros) {
-            final path = '${AppAudioPaths.outrosBase}$file';
-            if (await _assetExists(path)) {
-              validPaths.add(path);
+            if (await _assetExists(file)) {
+              validPaths.add(file);
             }
           }
           if (validPaths.isNotEmpty) {
@@ -134,7 +132,7 @@ class RadioPlayerService extends ChangeNotifier {
         return '';
       case RadioClipType.report:
         final report = _reports.getById(item.itemId);
-        return report != null ? '${AppAudioPaths.reportsBase}${report.path}' : '';
+        return report != null ? report.path : '';
     }
   }
 

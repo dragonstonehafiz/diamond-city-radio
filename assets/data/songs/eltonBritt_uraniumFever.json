@@ -1,13 +1,13 @@
 {
   "id": "eltonBritt_uraniumFever",
   "name": "Uranium Fever",
-  "song": "eltonBritt_uraniumFever.ogg",
+  "song": "assets/audio/songs/eltonBritt_uraniumFever.ogg",
   "intros": [
-    "eltonBritt_uraniumFever1.ogg",
-    "eltonBritt_uraniumFever2.ogg"
+    "assets/audio/intros/eltonBritt_uraniumFever1.ogg",
+    "assets/audio/intros/eltonBritt_uraniumFever2.ogg"
   ],
   "outros": [
-    "eltonBritt_uraniumFever1.ogg"
+    "assets/audio/outros/eltonBritt_uraniumFever1.ogg"
   ],
   "artist": "Elton Britt"
 }

@@ -1,15 +1,15 @@
 {
   "id": "ellaFitzgerald_undecided",
   "name": "Undecided",
-  "song": "ellaFitzgerald_undecided.ogg",
+  "song": "assets/audio/songs/ellaFitzgerald_undecided.ogg",
   "intros": [
-    "ellaFitzgerald_undecided1.ogg",
-    "ellaFitzgerald_undecided2.ogg",
-    "ellaFitzgerald_undecided3.ogg",
-    "ellaFitzgerald_undecided4.ogg"
+    "assets/audio/intros/ellaFitzgerald_undecided1.ogg",
+    "assets/audio/intros/ellaFitzgerald_undecided2.ogg",
+    "assets/audio/intros/ellaFitzgerald_undecided3.ogg",
+    "assets/audio/intros/ellaFitzgerald_undecided4.ogg"
   ],
   "outros": [
-    "ellaFitzgerald_undecided1.ogg"
+    "assets/audio/outros/ellaFitzgerald_undecided1.ogg"
   ],
   "artist": "Ella Fitzgerald"
 }

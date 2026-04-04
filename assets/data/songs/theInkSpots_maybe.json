@@ -1,15 +1,15 @@
 {
   "id": "theInkSpots_maybe",
   "name": "Maybe",
-  "song": "theInkSpots_maybe.ogg",
+  "song": "assets/audio/songs/theInkSpots_maybe.ogg",
   "intros": [
-    "theInkSpots_maybe1.ogg",
-    "theInkSpots_maybe2.ogg",
-    "theInkSpots_maybe3.ogg",
-    "theInkSpots_maybe4.ogg"
+    "assets/audio/intros/theInkSpots_maybe1.ogg",
+    "assets/audio/intros/theInkSpots_maybe2.ogg",
+    "assets/audio/intros/theInkSpots_maybe3.ogg",
+    "assets/audio/intros/theInkSpots_maybe4.ogg"
   ],
   "outros": [
-    "theInkSpots_maybe1.ogg"
+    "assets/audio/outros/theInkSpots_maybe1.ogg"
   ],
   "artist": "The Ink Spots"
 }

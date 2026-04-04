@@ -1,16 +1,16 @@
 {
   "id": "bobCrosby_wayBackHome",
   "name": "Way Back Home",
-  "song": "bobCrosby_wayBackHome.ogg",
+  "song": "assets/audio/songs/bobCrosby_wayBackHome.ogg",
   "intros": [
-    "bobCrosby_wayBackHome1.ogg",
-    "bobCrosby_wayBackHome2.ogg",
-    "bobCrosby_wayBackHome3.ogg"
+    "assets/audio/intros/bobCrosby_wayBackHome1.ogg",
+    "assets/audio/intros/bobCrosby_wayBackHome2.ogg",
+    "assets/audio/intros/bobCrosby_wayBackHome3.ogg"
   ],
   "outros": [
-    "bobCrosby1.ogg",
-    "bobCrosby2.ogg",
-    "bobCrosby3.ogg"
+    "assets/audio/outros/bobCrosby1.ogg",
+    "assets/audio/outros/bobCrosby2.ogg",
+    "assets/audio/outros/bobCrosby3.ogg"
   ],
   "artist": "Bob Crosby"
 }

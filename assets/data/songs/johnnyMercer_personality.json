@@ -1,14 +1,14 @@
 {
   "id": "johnnyMercer_personality",
   "name": "Personality",
-  "song": "johnnyMercer_personality.ogg",
+  "song": "assets/audio/songs/johnnyMercer_personality.ogg",
   "intros": [
-    "johnnyMercer_personality1.ogg",
-    "johnnyMercer_personality2.ogg",
-    "johnnyMercer_personality3.ogg"
+    "assets/audio/intros/johnnyMercer_personality1.ogg",
+    "assets/audio/intros/johnnyMercer_personality2.ogg",
+    "assets/audio/intros/johnnyMercer_personality3.ogg"
   ],
   "outros": [
-    "johnnyMercer_personality1.ogg"
+    "assets/audio/outros/johnnyMercer_personality1.ogg"
   ],
   "artist": "Johnny Mercer"
 }

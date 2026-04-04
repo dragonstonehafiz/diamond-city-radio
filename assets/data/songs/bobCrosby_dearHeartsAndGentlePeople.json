@@ -1,19 +1,19 @@
 {
   "id": "bobCrosby_dearHeartsAndGentlePeople",
   "name": "Dear Hearts and Gentle People",
-  "song": "bobCrosby_dearHeartsAndGentlePeople.ogg",
+  "song": "assets/audio/songs/bobCrosby_dearHeartsAndGentlePeople.ogg",
   "intros": [
-    "bobCrosby1.ogg",
-    "bobCrosby2.ogg",
-    "bobCrosby3.ogg",
-    "bobCrosby4.ogg",
-    "bobCrosby5.ogg",
-    "bobCrosby_dearHeartsAndGentlePeople1.ogg"
+    "assets/audio/intros/bobCrosby1.ogg",
+    "assets/audio/intros/bobCrosby2.ogg",
+    "assets/audio/intros/bobCrosby3.ogg",
+    "assets/audio/intros/bobCrosby4.ogg",
+    "assets/audio/intros/bobCrosby5.ogg",
+    "assets/audio/intros/bobCrosby_dearHeartsAndGentlePeople1.ogg"
   ],
   "outros": [
-    "bobCrosby1.ogg",
-    "bobCrosby2.ogg",
-    "bobCrosby3.ogg"
+    "assets/audio/outros/bobCrosby1.ogg",
+    "assets/audio/outros/bobCrosby2.ogg",
+    "assets/audio/outros/bobCrosby3.ogg"
   ],
   "artist": "Bob Crosby"
 }

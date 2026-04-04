@@ -1,16 +1,16 @@
 {
   "id": "billieHoliday_easyLiving",
   "name": "Easy Living",
-  "song": "billieHoliday_easyLiving.ogg",
+  "song": "assets/audio/songs/billieHoliday_easyLiving.ogg",
   "intros": [
-    "billieHoliday_easyLiving1.ogg",
-    "billieHoliday_easyLiving2.ogg",
-    "billieHoliday_easyLiving3.ogg",
-    "billieHoliday_easyLiving4.ogg"
+    "assets/audio/intros/billieHoliday_easyLiving1.ogg",
+    "assets/audio/intros/billieHoliday_easyLiving2.ogg",
+    "assets/audio/intros/billieHoliday_easyLiving3.ogg",
+    "assets/audio/intros/billieHoliday_easyLiving4.ogg"
   ],
   "outros": [
-    "billieHoliday1.ogg",
-    "billieHoliday2.ogg"
+    "assets/audio/outros/billieHoliday1.ogg",
+    "assets/audio/outros/billieHoliday2.ogg"
   ],
   "artist": "Billie Holiday"
 }

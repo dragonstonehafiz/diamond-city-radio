@@ -1,13 +1,13 @@
 {
   "id": "bingCrosby_accentuateThePositive",
   "name": "Accentuate The Positive",
-  "song": "bingCrosby_accentuateThePositive.ogg",
+  "song": "assets/audio/songs/bingCrosby_accentuateThePositive.ogg",
   "intros": [
-    "bingCrosby_accentuateThePositive1.ogg",
-    "bingCrosby1.ogg"
+    "assets/audio/intros/bingCrosby_accentuateThePositive1.ogg",
+    "assets/audio/intros/bingCrosby1.ogg"
   ],
   "outros": [
-    "bingCrosby_accentuateThePositive1.ogg"
+    "assets/audio/outros/bingCrosby_accentuateThePositive1.ogg"
   ],
   "artist": "Bing Crosby"
 }

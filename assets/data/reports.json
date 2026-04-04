@@ -1,128 +1,128 @@
 [
   {
     "id": "freedomTrail",
-    "path": "freedomTrail.ogg",
+    "path": "assets/audio/reports/freedomTrail.ogg",
     "title": "QUEST: Road to Freedom",
-    "image": "images/reports/FreedomTrail.png"
+    "image": "assets/images/reports/FreedomTrail.png"
   },
   {
     "id": "fireSupport",
-    "path": "fireSupport.ogg",
+    "path": "assets/audio/reports/fireSupport.ogg",
     "title": "QUEST: Fire Support",
-    "image": "images/reports/FireSupport.png"
+    "image": "assets/images/reports/FireSupport.png"
   },
   {
     "id": "takingIndependence",
-    "path": "takingIndependence.ogg",
+    "path": "assets/audio/reports/takingIndependence.ogg",
     "title": "QUEST: Taking Independence",
-    "image": "images/reports/TakingIndependence.png"
+    "image": "assets/images/reports/TakingIndependence.png"
   },
   {
     "id": "theBigDig",
-    "path": "theBigDig.ogg",
+    "path": "assets/audio/reports/theBigDig.ogg",
     "title": "QUEST: The Big Dig",
-    "image": "images/reports/TheBigDig.png"
+    "image": "assets/images/reports/TheBigDig.png"
   },
   {
     "id": "lastVoyageOfUSSConstitution",
-    "path": "lastVoyageOfUSSConstitution.ogg",
+    "path": "assets/audio/reports/lastVoyageOfUSSConstitution.ogg",
     "title": "QUEST: Last Voyage of USS Constitution",
-    "image": "images/reports/LastVoyageOfTheUSSConstitution.png"
+    "image": "assets/images/reports/LastVoyageOfTheUSSConstitution.png"
   },
   {
     "id": "kidInAFridge",
-    "path": "kidInAFridge.ogg",
+    "path": "assets/audio/reports/kidInAFridge.ogg",
     "title": "QUEST: Kid In A Fridge",
-    "image": "images/reports/KidInAFridge.png"
+    "image": "assets/images/reports/KidInAFridge.png"
   },
   {
     "id": "theSilverShroud",
-    "path": "theSilverShroud.ogg",
+    "path": "assets/audio/reports/theSilverShroud.ogg",
     "title": "QUEST: The Silver Shroud",
-    "image": "images/reports/TheSilverShroud.png"
+    "image": "assets/images/reports/TheSilverShroud.png"
   },
   {
     "id": "blindBetrayal",
-    "path": "blindBetrayal.ogg",
+    "path": "assets/audio/reports/blindBetrayal.ogg",
     "title": "QUEST: Blind Betrayal",
-    "image": "images/reports/BlindBetrayal.png"
+    "image": "assets/images/reports/BlindBetrayal.png"
   },
   {
     "id": "theSecretOfCabotHouse",
-    "path": "theSecretOfCabotHouse.ogg",
+    "path": "assets/audio/reports/theSecretOfCabotHouse.ogg",
     "title": "QUEST: The Secret of Cabot House",
-    "image": "images/reports/TheSecretOfCabotHouse.png"
+    "image": "assets/images/reports/TheSecretOfCabotHouse.png"
   },
   {
     "id": "hereThereBeMonsters",
-    "path": "hereThereBeMonsters.ogg",
+    "path": "assets/audio/reports/hereThereBeMonsters.ogg",
     "title": "QUEST: Here There Be Monsters",
-    "image": "images/reports/HereThereBeMonsters.png"
+    "image": "assets/images/reports/HereThereBeMonsters.png"
   },
   {
     "id": "theMolecularLevel",
-    "path": "theMolecularLevel.ogg",
+    "path": "assets/audio/reports/theMolecularLevel.ogg",
     "title": "QUEST: The Molecular Level",
-    "image": "images/reports/TheMolecularLevel.png"
+    "image": "assets/images/reports/TheMolecularLevel.png"
   },
   {
     "id": "humanError",
-    "path": "humanError.ogg",
+    "path": "assets/audio/reports/humanError.ogg",
     "title": "QUEST: Human Error",
-    "image": "images/reports/HumanError.png"
+    "image": "assets/images/reports/HumanError.png"
   },
   {
     "id": "synthRetention",
-    "path": "synthRetention.ogg",
+    "path": "assets/audio/reports/synthRetention.ogg",
     "title": "QUEST: Synth Retention",
-    "image": "images/reports/SynthRetention.png"
+    "image": "assets/images/reports/SynthRetention.png"
   },
   {
     "id": "libertyReprimed",
-    "path": "libertyReprimed.ogg",
+    "path": "assets/audio/reports/libertyReprimed.ogg",
     "title": "QUEST: Liberty Reprimed",
-    "image": "images/reports/LibertyReprimed.png"
+    "image": "assets/images/reports/LibertyReprimed.png"
   },
   {
     "id": "curtainCall",
-    "path": "curtainCall.ogg",
+    "path": "assets/audio/reports/curtainCall.ogg",
     "title": "QUEST: Curtain Call",
-    "image": "images/reports/CurtainCall.png"
+    "image": "assets/images/reports/CurtainCall.png"
   },
   {
     "id": "holeInTheWall",
-    "path": "holeInTheWall.ogg",
+    "path": "assets/audio/reports/holeInTheWall.ogg",
     "title": "QUEST: Hole In The Wall",
-    "image": "images/reports/HoleInTheWall.png"
+    "image": "assets/images/reports/HoleInTheWall.png"
   },
-  { 
+  {
     "id": "instituteDestroyed",
-    "path": "instituteDestroyed.ogg",
+    "path": "assets/audio/reports/instituteDestroyed.ogg",
     "title": "QUEST: The Nuclear Option",
-    "image": "images/reports/TheNuclearOption.png"
+    "image": "assets/images/reports/TheNuclearOption.png"
   },
   {
     "id": "sponsorChoiceChops",
-    "path": "sponsorChoiceChops.ogg",
+    "path": "assets/audio/reports/sponsorChoiceChops.ogg",
     "title": "SPONSOR: Choice Chops",
-    "image": "images/reports/ConfidenceMan.png"
+    "image": "assets/images/reports/ConfidenceMan.png"
   },
   {
     "id": "sponsorColonialTaphouse",
-    "path": "sponsorColonialTaphouse.ogg",
+    "path": "assets/audio/reports/sponsorColonialTaphouse.ogg",
     "title": "SPONSOR: Colonial Taphouse",
-    "image": "images/reports/ConfidenceMan.png"
+    "image": "assets/images/reports/ConfidenceMan.png"
   },
   {
     "id": "sponsorChemicare",
-    "path": "sponsorChemicare.ogg",
+    "path": "assets/audio/reports/sponsorChemicare.ogg",
     "title": "SPONSOR: Chemicare",
-    "image": "images/reports/ConfidenceMan.png"
+    "image": "assets/images/reports/ConfidenceMan.png"
   },
   {
     "id": "sponsorPowerNoodels",
-    "path": "sponsorPowerNoodles.ogg",
+    "path": "assets/audio/reports/sponsorPowerNoodles.ogg",
     "title": "SPONSOR: Power Noodles",
-    "image": "images/reports/ConfidenceMan.png"
+    "image": "assets/images/reports/ConfidenceMan.png"
   }
 ]

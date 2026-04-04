@@ -1,15 +1,15 @@
 {
   "id": "bingCrosby_tooRaLooRaLooRa",
   "name": "Too Ra Loo Ra Loo Ral",
-  "song": "bingCrosby_tooRaLooRaLooRa.ogg",
+  "song": "assets/audio/songs/bingCrosby_tooRaLooRaLooRa.ogg",
   "intros": [
-    "bingCrosby1.ogg",
-    "bingCrosby2.ogg"
+    "assets/audio/intros/bingCrosby1.ogg",
+    "assets/audio/intros/bingCrosby2.ogg"
   ],
   "outros": [
-    "bingCrosby1.ogg",
-    "general2.ogg",
-    "general3.ogg"
+    "assets/audio/outros/bingCrosby1.ogg",
+    "assets/audio/outros/general2.ogg",
+    "assets/audio/outros/general3.ogg"
   ],
   "artist": "Bing Crosby"
 }

@@ -32,14 +32,14 @@ class PlayerScreen extends StatelessWidget {
       final settings = context.watch<PipBoySettingsNotifier>();
       final reports = context.read<ReportRepository>();
       final report = reports.getById(currentItem!.itemId);
-      if (report?.image != null) {
+      if (report != null && report.image != null) {
         return ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: size,
             maxHeight: size,
           ),
           child: Image.asset(
-            'assets/${report!.image}',
+            report.image!,
             fit: BoxFit.contain,
             color: settings.accent,
             colorBlendMode: BlendMode.srcIn,
@@ -58,7 +58,7 @@ class PlayerScreen extends StatelessWidget {
           maxHeight: size,
         ),
         child: Image.asset(
-          'assets/${config.appIconPath}',
+          config.appIconPath,
           fit: BoxFit.contain,
           color: settings.accent,
           colorBlendMode: BlendMode.srcIn,
