@@ -173,19 +173,23 @@ class SettingsScreen extends StatelessWidget {
             // About panel
             PipBoyPanel(
               title: 'ABOUT',
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'DIAMOND CITY RADIO',
-                    style: PipBoyTypography.body(settings.accent),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingS),
-                  Text(
-                    'Version 1.0.0',
-                    style: PipBoyTypography.body(settings.accent),
-                  ),
-                ],
+              width: double.infinity,
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'DIAMOND CITY RADIO',
+                      style: PipBoyTypography.body(settings.accent),
+                    ),
+                    const SizedBox(height: PipBoyConstants.spacingS),
+                    Text(
+                      'Version 1.0.0',
+                      style: PipBoyTypography.body(settings.accent),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

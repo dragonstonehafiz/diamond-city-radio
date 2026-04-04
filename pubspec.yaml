@@ -1,5 +1,5 @@
 name: diamondcityradio
-description: "A new Flutter project."
+description: "Diamond City Radio - A Fallout-inspired radio player with retro Pip-Boy interface."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -24,6 +24,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true
@@ -43,3 +44,13 @@ flutter:
     - family: VT323
       fonts:
         - asset: assets/fonts/VT323-Regular.ttf
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icons/dcr_icon_color.png"
+  web:
+    generate: true
+    image_path: "assets/images/icons/dcr_icon_color.png"
+    background_color: "#141614"
+    theme_color: "#6bff6b"

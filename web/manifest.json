@@ -1,11 +1,11 @@
 {
-    "name": "diamondcityradio",
-    "short_name": "diamondcityradio",
+    "name": "Diamond City Radio",
+    "short_name": "DCR",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#141614",
+    "theme_color": "#6bff6b",
+    "description": "Diamond City Radio - A Fallout-inspired radio player with retro Pip-Boy interface.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
