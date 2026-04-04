@@ -103,7 +103,7 @@
 - Duration pulled at runtime from audio file via `just_audio`
 
 **AppConfig** (`lib/models/app_config.dart`)
-- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/icon_white.png`)
+- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/dcr_icon.png`)
 - Factory: `fromJson()`
 
 ---

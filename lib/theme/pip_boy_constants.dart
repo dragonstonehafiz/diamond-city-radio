@@ -19,8 +19,8 @@ class PipBoyConstants {
   static const double statusBarHeight = 28.0;
 
   // Scanlines
-  static const double scanlineSpacing = 3.0; // px between dark bands
-  static const double scanlineThickness = 1.0;
+  static const double scanlineSpacing = 7.0; // px between dark bands
+  static const double scanlineThickness = 5.0;
 
   // Button
   static const double buttonHeight = 44.0;

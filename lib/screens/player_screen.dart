@@ -29,6 +29,7 @@ class PlayerScreen extends StatelessWidget {
     required double size,
   }) {
     if (currentItem?.clipType == RadioClipType.report) {
+      final settings = context.watch<PipBoySettingsNotifier>();
       final reports = context.read<ReportRepository>();
       final report = reports.getById(currentItem!.itemId);
       if (report?.image != null) {
@@ -40,6 +41,8 @@ class PlayerScreen extends StatelessWidget {
           child: Image.asset(
             'assets/${report!.image}',
             fit: BoxFit.contain,
+            color: settings.accent,
+            colorBlendMode: BlendMode.srcIn,
           ),
         );
       }

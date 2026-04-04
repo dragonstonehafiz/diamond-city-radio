@@ -99,7 +99,30 @@
     "id": "instituteDestroyed",
     "path": "instituteDestroyed.ogg",
     "title": "QUEST: The Nuclear Option",
-    "image": "TheNuclearOption.png"
+    "image": "images/reports/TheNuclearOption.png"
+  },
+  {
+    "id": "sponsorChoiceChops",
+    "path": "sponsorChoiceChops.ogg",
+    "title": "SPONSOR: Choice Chops",
+    "image": "images/reports/ConfidenceMan.png"
+  },
+  {
+    "id": "sponsorColonialTaphouse",
+    "path": "sponsorColonialTaphouse.ogg",
+    "title": "SPONSOR: Colonial Taphouse",
+    "image": "images/reports/ConfidenceMan.png"
+  },
+  {
+    "id": "sponsorChemicare",
+    "path": "sponsorChemicare.ogg",
+    "title": "SPONSOR: Chemicare",
+    "image": "images/reports/ConfidenceMan.png"
+  },
+  {
+    "id": "sponsorPowerNoodels",
+    "path": "sponsorPowerNoodles.ogg",
+    "title": "SPONSOR: Power Noodles",
+    "image": "images/reports/ConfidenceMan.png"
   }
-  
 ]
