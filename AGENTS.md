@@ -66,6 +66,13 @@
 - Icon wrapper: enforces monochrome tint from settings notifier
 - Constructor: `icon`, `size`, `dimmed`, `disabled` flags
 
+**PipBoyMarqueeText** (`lib/widgets/pip_boy_marquee_text.dart`)
+- Scrolling text widget for display of long titles/labels on a single line
+- Constructor: `text`, `style`, `height`
+- Auto-detects overflow: if text fits within available width, displays static text; if overflow, animates marquee scroll
+- Marquee settings: 40px/sec velocity, 2-second pause between loops, 64dp gap between repetitions, subtle fade at right edge
+- Enables long song titles and artist names to remain on one line while scrolling smoothly
+
 ---
 
 ## Screens

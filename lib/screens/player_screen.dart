@@ -9,6 +9,7 @@ import '../widgets/pip_boy_icon.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';
 import '../widgets/pip_boy_divider.dart';
+import '../widgets/pip_boy_marquee_text.dart';
 import '../audio/radio_player_service.dart';
 import '../data/report_repository.dart';
 import '../models/app_config.dart';
@@ -110,20 +111,20 @@ class PlayerScreen extends StatelessWidget {
             const SizedBox(height: PipBoyConstants.spacingL),
 
             // Track name
-            Text(
-              currentItem != null ? player.getTrackName(currentItem) : '—',
+            PipBoyMarqueeText(
+              text: currentItem != null ? player.getTrackName(currentItem) : '—',
               style: PipBoyTypography.heading(settings.accent),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+              height: 32.0,
             ),
             const SizedBox(height: PipBoyConstants.spacingS),
 
             // Artist
-            Text(
-              currentItem != null ? player.getArtist(currentItem) : '—',
+            PipBoyMarqueeText(
+              text: currentItem != null ? player.getArtist(currentItem) : '—',
               style: PipBoyTypography.subheading(
                 PipBoyColors.dimmed(settings.accent, factor: 0.7),
               ),
+              height: 24.0,
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
 
