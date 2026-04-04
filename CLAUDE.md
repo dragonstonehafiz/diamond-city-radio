@@ -7,8 +7,9 @@
 - Utility: `dimmed(Color, factor)` — lerps accent toward black for muted/disabled states
 
 **PipBoySettingsNotifier** (`lib/theme/pip_boy_settings_notifier.dart`)
-- ChangeNotifier managing all app settings (accent color, scanlines, hum, SFX volume)
-- Persists to SharedPreferences
+- ChangeNotifier managing all app settings: accent color, scanlines enabled, hum enabled, SFX volume (0.0–1.0, default 0.8), hum volume (0.0–1.0, default 0.5), main audio volume (0.0–1.0, default 1.0)
+- Persists to SharedPreferences with keys: `accent_color`, `scanlines_enabled`, `hum_enabled`, `sfx_volume`, `hum_volume`, `main_volume`
+- Methods: `setAccent()`, `setScanlinesEnabled()`, `setHumEnabled()`, `setSfxVolume()`, `setHumVolume()`, `setMainVolume()`
 - Accessed via `context.watch<PipBoySettingsNotifier>()`
 
 **PipBoyTypography** (`lib/theme/pip_boy_typography.dart`)
@@ -83,8 +84,14 @@
 
 **SettingsScreen** (`lib/screens/settings_screen.dart`)
 - DISPLAY COLOR: 6 color circle presets (tappable, plays SFX)
-- UI OPTIONS: SCANLINES toggle, AMBIENT HUM toggle, SFX VOLUME slider
-- ABOUT: static version/credits info
+- UI OPTIONS panel:
+  - SCANLINES toggle (on/off)
+  - AMBIENT HUM toggle (on/off)
+  - SFX VOLUME slider (0.0–1.0) — controls UI sound effects volume, plays mapRollover SFX on release
+  - HUM VOLUME slider (0.0–1.0) — controls ambient hum loop volume independently from SFX
+  - AUDIO VOLUME slider (0.0–1.0) — controls main radio playback (songs, reports, intros/outros)
+- All sliders apply changes in real time and persist to SharedPreferences via `PipBoySettingsNotifier` setter + audio player `setVolume()` call
+- ABOUT: version info only (no credentials)
 
 ---
 
@@ -157,10 +164,11 @@
 **SfxPlayer** (`lib/audio/sfx_player.dart`)
 - Singleton using `audioplayers` for UI sound effects (rotary clicks, etc.) and ambient hum loop
 - Enum: `PipBoySfx` (hum, mapRollover, rotaryHorizontal, rotaryVertical)
-- Methods: `init()` (pre-cache all SFX, configure audio context), `play(sfx)`, `playLoop()`, `stopLoop()`, `setVolume()`, `toggleHum()`
+- Fields: `_sfxVolume` (SFX only, default 0.8), `_humVolume` (hum loop only, default 0.5)
+- Methods: `init()` (pre-cache all SFX, configure audio context), `play(sfx)`, `playLoop()`, `stopLoop()`, `setVolume()` (SFX only), `setHumVolume()` (hum only), `getVolume()`, `getHumVolume()`, `toggleHum()`
 - **Critical**: Both `_player` (for SFX) and `_loopPlayer` (for hum) configured with `audioFocus: AndroidAudioFocus.none` to prevent audio focus conflicts with main radio audio
-- Main player: low-latency UI clicks
-- Loop player: separate instance for continuous ambient hum at 50% volume
+- `_player`: low-latency UI clicks at `_sfxVolume`
+- `_loopPlayer`: separate instance for continuous ambient hum at `_humVolume`
 
 **RadioPlayerService** (`lib/audio/radio_player_service.dart`)
 - Main audio player using `just_audio` (audio playback) + `audio_service` (notifications/background)
@@ -168,7 +176,7 @@
 - Enum: `RadioClipType` (intro, song, outro, report)
 - Class: `RadioQueueItem` — stores only `itemId` and `clipType`, display info resolved at playback time
 - Fields: `_sets` (3-set buffer: [current, next, after-next]), `_currentIndex`, `_audioHandler`
-- Methods: `init(audioHandler, ...)`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`
+- Methods: `init(audioHandler, ...)`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`, `setVolume(double)` (controls main audio playback volume via `just_audio`)
 - Getters: `sets`, `currentItem`, `currentIndex`, `isPlaying`, `duration`, `position`
 - Streams: `durationStream`, `positionStream` — duration updates reactively as file loads
 - Public methods for UI: `getTrackName(item)`, `getArtist(item)`, `seek(position)` for progress bar seeking
@@ -232,6 +240,10 @@
 - Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
 - Constructor: `audioHandler`, `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`, `buildNextSet`
 - Passes `audioHandler` to `RadioPlayerService.init()` in the provider
+- Uses `Consumer2<PipBoySettingsNotifier, RadioPlayerService>` to apply saved volumes on startup:
+  - `SfxPlayer().setVolume(settingsNotifier.sfxVolume)`
+  - `SfxPlayer().setHumVolume(settingsNotifier.humVolume)`
+  - `radioPlayerService.setVolume(settingsNotifier.mainVolume)`
 - Builds MaterialApp with dynamic theme from settings notifier
 
 **HomeScreen** (`lib/main.dart`)

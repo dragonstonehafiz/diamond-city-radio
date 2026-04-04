@@ -185,13 +185,6 @@ class SettingsScreen extends StatelessWidget {
                     'Version 1.0.0',
                     style: PipBoyTypography.body(settings.accent),
                   ),
-                  const SizedBox(height: PipBoyConstants.spacingL),
-                  Text(
-                    'All songs property of Bethesda Game Studios. For educational purposes only.',
-                    style: PipBoyTypography.caption(settings.accent),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
                 ],
               ),
             ),
