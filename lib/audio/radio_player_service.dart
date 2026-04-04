@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:audio_service/audio_service.dart';
 import '../data/asset_paths.dart';
 import '../data/song_repository.dart';
 import '../data/report_repository.dart';
+import 'audio_handler_impl.dart';
 
 enum RadioClipType { intro, song, outro, report }
 
@@ -36,7 +37,8 @@ class RadioQueueItem {
 }
 
 class RadioPlayerService extends ChangeNotifier {
-  final AudioPlayer _player = AudioPlayer();
+  late AudioHandlerImpl _audioHandler;
+  late AudioPlayer _player;
   late List<List<RadioQueueItem>> _sets;
   late SongRepository _songs;
   late ReportRepository _reports;
@@ -44,9 +46,7 @@ class RadioPlayerService extends ChangeNotifier {
   late StreamSubscription _playerStateSubscription;
   late Function() _buildNextSet;
 
-  RadioPlayerService() {
-    _setupPlayerStateListener();
-  }
+  RadioPlayerService();
 
   void _setupPlayerStateListener() {
     _playerStateSubscription = _player.playerStateStream.listen((state) {
@@ -58,16 +58,28 @@ class RadioPlayerService extends ChangeNotifier {
   }
 
   Future<void> init(
+    AudioHandlerImpl audioHandler,
     List<List<RadioQueueItem>> sets,
     SongRepository songs,
     ReportRepository reports,
     Function() buildNextSet,
   ) async {
+    _audioHandler = audioHandler;
+    _player = audioHandler.audioPlayer;
     _sets = sets;
     _songs = songs;
     _reports = reports;
     _buildNextSet = buildNextSet;
     _currentIndex = 0;
+
+    _setupPlayerStateListener();
+
+    // Wire up skip callbacks for the audio service
+    _audioHandler.setSkipCallbacks(
+      onSkipToNext: next,
+      onSkipToPrevious: prev,
+    );
+
     await _loadAndPlay(0, autoPlay: false);
   }
 
@@ -188,35 +200,37 @@ class RadioPlayerService extends ChangeNotifier {
     try {
       final trackName = _getTrackName(item);
       final artist = _getArtist(item);
+      final mediaItem = MediaItem(
+        id: item.itemId,
+        title: trackName,
+        artist: artist,
+      );
       await _player.setAudioSource(
         AudioSource.asset(
           assetPath,
-          tag: MediaItem(
-            id: item.itemId,
-            title: trackName,
-            artist: artist,
-          ),
+          tag: mediaItem,
         ),
       );
+      // Update audio service with the current media item
+      await _audioHandler.updateMediaItem(mediaItem);
       if (autoPlay) {
         await _player.play();
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('[RadioPlayerService] Error loading audio: $e');
-      }
+      print('[RadioPlayerService] Error loading audio: $e');
+      rethrow;
     }
 
     notifyListeners();
   }
 
   Future<void> play() async {
-    await _player.play();
+    await _audioHandler.play();
     notifyListeners();
   }
 
   Future<void> pause() async {
-    await _player.pause();
+    await _audioHandler.pause();
     notifyListeners();
   }
 
@@ -258,7 +272,7 @@ class RadioPlayerService extends ChangeNotifier {
   @override
   void dispose() {
     _playerStateSubscription.cancel();
-    _player.dispose();
+    // Don't dispose the player or handler - they're managed by AudioService
     super.dispose();
   }
 }

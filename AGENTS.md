@@ -128,20 +128,47 @@
 
 ---
 
+## Android Setup
+
+**MainActivity** (`android/app/src/main/kotlin/.../MainActivity.kt`)
+- CRITICAL: Must extend `AudioServiceFragmentActivity` (not `FlutterFragmentActivity`)
+- `audio_service` plugin validates `instanceof AudioServiceFragmentActivity` during init—using wrong base class causes platform exception
+
+**AndroidManifest.xml** (`android/app/src/main/AndroidManifest.xml`)
+- Service: `com.ryanheise.audioservice.AudioService` with `android:foregroundServiceType="mediaPlayback"`
+- Intent filter: `android.media.browse.MediaBrowserService`
+- Permissions: `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`
+- Activity: `MainActivity` with `android:launchMode="singleTop"`, `android:taskAffinity=""`
+
+---
+
 ## Audio Layer
 
+**AudioHandlerImpl** (`lib/audio/audio_handler_impl.dart`)
+- Extends `BaseAudioHandler` from `audio_service` package
+- Owns the single `AudioPlayer` instance used by `RadioPlayerService`
+- Manages Android media notifications, lock screen controls, and background playback
+- Methods: `play()`, `pause()`, `stop()`, `seek()`, `skipToNext()`, `skipToPrevious()`
+- Exposes player via `audioPlayer` getter
+- Callbacks: `setSkipCallbacks()` for next/prev integration with `RadioPlayerService`
+- Updates `mediaItem` stream when track changes (id, title, artist)
+- Syncs `playbackState` from player events (position, duration, processing state)
+
 **SfxPlayer** (`lib/audio/sfx_player.dart`)
-- Singleton using `audioplayers` for UI sound effects
+- Singleton using `audioplayers` for UI sound effects (rotary clicks, etc.) and ambient hum loop
 - Enum: `PipBoySfx` (hum, mapRollover, rotaryHorizontal, rotaryVertical)
-- Methods: `init()` (pre-cache), `play(sfx)`, `playLoop()`, `stopLoop()`, `setVolume()`, `toggleHum()`
-- Separate player for ambient hum loop
+- Methods: `init()` (pre-cache all SFX, configure audio context), `play(sfx)`, `playLoop()`, `stopLoop()`, `setVolume()`, `toggleHum()`
+- **Critical**: Both `_player` (for SFX) and `_loopPlayer` (for hum) configured with `audioFocus: AndroidAudioFocus.none` to prevent audio focus conflicts with main radio audio
+- Main player: low-latency UI clicks
+- Loop player: separate instance for continuous ambient hum at 50% volume
 
 **RadioPlayerService** (`lib/audio/radio_player_service.dart`)
-- Main audio player using `just_audio` + `just_audio_background`
+- Main audio player using `just_audio` (audio playback) + `audio_service` (notifications/background)
+- Owns reference to `AudioHandlerImpl` for playback control
 - Enum: `RadioClipType` (intro, song, outro, report)
 - Class: `RadioQueueItem` — stores only `itemId` and `clipType`, display info resolved at playback time
-- Fields: `_sets` (3-set buffer: [current, next, after-next]), `_currentIndex`
-- Methods: `init()`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`
+- Fields: `_sets` (3-set buffer: [current, next, after-next]), `_currentIndex`, `_audioHandler`
+- Methods: `init(audioHandler, ...)`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`
 - Getters: `sets`, `currentItem`, `currentIndex`, `isPlaying`, `duration`, `position`
 - Streams: `durationStream`, `positionStream` — duration updates reactively as file loads
 - Public methods for UI: `getTrackName(item)`, `getArtist(item)`, `seek(position)` for progress bar seeking
@@ -151,6 +178,7 @@
   - Intros/outros: randomly selects from available list after validating each exists via `_assetExists()`; auto-skips to next track if none valid
   - Reports: returns `path` from ReportModel
 - Audio files are loaded via `AudioSource.asset()` which expects full asset paths
+- **Audio Service Integration**: After loading each track, calls `_audioHandler.updateMediaItem()` to sync Android notifications
 
 ---
 
@@ -193,16 +221,21 @@
 ## Main
 
 **main()** (`lib/main.dart`)
-- Initializes JustAudioBackground, SfxPlayer, then loads AppConfig and songs/reports in parallel via `Future.wait()`
-- AppConfig loaded via `_loadConfig()` helper; songs/reports loaded via `SongLoader`
-- Initializes SongBank and ReportBank, builds initial 3 sets, then runs app
+- Initialization order (critical):
+  1. `AudioService.init()` with `AudioHandlerImpl` builder — must be before `runApp()` so background playback is ready
+  2. `SfxPlayer().init()` — pre-caches UI sounds and configures audio context
+  3. `Future.wait()` loads AppConfig and songs/reports in parallel via `_loadConfig()` and `SongLoader`
+  4. Initialize SongBank and ReportBank, build initial 3 sets
+  5. Run app with `audioHandler` passed to `DiamondCityRadioApp`
 
 **DiamondCityRadioApp** (`lib/main.dart`)
 - Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
+- Constructor: `audioHandler`, `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`, `buildNextSet`
+- Passes `audioHandler` to `RadioPlayerService.init()` in the provider
 - Builds MaterialApp with dynamic theme from settings notifier
-- Constructor: `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`, `buildNextSet` callback
 
 **HomeScreen** (`lib/main.dart`)
 - Main layout: `PipBoyTabBar` (top) + `IndexedStack` (three tabs) + `PipBoyStatusBar` (bottom)
 - All wrapped in `PipBoyScanlineOverlay`
 - UI constrained to 360dp max width (phone aspect ratio)
+- `initState()` starts ambient hum loop if enabled via `SfxPlayer().playLoop()`

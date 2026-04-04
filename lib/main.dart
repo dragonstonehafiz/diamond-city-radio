@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:audio_service/audio_service.dart';
+import 'audio/audio_handler_impl.dart';
 import 'theme/pip_boy_settings_notifier.dart';
 import 'theme/pip_boy_theme.dart';
 import 'theme/pip_boy_colors.dart';
@@ -27,12 +28,15 @@ import 'screens/settings_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize background audio (must be before any audio operations)
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.diamondcityradio.channel.audio',
-    androidNotificationChannelName: 'Diamond City Radio',
-    androidNotificationOngoing: true,
-    androidStopForegroundOnPause: true,
+  // Initialize audio service for background playback and media notifications
+  final audioHandler = await AudioService.init(
+    builder: () => AudioHandlerImpl(),
+    config: const AudioServiceConfig(
+      androidNotificationChannelId: 'com.diamondcityradio.channel.audio',
+      androidNotificationChannelName: 'Diamond City Radio',
+      androidNotificationOngoing: true,
+      androidStopForegroundOnPause: true,
+    ),
   );
 
   // Initialize SFX player before running the app
@@ -64,6 +68,7 @@ void main() async {
 
   runApp(
     DiamondCityRadioApp(
+      audioHandler: audioHandler,
       initialSets: [set1, set2, set3],
       songRepo: songRepo,
       reportRepo: reportRepo,
@@ -76,6 +81,7 @@ void main() async {
 }
 
 class DiamondCityRadioApp extends StatelessWidget {
+  final AudioHandlerImpl audioHandler;
   final List<List<RadioQueueItem>> initialSets;
   final SongRepository songRepo;
   final ReportRepository reportRepo;
@@ -85,6 +91,7 @@ class DiamondCityRadioApp extends StatelessWidget {
   final List<RadioQueueItem> Function() buildNextSet;
 
   const DiamondCityRadioApp({
+    required this.audioHandler,
     required this.initialSets,
     required this.songRepo,
     required this.reportRepo,
@@ -104,7 +111,7 @@ class DiamondCityRadioApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PipBoySettingsNotifier()..load()),
         ChangeNotifierProvider(
           create: (_) => RadioPlayerService()
-            ..init(initialSets, songRepo, reportRepo, buildNextSet),
+            ..init(audioHandler, initialSets, songRepo, reportRepo, buildNextSet),
         ),
       ],
       child: Consumer<PipBoySettingsNotifier>(

@@ -35,6 +35,14 @@ class SfxPlayer {
   /// Call this once during app startup before runApp().
   Future<void> init() async {
     try {
+      // Don't request audio focus so SFX doesn't interfere with main audio
+      await _player.setAudioContext(
+        AudioContext(
+          android: const AudioContextAndroid(
+            audioFocus: AndroidAudioFocus.none,
+          ),
+        ),
+      );
       await _player.setSourceAsset(AppAudioPaths.sfxHum);
       await _player.setSourceAsset(AppAudioPaths.sfxMapRollover);
       await _player.setSourceAsset(AppAudioPaths.sfxRotaryHorizontal);
@@ -60,8 +68,16 @@ class SfxPlayer {
   Future<void> playLoop() async {
     try {
       _loopPlayer ??= AudioPlayer();
+      // Don't request audio focus so hum doesn't interfere with main audio
+      await _loopPlayer!.setAudioContext(
+        AudioContext(
+          android: const AudioContextAndroid(
+            audioFocus: AndroidAudioFocus.none,
+          ),
+        ),
+      );
       await _loopPlayer!.setReleaseMode(ReleaseMode.loop);
-      await _loopPlayer!.setVolume(_sfxVolume * 0.5); // hum is quieter
+      await _loopPlayer!.setVolume(_sfxVolume); // hum is quieter
       await _loopPlayer!.play(AssetSource(AppAudioPaths.sfxHum));
       _humPlaying = true;
     } catch (e) {
@@ -100,7 +116,7 @@ class SfxPlayer {
     try {
       await _player.setVolume(_sfxVolume);
       if (_loopPlayer != null) {
-        await _loopPlayer!.setVolume(_sfxVolume * 0.5);
+        await _loopPlayer!.setVolume(_sfxVolume);
       }
     } catch (e) {
       debugPrint('Error setting SFX volume: $e');

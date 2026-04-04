@@ -16,7 +16,7 @@ dependencies:
   shared_preferences: ^2.3.2
   google_fonts: ^6.2.1
   just_audio: ^0.9.40
-  just_audio_background: ^0.0.1-beta.12
+  audio_service: ^0.18.0
   audioplayers: ^6.1.0
 
 dev_dependencies:
