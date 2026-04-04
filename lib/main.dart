@@ -162,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
           constraints: const BoxConstraints(maxWidth: 360),
           child: Column(
             children: [
+              SizedBox(height: MediaQuery.of(context).padding.top),
               // Top navigation tabs
               PipBoyTabBar(
                 labels: _tabLabels,

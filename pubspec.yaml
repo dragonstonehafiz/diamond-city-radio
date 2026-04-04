@@ -38,3 +38,8 @@ flutter:
     - assets/audio/reports/
     - assets/images/reports/
     - assets/images/icons/
+
+  fonts:
+    - family: VT323
+      fonts:
+        - asset: assets/fonts/VT323-Regular.ttf
