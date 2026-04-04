@@ -269,6 +269,11 @@ class RadioPlayerService extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Set the volume for main audio playback (0.0 to 1.0).
+  Future<void> setVolume(double volume) async {
+    await _player.setVolume(volume.clamp(0.0, 1.0));
+  }
+
   @override
   void dispose() {
     _playerStateSubscription.cancel();

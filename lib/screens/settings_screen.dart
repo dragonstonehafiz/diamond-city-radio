@@ -4,6 +4,7 @@ import '../theme/pip_boy_settings_notifier.dart';
 import '../theme/pip_boy_constants.dart';
 import '../theme/pip_boy_typography.dart';
 import '../audio/sfx_player.dart';
+import '../audio/radio_player_service.dart';
 import '../widgets/pip_boy_button.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';
@@ -121,6 +122,44 @@ class SettingsScreen extends StatelessWidget {
                     onSeek: (newValue) {
                       settings.setSfxVolume(newValue);
                       SfxPlayer().setVolume(newValue);
+                    },
+                    onSeekEnd: () {
+                      SfxPlayer().play(PipBoySfx.mapRollover);
+                    },
+                  ),
+                  const SizedBox(height: PipBoyConstants.spacingM),
+
+                  // Hum volume
+                  Text(
+                    'HUM VOLUME',
+                    style: PipBoyTypography.body(settings.accent),
+                  ),
+                  const SizedBox(height: PipBoyConstants.spacingS),
+                  PipBoyProgressBar(
+                    value: settings.humVolume,
+                    interactive: true,
+                    onSeek: (newValue) {
+                      settings.setHumVolume(newValue);
+                      SfxPlayer().setHumVolume(newValue);
+                    },
+                    onSeekEnd: () {
+                      SfxPlayer().play(PipBoySfx.mapRollover);
+                    },
+                  ),
+                  const SizedBox(height: PipBoyConstants.spacingM),
+
+                  // Main audio volume
+                  Text(
+                    'AUDIO VOLUME',
+                    style: PipBoyTypography.body(settings.accent),
+                  ),
+                  const SizedBox(height: PipBoyConstants.spacingS),
+                  PipBoyProgressBar(
+                    value: settings.mainVolume,
+                    interactive: true,
+                    onSeek: (newValue) {
+                      settings.setMainVolume(newValue);
+                      context.read<RadioPlayerService>().setVolume(newValue);
                     },
                     onSeekEnd: () {
                       SfxPlayer().play(PipBoySfx.mapRollover);

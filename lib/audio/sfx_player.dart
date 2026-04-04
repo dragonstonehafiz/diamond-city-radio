@@ -19,6 +19,7 @@ class SfxPlayer {
   AudioPlayer? _loopPlayer; // separate player for ambient hum loop
 
   double _sfxVolume = 0.8;
+  double _humVolume = 0.5;
   bool _humPlaying = false;
 
   /// Map enum values to asset paths
@@ -77,7 +78,7 @@ class SfxPlayer {
         ),
       );
       await _loopPlayer!.setReleaseMode(ReleaseMode.loop);
-      await _loopPlayer!.setVolume(_sfxVolume); // hum is quieter
+      await _loopPlayer!.setVolume(_humVolume);
       await _loopPlayer!.play(AssetSource(AppAudioPaths.sfxHum));
       _humPlaying = true;
     } catch (e) {
@@ -109,21 +110,31 @@ class SfxPlayer {
     }
   }
 
-  /// Set the volume for all SFX (0.0 to 1.0).
-  /// The loop runs at 50% of this volume.
+  /// Set the volume for SFX (0.0 to 1.0).
   Future<void> setVolume(double volume) async {
     _sfxVolume = volume.clamp(0.0, 1.0);
     try {
       await _player.setVolume(_sfxVolume);
-      if (_loopPlayer != null) {
-        await _loopPlayer!.setVolume(_sfxVolume);
-      }
     } catch (e) {
       debugPrint('Error setting SFX volume: $e');
     }
   }
 
+  /// Set the volume for the hum loop (0.0 to 1.0).
+  Future<void> setHumVolume(double volume) async {
+    _humVolume = volume.clamp(0.0, 1.0);
+    try {
+      if (_loopPlayer != null) {
+        await _loopPlayer!.setVolume(_humVolume);
+      }
+    } catch (e) {
+      debugPrint('Error setting hum volume: $e');
+    }
+  }
+
   double getVolume() => _sfxVolume;
+
+  double getHumVolume() => _humVolume;
 
   /// Cleanup on app shutdown.
   Future<void> dispose() async {

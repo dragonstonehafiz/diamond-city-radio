@@ -6,11 +6,15 @@ class PipBoySettingsNotifier extends ChangeNotifier {
   static const String _prefKeyScanlinesEnabled = 'scanlines_enabled';
   static const String _prefKeySfxVolume = 'sfx_volume';
   static const String _prefKeyHumEnabled = 'hum_enabled';
+  static const String _prefKeyHumVolume = 'hum_volume';
+  static const String _prefKeyMainVolume = 'main_volume';
 
   Color _accent = const Color(0xFF59FF47); // CRT phosphor green
   bool _scanlinesEnabled = true;
   double _sfxVolume = 0.8;
   bool _humEnabled = true;
+  double _humVolume = 0.5;
+  double _mainVolume = 1.0;
 
   Color get accent => _accent;
   Color get dim => Color.lerp(Colors.black, _accent, 0.35)!;
@@ -20,6 +24,8 @@ class PipBoySettingsNotifier extends ChangeNotifier {
   bool get scanlinesEnabled => _scanlinesEnabled;
   double get sfxVolume => _sfxVolume;
   bool get humEnabled => _humEnabled;
+  double get humVolume => _humVolume;
+  double get mainVolume => _mainVolume;
 
   // Preset palette — the 6 canonical Pip-Boy display colors
   static const List<Color> presets = [
@@ -42,6 +48,8 @@ class PipBoySettingsNotifier extends ChangeNotifier {
       _scanlinesEnabled = prefs.getBool(_prefKeyScanlinesEnabled) ?? true;
       _sfxVolume = prefs.getDouble(_prefKeySfxVolume) ?? 0.8;
       _humEnabled = prefs.getBool(_prefKeyHumEnabled) ?? true;
+      _humVolume = prefs.getDouble(_prefKeyHumVolume) ?? 0.5;
+      _mainVolume = prefs.getDouble(_prefKeyMainVolume) ?? 1.0;
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading settings: $e');
@@ -97,6 +105,32 @@ class PipBoySettingsNotifier extends ChangeNotifier {
       await prefs.setBool(_prefKeyHumEnabled, enabled);
     } catch (e) {
       debugPrint('Error saving hum setting: $e');
+    }
+  }
+
+  /// Set hum volume and persist to SharedPreferences.
+  Future<void> setHumVolume(double volume) async {
+    _humVolume = volume.clamp(0.0, 1.0);
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefKeyHumVolume, _humVolume);
+    } catch (e) {
+      debugPrint('Error saving hum volume: $e');
+    }
+  }
+
+  /// Set main audio volume and persist to SharedPreferences.
+  Future<void> setMainVolume(double volume) async {
+    _mainVolume = volume.clamp(0.0, 1.0);
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefKeyMainVolume, _mainVolume);
+    } catch (e) {
+      debugPrint('Error saving main volume: $e');
     }
   }
 }

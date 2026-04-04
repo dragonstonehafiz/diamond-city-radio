@@ -114,8 +114,15 @@ class DiamondCityRadioApp extends StatelessWidget {
             ..init(audioHandler, initialSets, songRepo, reportRepo, buildNextSet),
         ),
       ],
-      child: Consumer<PipBoySettingsNotifier>(
-        builder: (context, settingsNotifier, _) {
+      child: Consumer2<PipBoySettingsNotifier, RadioPlayerService>(
+        builder: (context, settingsNotifier, radioPlayerService, _) {
+          // Apply saved volumes on startup
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            SfxPlayer().setVolume(settingsNotifier.sfxVolume);
+            SfxPlayer().setHumVolume(settingsNotifier.humVolume);
+            radioPlayerService.setVolume(settingsNotifier.mainVolume);
+          });
+
           return MaterialApp(
             title: 'Diamond City Radio',
             theme: buildPipBoyTheme(settingsNotifier.accent),
