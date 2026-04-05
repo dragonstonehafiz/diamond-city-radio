@@ -92,8 +92,8 @@
 
 **SettingsScreen** (`lib/screens/settings_screen.dart`)
 - DISPLAY COLOR: 6 color circle presets (tappable, plays SFX)
-- UI OPTIONS panel:
-  - SCANLINES toggle (on/off)
+- VISUAL panel: SCANLINES toggle (on/off)
+- AUDIO panel:
   - AMBIENT HUM toggle (on/off)
   - SFX VOLUME slider (0.0–1.0) — controls UI sound effects volume, plays mapRollover SFX on release
   - HUM VOLUME slider (0.0–1.0) — controls ambient hum loop volume independently from SFX

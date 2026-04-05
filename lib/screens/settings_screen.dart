@@ -46,38 +46,41 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(height: PipBoyConstants.spacingL),
 
-            // UI options panel
+            // Visual panel
             PipBoyPanel(
-              title: 'UI OPTIONS',
+              title: 'VISUAL',
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: PipBoyConstants.spacingS,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'SCANLINES',
+                        style: PipBoyTypography.body(settings.accent),
+                      ),
+                    ),
+                    PipBoyButton(
+                      label: settings.scanlinesEnabled ? 'ON' : 'OFF',
+                      isActive: settings.scanlinesEnabled,
+                      variant: PipBoyButtonVariant.outlined,
+                      width: 60,
+                      onPressed: () {
+                        settings.setScanlinesEnabled(!settings.scanlinesEnabled);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: PipBoyConstants.spacingL),
+
+            // Audio panel
+            PipBoyPanel(
+              title: 'AUDIO',
               child: Column(
                 children: [
-                  // Scanlines toggle
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: PipBoyConstants.spacingS,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'SCANLINES',
-                            style: PipBoyTypography.body(settings.accent),
-                          ),
-                        ),
-                        PipBoyButton(
-                          label: settings.scanlinesEnabled ? 'ON' : 'OFF',
-                          isActive: settings.scanlinesEnabled,
-                          variant: PipBoyButtonVariant.outlined,
-                          width: 60,
-                          onPressed: () {
-                            settings.setScanlinesEnabled(!settings.scanlinesEnabled);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingM),
-
                   // Ambient hum toggle
                   Padding(
                     padding: const EdgeInsets.symmetric(
