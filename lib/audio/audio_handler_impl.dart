@@ -26,8 +26,9 @@ class AudioHandlerImpl extends BaseAudioHandler {
     _onSkipToPrevious = onSkipToPrevious;
   }
 
-  Future<void> updateMediaItem(MediaItem item) async {
-    mediaItem.add(item);
+  @override
+  Future<void> updateMediaItem(MediaItem mediaItem) async {
+    this.mediaItem.add(mediaItem);
   }
 
   void _updatePlaybackState(PlaybackEvent event) {

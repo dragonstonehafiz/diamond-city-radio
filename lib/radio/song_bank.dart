@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/song_model.dart';
 import '../models/app_config.dart';
@@ -61,8 +62,9 @@ class SongBank {
       if (_unplayedSongs.isEmpty) break;
       SongModel song = _unplayedSongs[i];
 
-      if (!song.hasIntros) ++i;
-      else {
+      if (!song.hasIntros) {
+        ++i;
+      } else {
         drawn.add(song);
         _unplayedSongs.removeAt(i);
         _playedSongs.add(song);
@@ -83,13 +85,13 @@ class SongBank {
       if (_unplayedSongs.isEmpty) break;
       SongModel song = _unplayedSongs[i];
 
-      if (!song.hasOutros) ++i;
-      else {
+      if (!song.hasOutros) {
+        ++i;
+      } else {
         drawn.add(song);
         _unplayedSongs.removeAt(i);
         _playedSongs.add(song);
       }
-
     }
 
     _refill();
@@ -115,7 +117,7 @@ class SongBank {
       await _prefs.setStringList(_bankKey, bankIds);
       await _prefs.setStringList(_playedKey, playedIds);
     } catch (e) {
-      print('[SongBank] Error persisting state: $e');
+      debugPrint('[SongBank] Error persisting state: $e');
     }
   }
 

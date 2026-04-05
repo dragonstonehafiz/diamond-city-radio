@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/report_model.dart';
 import '../models/app_config.dart';
@@ -67,7 +68,7 @@ class ReportBank {
       await _prefs.setStringList(_bankKey, bankIds);
       await _prefs.setStringList(_playedKey, playedIds);
     } catch (e) {
-      print('[ReportBank] Error persisting state: $e');
+      debugPrint('[ReportBank] Error persisting state: $e');
     }
   }
 

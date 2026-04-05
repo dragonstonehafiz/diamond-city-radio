@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../data/asset_paths.dart';
 
@@ -50,7 +51,7 @@ class SfxPlayer {
       await _player.setSourceAsset(AppAudioPaths.sfxRotaryVertical);
       await _player.setVolume(_sfxVolume);
     } catch (e) {
-      debugPrint('Error initializing SFX player: $e');
+      debugPrint('[SfxPlayer] Error initializing SFX player: $e');
     }
   }
 
@@ -60,7 +61,7 @@ class SfxPlayer {
       final assetPath = _getAssetPath(sfx);
       await _player.play(AssetSource(assetPath));
     } catch (e) {
-      debugPrint('Error playing SFX: $e');
+      debugPrint('[SfxPlayer] Error playing SFX: $e');
     }
   }
 
@@ -82,7 +83,7 @@ class SfxPlayer {
       await _loopPlayer!.play(AssetSource(AppAudioPaths.sfxHum));
       _humPlaying = true;
     } catch (e) {
-      debugPrint('Error starting hum loop: $e');
+      debugPrint('[SfxPlayer] Error starting hum loop: $e');
     }
   }
 
@@ -94,7 +95,7 @@ class SfxPlayer {
       }
       _humPlaying = false;
     } catch (e) {
-      debugPrint('Error stopping hum loop: $e');
+      debugPrint('[SfxPlayer] Error stopping hum loop: $e');
     }
   }
 
@@ -116,7 +117,7 @@ class SfxPlayer {
     try {
       await _player.setVolume(_sfxVolume);
     } catch (e) {
-      debugPrint('Error setting SFX volume: $e');
+      debugPrint('[SfxPlayer] Error setting SFX volume: $e');
     }
   }
 
@@ -128,7 +129,7 @@ class SfxPlayer {
         await _loopPlayer!.setVolume(_humVolume);
       }
     } catch (e) {
-      debugPrint('Error setting hum volume: $e');
+      debugPrint('[SfxPlayer] Error setting hum volume: $e');
     }
   }
 
@@ -144,10 +145,7 @@ class SfxPlayer {
         await _loopPlayer!.dispose();
       }
     } catch (e) {
-      debugPrint('Error disposing SFX player: $e');
+      debugPrint('[SfxPlayer] Error disposing SFX player: $e');
     }
   }
 }
-
-// ignore: avoid_print
-void debugPrint(String message) => print('[SfxPlayer] $message');

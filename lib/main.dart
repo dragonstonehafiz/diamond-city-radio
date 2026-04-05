@@ -15,7 +15,6 @@ import 'data/song_repository.dart';
 import 'data/report_repository.dart';
 import 'data/asset_paths.dart';
 import 'models/app_config.dart';
-import 'radio/song_loader.dart' show LoadedData;
 import 'widgets/pip_boy_tab_bar.dart';
 import 'dart:convert';
 import 'widgets/pip_boy_scanline_overlay.dart';
@@ -210,7 +209,7 @@ Future<AppConfig> _loadConfig() async {
     final json = jsonDecode(jsonStr) as Map<String, dynamic>;
     return AppConfig.fromJson(json);
   } catch (e) {
-    print('[main] Error loading config: $e');
+    debugPrint('[main] Error loading config: $e');
     return AppConfig.fromJson({});
   }
 }

@@ -13,6 +13,7 @@ class PipBoyItemIcon extends StatelessWidget {
   final bool dimmed;
 
   const PipBoyItemIcon({
+    super.key,
     required this.item,
     required this.size,
     this.dimmed = false,

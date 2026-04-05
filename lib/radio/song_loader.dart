@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../data/asset_paths.dart';
 import '../models/song_model.dart';
@@ -33,7 +34,7 @@ class SongLoader {
       final list = jsonDecode(jsonStr) as List<dynamic>;
       return list.map((item) => ReportModel.fromJson(item as Map<String, dynamic>)).toList();
     } catch (e) {
-      print('[SongLoader] Error loading reports: $e');
+      debugPrint('[SongLoader] Error loading reports: $e');
       return [];
     }
   }
@@ -49,7 +50,7 @@ class SongLoader {
       final songs = await Future.wait(keys.map(_loadSong));
       return songs.whereType<SongModel>().toList();
     } catch (e) {
-      print('[SongLoader] Error loading songs: $e');
+      debugPrint('[SongLoader] Error loading songs: $e');
       return [];
     }
   }
@@ -60,7 +61,7 @@ class SongLoader {
       final json = jsonDecode(jsonStr) as Map<String, dynamic>;
       return SongModel.fromJson(json);
     } catch (e) {
-      print('[SongLoader] Error loading song at $assetKey: $e');
+      debugPrint('[SongLoader] Error loading song at $assetKey: $e');
       return null;
     }
   }

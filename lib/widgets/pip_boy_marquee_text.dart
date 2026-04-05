@@ -7,6 +7,7 @@ class PipBoyMarqueeText extends StatelessWidget {
   final double height;
 
   const PipBoyMarqueeText({
+    super.key,
     required this.text,
     required this.style,
     required this.height,

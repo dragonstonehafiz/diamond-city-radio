@@ -225,7 +225,7 @@ class RadioPlayerService extends ChangeNotifier {
         await _player.play();
       }
     } catch (e) {
-      print('[RadioPlayerService] Error loading audio: $e');
+      debugPrint('[RadioPlayerService] Error loading audio: $e');
       rethrow;
     }
 
