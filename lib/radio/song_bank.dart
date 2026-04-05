@@ -8,7 +8,7 @@ class SongBank {
   static const String _bankKey = 'song_bank_ids';
   static const String _playedKey = 'song_played_ids';
 
-  List<SongModel> _songBank = [];
+  List<SongModel> _unplayedSongs = [];
   List<SongModel> _playedSongs = [];
   late AppConfig _config;
   late SongRepository _songs;
@@ -25,44 +25,92 @@ class SongBank {
 
     if (savedBankIds != null && savedBankIds.isNotEmpty) {
       // Restore from saved state
-      _songBank = _restoreFromIds(savedBankIds);
-      _playedSongs = _restoreFromIds(savedPlayedIds ?? []);
+      _unplayedSongs = _loadFromState(savedBankIds);
+      _playedSongs = _loadFromState(savedPlayedIds ?? []);
     } else {
       // First launch: initialize fresh
-      _songBank = List.from(_songs.getAllSongs())..shuffle(Random());
+      _unplayedSongs = List.from(_songs.getAllSongs())..shuffle(Random());
       _playedSongs = [];
-      await _persist();
+      await _saveToState();
     }
   }
 
-  SongModel draw() {
-    assert(_songBank.isNotEmpty, 'SongBank.draw() called with empty bank');
-    final song = _songBank.removeAt(0);
-    _playedSongs.add(song);
-    _checkRefill();
-    _persist(); // fire-and-forget
-    return song;
+    List<SongModel> draw(int drawCount) {
+    assert(_unplayedSongs.isNotEmpty, 'SongBank.draw() called with empty bank');
+    _unplayedSongs.shuffle(Random());
+    List<SongModel> drawn = [];
+
+    while (drawn.length < drawCount) {
+      if (_unplayedSongs.isEmpty) break;
+      final song = _unplayedSongs.removeAt(0);
+      _playedSongs.add(song);
+      drawn.add(song);
+    }
+    _refill();
+    _saveToState(); // fire-and-forget
+    return drawn;
   }
 
-  void _checkRefill() {
-    if (_songBank.length < _config.refillThreshold) {
-      _refill();
+  List<SongModel> drawWithIntro(int drawCount) {
+    assert(_unplayedSongs.isNotEmpty, 'SongBank.drawWithIntro() called with empty bank');
+    _unplayedSongs.shuffle(Random());
+    List<SongModel> drawn = [];
+
+    int i = 0;
+    while (drawn.length < drawCount && i < _unplayedSongs.length) {
+      if (_unplayedSongs.isEmpty) break;
+      SongModel song = _unplayedSongs[i];
+
+      if (!song.hasIntros) ++i;
+      else {
+        drawn.add(song);
+        _unplayedSongs.removeAt(i);
+        _playedSongs.add(song);
+      }
     }
+    _refill();
+    _saveToState(); // fire-and-forget
+    return drawn;
+  }
+
+  List<SongModel> drawWithOutro(int drawCount) {
+    assert(_unplayedSongs.isNotEmpty, 'SongBank.drawWithIntro() called with empty bank');
+    _unplayedSongs.shuffle(Random());
+    List<SongModel> drawn = [];
+
+    int i = 0;
+    while (drawn.length < drawCount && i < _unplayedSongs.length) {
+      if (_unplayedSongs.isEmpty) break;
+      SongModel song = _unplayedSongs[i];
+
+      if (!song.hasOutros) ++i;
+      else {
+        drawn.add(song);
+        _unplayedSongs.removeAt(i);
+        _playedSongs.add(song);
+      }
+
+    }
+
+    _refill();
+    _saveToState(); // fire-and-forget
+    return drawn;
   }
 
   void _refill() {
+    if (_unplayedSongs.length > _config.refillThreshold) return;
     if (_playedSongs.isEmpty) return;
 
     final count = min(_config.refillCount, _playedSongs.length);
     final toMove = _playedSongs.sublist(0, count);
     _playedSongs = _playedSongs.sublist(count);
-    _songBank.addAll(toMove);
-    _songBank.shuffle(Random());
+    _unplayedSongs.addAll(toMove);
+    _unplayedSongs.shuffle(Random());
   }
 
-  Future<void> _persist() async {
+  Future<void> _saveToState() async {
     try {
-      final bankIds = _songBank.map((s) => s.id).toList();
+      final bankIds = _unplayedSongs.map((s) => s.id).toList();
       final playedIds = _playedSongs.map((s) => s.id).toList();
       await _prefs.setStringList(_bankKey, bankIds);
       await _prefs.setStringList(_playedKey, playedIds);
@@ -71,7 +119,7 @@ class SongBank {
     }
   }
 
-  List<SongModel> _restoreFromIds(List<String> ids) {
+  List<SongModel> _loadFromState(List<String> ids) {
     final result = <SongModel>[];
     for (final id in ids) {
       final song = _songs.getById(id);
@@ -82,5 +130,5 @@ class SongBank {
     return result;
   }
 
-  int get bankLength => _songBank.length;
+  int get bankLength => _unplayedSongs.length;
 }

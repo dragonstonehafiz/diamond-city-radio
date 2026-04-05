@@ -6,32 +6,33 @@ import '../theme/pip_boy_colors.dart';
 import '../theme/pip_boy_typography.dart';
 import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_divider.dart';
+import '../widgets/pip_boy_item_icon.dart';
 import '../audio/radio_player_service.dart';
 
 class QueueScreen extends StatelessWidget {
   const QueueScreen({super.key});
 
-  Widget _buildSetPanel({
-    required String title,
-    required List<RadioQueueItem> items,
-    required Color accentColor,
-    required RadioPlayerService playerService,
-    int activeIndex = -1,
-  }) {
-    return Column(
-      children: [
-        PipBoyPanel(
-          title: title,
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<PipBoySettingsNotifier>();
+    final player = context.watch<RadioPlayerService>();
+
+    final allItems = player.queue;
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(PipBoyConstants.spacingM),
+        child: PipBoyPanel(
           child: Column(
             children: [
-              for (int i = 0; i < items.length; i++) ...[
+              for (int i = 0; i < allItems.length; i++) ...[
                 _QueueItem(
-                  item: items[i],
-                  isActive: i == activeIndex,
-                  accentColor: accentColor,
-                  playerService: playerService,
+                  item: allItems[i],
+                  isActive: i == player.currentIndex,
+                  accentColor: settings.accent,
+                  playerService: player,
                 ),
-                if (i < items.length - 1)
+                if (i < allItems.length - 1)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: PipBoyConstants.spacingS,
@@ -43,42 +44,6 @@ class QueueScreen extends StatelessWidget {
               ],
             ],
           ),
-        ),
-        const SizedBox(height: PipBoyConstants.spacingL),
-      ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final settings = context.watch<PipBoySettingsNotifier>();
-    final player = context.watch<RadioPlayerService>();
-
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(PipBoyConstants.spacingM),
-        child: Column(
-          children: [
-            _buildSetPanel(
-              title: 'CURRENT SET',
-              items: player.sets[0],
-              accentColor: settings.accent,
-              playerService: player,
-              activeIndex: player.currentIndex,
-            ),
-            _buildSetPanel(
-              title: 'NEXT SET',
-              items: player.sets[1],
-              accentColor: settings.accent,
-              playerService: player,
-            ),
-            _buildSetPanel(
-              title: 'NEXT SET',
-              items: player.sets[2],
-              accentColor: settings.accent,
-              playerService: player,
-            ),
-          ],
         ),
       ),
     );
@@ -109,9 +74,10 @@ class _QueueItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
       child: Row(
         children: [
-          Text(
-            isActive ? '>' : ' ',
-            style: PipBoyTypography.body(displayColor),
+          SizedBox(
+            width: 32,
+            height: 32,
+            child: PipBoyItemIcon(item: item, size: 32, dimmed: !isActive),
           ),
           const SizedBox(width: PipBoyConstants.spacingM),
           Expanded(

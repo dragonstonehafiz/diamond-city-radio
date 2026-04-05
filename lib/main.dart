@@ -11,7 +11,6 @@ import 'audio/radio_player_service.dart';
 import 'radio/song_loader.dart';
 import 'radio/song_bank.dart';
 import 'radio/report_bank.dart';
-import 'radio/set_builder.dart';
 import 'data/song_repository.dart';
 import 'data/report_repository.dart';
 import 'data/asset_paths.dart';
@@ -61,44 +60,33 @@ void main() async {
   final reportBank = ReportBank();
   await reportBank.init(reportRepo, config);
 
-  // Build initial 3 sets
-  final set1 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
-  final set2 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
-  final set3 = SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config);
-
   runApp(
     DiamondCityRadioApp(
       audioHandler: audioHandler,
-      initialSets: [set1, set2, set3],
       songRepo: songRepo,
       reportRepo: reportRepo,
       appConfig: config,
       songBank: songBank,
       reportBank: reportBank,
-      buildNextSet: () => SetBuilder.buildSet(songBank, reportBank, songRepo, reportRepo, config),
     ),
   );
 }
 
 class DiamondCityRadioApp extends StatelessWidget {
   final AudioHandlerImpl audioHandler;
-  final List<List<RadioQueueItem>> initialSets;
   final SongRepository songRepo;
   final ReportRepository reportRepo;
   final AppConfig appConfig;
   final SongBank songBank;
   final ReportBank reportBank;
-  final List<RadioQueueItem> Function() buildNextSet;
 
   const DiamondCityRadioApp({
     required this.audioHandler,
-    required this.initialSets,
     required this.songRepo,
     required this.reportRepo,
     required this.appConfig,
     required this.songBank,
     required this.reportBank,
-    required this.buildNextSet,
     super.key,
   });
 
@@ -111,7 +99,7 @@ class DiamondCityRadioApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PipBoySettingsNotifier()..load()),
         ChangeNotifierProvider(
           create: (_) => RadioPlayerService()
-            ..init(audioHandler, initialSets, songRepo, reportRepo, buildNextSet),
+            ..init(audioHandler, songRepo, reportRepo, songBank, reportBank, appConfig),
         ),
       ],
       child: Consumer2<PipBoySettingsNotifier, RadioPlayerService>(

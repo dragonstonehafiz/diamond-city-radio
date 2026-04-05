@@ -4,9 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
-import '../data/asset_paths.dart';
 import '../data/song_repository.dart';
 import '../data/report_repository.dart';
+import '../models/app_config.dart';
+import '../radio/song_bank.dart';
+import '../radio/report_bank.dart';
+import '../radio/set_builder.dart';
 import 'audio_handler_impl.dart';
 
 enum RadioClipType { intro, song, outro, report }
@@ -39,7 +42,7 @@ class RadioQueueItem {
 class RadioPlayerService extends ChangeNotifier {
   late AudioHandlerImpl _audioHandler;
   late AudioPlayer _player;
-  late List<List<RadioQueueItem>> _sets;
+  late List<RadioQueueItem> _queue;
   late SongRepository _songs;
   late ReportRepository _reports;
   int _currentIndex = 0;
@@ -59,18 +62,25 @@ class RadioPlayerService extends ChangeNotifier {
 
   Future<void> init(
     AudioHandlerImpl audioHandler,
-    List<List<RadioQueueItem>> sets,
     SongRepository songs,
     ReportRepository reports,
-    Function() buildNextSet,
+    SongBank songBank,
+    ReportBank reportBank,
+    AppConfig config,
   ) async {
     _audioHandler = audioHandler;
     _player = audioHandler.audioPlayer;
-    _sets = sets;
     _songs = songs;
     _reports = reports;
-    _buildNextSet = buildNextSet;
+    _buildNextSet = () => SetBuilder.buildSet(songBank, reportBank, songs, reports, config);
     _currentIndex = 0;
+
+    // Build initial queue from 3 sets
+    _queue = [
+      ..._buildNextSet(),
+      ..._buildNextSet(),
+      ..._buildNextSet(),
+    ];
 
     _setupPlayerStateListener();
 
@@ -83,12 +93,11 @@ class RadioPlayerService extends ChangeNotifier {
     await _loadAndPlay(0, autoPlay: false);
   }
 
-  List<List<RadioQueueItem>> get sets => _sets;
-  List<RadioQueueItem> get _currentQueue => _sets[0];
+  List<RadioQueueItem> get queue => _queue;
 
   RadioQueueItem? get currentItem {
-    if (_currentIndex >= 0 && _currentIndex < _currentQueue.length) {
-      return _currentQueue[_currentIndex];
+    if (_currentIndex >= 0 && _currentIndex < _queue.length) {
+      return _queue[_currentIndex];
     }
     return null;
   }
@@ -102,7 +111,6 @@ class RadioPlayerService extends ChangeNotifier {
   Duration? get duration => _player.duration;
 
   int get currentIndex => _currentIndex;
-  int get queueLength => _currentQueue.length;
 
   String getTrackName(RadioQueueItem item) => _getTrackName(item);
   String getArtist(RadioQueueItem item) => _getArtist(item);
@@ -178,12 +186,12 @@ class RadioPlayerService extends ChangeNotifier {
   }
 
   Future<void> _loadAndPlay(int index, {bool autoPlay = true}) async {
-    if (index < 0 || index >= _currentQueue.length) {
+    if (index < 0 || index >= _queue.length) {
       return;
     }
 
     _currentIndex = index;
-    final item = _currentQueue[index];
+    final item = _queue[index];
     final assetPath = await _resolveAssetPath(item);
 
     if (assetPath.isEmpty) {
@@ -243,14 +251,16 @@ class RadioPlayerService extends ChangeNotifier {
   }
 
   Future<void> next() async {
-    if (_currentIndex + 1 < _currentQueue.length) {
-      await _loadAndPlay(_currentIndex + 1);
-    } else {
-      _sets[0] = _sets[1];
-      _sets[1] = _sets[2];
-      _sets[2] = _buildNextSet();
-      _currentIndex = 0;
+    final nextIndex = _currentIndex + 1;
+    if (nextIndex >= _queue.length) {
+      // Queue exhausted, clear and rebuild with 3 new sets
+      _queue.clear();
+      _queue.addAll(_buildNextSet());
+      _queue.addAll(_buildNextSet());
+      _queue.addAll(_buildNextSet());
       await _loadAndPlay(0);
+    } else {
+      await _loadAndPlay(nextIndex);
     }
   }
 

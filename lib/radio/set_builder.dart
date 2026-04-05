@@ -14,30 +14,39 @@ class SetBuilder {
     ReportRepository reports,
     AppConfig config,
   ) {
-
-    // Draw songs from bank
     final drawn = <SongModel>[];
-    for (int i = 0; i < config.songsPerSet && songBank.bankLength > 0; i++) {
-      drawn.add(songBank.draw());
+
+    // Draw first song with intros guaranteed
+    if (songBank.bankLength > 0) {
+      final withIntro = songBank.drawWithIntro(1);
+      drawn.addAll(withIntro);
+    }
+
+    // Draw middle songs (any songs)
+    final middleCount = config.songsPerSet - 2;
+    if (middleCount > 0 && songBank.bankLength > 0) {
+      final middle = songBank.draw(middleCount);
+      drawn.addAll(middle);
+    }
+
+    // Draw last song with outros guaranteed
+    if (songBank.bankLength > 0) {
+      final withOutro = songBank.drawWithOutro(1);
+      drawn.addAll(withOutro);
     }
 
     if (drawn.isEmpty) {
       return [];
     }
 
-    // Ensure first song has intros, last has outros
-    _satisfyConstraints(drawn);
-
     // Build queue items
     final queue = <RadioQueueItem>[];
 
-    // Intro
-    if (drawn[0].intros.isNotEmpty) {
-      queue.add(RadioQueueItem(
-        itemId: drawn[0].id,
-        clipType: RadioClipType.intro,
-      ));
-    }
+    // Intro (guaranteed since first song was drawn with intro)
+    queue.add(RadioQueueItem(
+      itemId: drawn[0].id,
+      clipType: RadioClipType.intro,
+    ));
 
     // Songs
     for (final song in drawn) {
@@ -47,13 +56,11 @@ class SetBuilder {
       ));
     }
 
-    // Outro
-    if (drawn[drawn.length - 1].outros.isNotEmpty) {
-      queue.add(RadioQueueItem(
-        itemId: drawn[drawn.length - 1].id,
-        clipType: RadioClipType.outro,
-      ));
-    }
+    // Outro (guaranteed since last song was drawn with outro)
+    queue.add(RadioQueueItem(
+      itemId: drawn[drawn.length - 1].id,
+      clipType: RadioClipType.outro,
+    ));
 
     // Report
     assert(reportBank.bankLength > 0, 'ReportBank.draw() called with empty bank');
@@ -64,46 +71,5 @@ class SetBuilder {
     ));
 
     return queue;
-  }
-
-  static void _satisfyConstraints(List<SongModel> drawn) {
-    if (drawn.isEmpty) return;
-
-    // Find a song with intros for the first slot
-    if (!drawn[0].hasIntros) {
-      int? foundIdx;
-      for (int i = 1; i < drawn.length; i++) {
-        if (drawn[i].hasIntros) {
-          foundIdx = i;
-          break;
-        }
-      }
-      if (foundIdx != null) {
-        // Swap
-        final tmp = drawn[0];
-        drawn[0] = drawn[foundIdx];
-        drawn[foundIdx] = tmp;
-      }
-      // If no valid candidate, keep drawn[0] as fallback (no intro will be played)
-    }
-
-    // Find a song with outros for the last slot
-    final lastIdx = drawn.length - 1;
-    if (!drawn[lastIdx].hasOutros) {
-      int? foundIdx;
-      for (int i = lastIdx - 1; i >= 0; i--) {
-        if (drawn[i].hasOutros) {
-          foundIdx = i;
-          break;
-        }
-      }
-      if (foundIdx != null && foundIdx != lastIdx) {
-        // Swap
-        final tmp = drawn[lastIdx];
-        drawn[lastIdx] = drawn[foundIdx];
-        drawn[foundIdx] = tmp;
-      }
-      // If no valid candidate, keep drawn[lastIdx] as fallback (no outro from song, will use general)
-    }
   }
 }

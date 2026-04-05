@@ -85,8 +85,9 @@
 - AppConfig `appIconPath` configures intro/outro icon path
 
 **QueueScreen** (`lib/screens/queue_screen.dart`)
-- Three panels: CURRENT SET (active item marked with `>`), NEXT SET, AFTER NEXT SET
-- All dividers between items
+- Single panel showing the full flat queue from `RadioPlayerService.queue`
+- Active item marked with `>`, dimmed accent for future items
+- All items separated by dividers
 - Uses `RadioPlayerService` for live queue data
 
 **SettingsScreen** (`lib/screens/settings_screen.dart`)
@@ -182,12 +183,12 @@
 - Owns reference to `AudioHandlerImpl` for playback control
 - Enum: `RadioClipType` (intro, song, outro, report)
 - Class: `RadioQueueItem` — stores only `itemId` and `clipType`, display info resolved at playback time
-- Fields: `_sets` (3-set buffer: [current, next, after-next]), `_currentIndex`, `_audioHandler`
-- Methods: `init(audioHandler, ...)`, `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`, `setVolume(double)` (controls main audio playback volume via `just_audio`)
-- Getters: `sets`, `currentItem`, `currentIndex`, `isPlaying`, `duration`, `position`
+- Fields: `_queue` (flat list of all upcoming items), `_currentIndex`, `_audioHandler`
+- Methods: `init(audioHandler, songs, reports, songBank, reportBank, config)` (builds initial queue from 3 sets), `play()`, `pause()`, `togglePlayPause()`, `next()`, `prev()`, `seek(Duration)`, `setVolume(double)` (controls main audio playback volume via `just_audio`)
+- Getters: `queue`, `currentItem`, `currentIndex`, `isPlaying`, `duration`, `position`
 - Streams: `durationStream`, `positionStream` — duration updates reactively as file loads
 - Public methods for UI: `getTrackName(item)`, `getArtist(item)`, `seek(position)` for progress bar seeking
-- **Key behavior**: When current set ends, rotates sets and builds new set 3 via `_buildNextSet()` callback
+- **Key behavior**: When `next()` reaches the end of the queue (after 3 reports), the queue is cleared and rebuilt with 3 fresh sets. This prevents unbounded memory growth over time.
 - **Path resolution** via `_resolveAssetPath()`: 
   - Songs: returns `songFile` from SongModel
   - Intros/outros: randomly selects from available list after validating each exists via `_assetExists()`; auto-skips to next track if none valid
@@ -210,11 +211,11 @@
 
 **SongBank** (`lib/radio/song_bank.dart`)
 - Rotating pool of songs for set building
-- Fields: `_songBank` (pool), `_playedSongs` (recently-used), `_config`
+- Fields: `_unplayedSongs` (pool), `_playedSongs` (recently-used), `_config`
 - Persists state to SharedPreferences as ID lists (survives app restart)
-- Methods: `init()`, `draw()` (removes from pool, adds to played), `_checkRefill()`, `_refill()` (rotates old songs back)
+- Methods: `init()`, `draw(int count)` (draw N random songs), `drawWithIntro(int count)` (draw N songs with intros), `drawWithOutro(int count)` (draw N songs with outros), `_refill()` (rotates old songs back when pool depletes)
 - On first launch: shuffles all songs into bank
-- On app restart: restores from SharedPreferences
+- On app restart: restores from SharedPreferences via `_loadFromState()`
 
 **ReportBank** (`lib/radio/report_bank.dart`)
 - Rotating pool of reports for set building (mirrors SongBank exactly)
@@ -226,8 +227,10 @@
 
 **SetBuilder** (`lib/radio/set_builder.dart`)
 - Static method: `buildSet(songBank, reportBank, songs, reports, config)`
-- Draws N songs from songBank, ensures first has intros + last has outros (swaps if needed)
-- Draws report from reportBank (ensures even distribution)
+- Draws first song from `songBank.drawWithIntro(1)` (guaranteed to have intros)
+- Draws middle songs from `songBank.draw(N)` (any songs)
+- Draws last song from `songBank.drawWithOutro(1)` (guaranteed to have outros)
+- Draws one report from `reportBank.draw()`
 - Builds queue: [intro, ...songs, outro, report]
 - Returns `List<RadioQueueItem>` with only `itemId` + `clipType` (no paths)
 
@@ -240,13 +243,14 @@
   1. `AudioService.init()` with `AudioHandlerImpl` builder — must be before `runApp()` so background playback is ready
   2. `SfxPlayer().init()` — pre-caches UI sounds and configures audio context
   3. `Future.wait()` loads AppConfig and songs/reports in parallel via `_loadConfig()` and `SongLoader`
-  4. Initialize SongBank and ReportBank, build initial 3 sets
-  5. Run app with `audioHandler` passed to `DiamondCityRadioApp`
+  4. Initialize SongBank and ReportBank
+  5. Run app, passing `audioHandler`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank` to `DiamondCityRadioApp`
+  6. `DiamondCityRadioApp` initializes `RadioPlayerService`, which builds its own initial queue from 3 sets
 
 **DiamondCityRadioApp** (`lib/main.dart`)
 - Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
-- Constructor: `audioHandler`, `initialSets`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`, `buildNextSet`
-- Passes `audioHandler` to `RadioPlayerService.init()` in the provider
+- Constructor: `audioHandler`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`
+- Passes all parameters to `RadioPlayerService.init()` so the service builds its own initial queue
 - Uses `Consumer2<PipBoySettingsNotifier, RadioPlayerService>` to apply saved volumes on startup:
   - `SfxPlayer().setVolume(settingsNotifier.sfxVolume)`
   - `SfxPlayer().setHumVolume(settingsNotifier.humVolume)`
