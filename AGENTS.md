@@ -71,8 +71,8 @@
 **PipBoyItemIcon** (`lib/widgets/pip_boy_item_icon.dart`)
 - Resolves and renders the correct now-playing visual for a `RadioQueueItem`
 - Report clips: uses `ReportRepository` image when available
-- Intro/outro clips: uses `AppConfig.appIconPath`
-- Song clips or fallback: uses `PipBoyIcon(Icons.music_note)`
+- Intro/outro clips: uses `AppConfig.introIconPath` and `AppConfig.outroIconPath`
+- Song clips: uses `AppConfig.songIconPath`
 - Constructor: `item`, `size`, optional `dimmed`
 
 **PipBoyNowPlayingView** (`lib/widgets/pip_boy_now_playing_view.dart`)
@@ -93,13 +93,11 @@
 ## Screens
 
 **PlayerScreen** (`lib/screens/player_screen.dart`)
-- Radio now-playing display: clip badge, dynamic image/icon, track name/artist, seekable progress bar, prev/play/next buttons
+- Radio now-playing display: delegates UI to `PipBoyNowPlayingView` (clip badge, dynamic image/icon, track name/artist, seekable progress bar, prev/play/next buttons)
 - Uses `RadioPlayerService` for playback state
 - Responsive layout via `LayoutBuilder`: mobile and desktop variants
 - Desktop breakpoint: `maxWidth >= 900`
-- Progress bar: duration reactive via nested `StreamBuilder` on `player.durationStream`; `interactive: true` with `onSeek` callback to `player.seek()`
-- Display logic via `_buildDisplayImage()`: shows report image if available, white icon (tinted with accent color) for intros/outros, music note icon for songs
-- AppConfig `appIconPath` configures intro/outro icon path
+- Display image/icon and progress behavior are implemented inside `PipBoyNowPlayingView` + `PipBoyItemIcon`
 
 **QueueScreen** (`lib/screens/queue_screen.dart`)
 - Single panel showing the full flat queue from `RadioPlayerService.queue`
@@ -144,8 +142,53 @@
 - Duration pulled at runtime from audio file via `just_audio`
 
 **AppConfig** (`lib/models/app_config.dart`)
-- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/dcr_icon.png`), `scanlineSpeed` (default 24.0)
+- Fields:
+  - Queue tuning: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10)
+  - Icon paths: `songIconPath` (default `assets/images/icons/song_icon.png`), `introIconPath` (default `assets/images/icons/dcr_icon.png`), `outroIconPath` (default `assets/images/icons/dcr_icon.png`)
+  - Default visual/audio settings: `defaultAccentColor`, `defaultScanlinesEnabled`, `defaultScanlineWidth`, `defaultScanlineDistance`, `scanlineSpeed`, `defaultHumEnabled`, `defaultSfxVolume`, `defaultHumVolume`, `defaultMainVolume`
 - Factory: `fromJson()`
+
+**Config JSON Reference** (`assets/data/config.json` -> `AppConfig.fromJson()`)
+- `songs_per_set` -> `AppConfig.songsPerSet`:
+  - Used by `SetBuilder.buildSet()` to determine middle-song count (`songsPerSet - 2`) while intro/outro bookend each set
+- `refill_threshold` -> `AppConfig.refillThreshold`:
+  - Used by `SongBank._refill()` and `ReportBank._checkRefill()` to trigger bank refill when pools get low
+- `refill_count` -> `AppConfig.refillCount`:
+  - Used by `SongBank._refill()` and `ReportBank._refill()` to control how many played items rotate back into active pools
+- `song_icon_path` -> `AppConfig.songIconPath`:
+  - Used by `PipBoyItemIcon` for song clip artwork
+- `intro_icon_path` -> `AppConfig.introIconPath`:
+  - Used by `PipBoyItemIcon` for intro clip artwork
+- `outro_icon_path` -> `AppConfig.outroIconPath`:
+  - Used by `PipBoyItemIcon` for outro clip artwork
+- `accent_color` -> `AppConfig.defaultAccentColor`:
+  - Passed into `PipBoySettingsNotifier(defaultAccent: ...)` in `DiamondCityRadioApp`
+  - Acts as first-run default; saved `SharedPreferences` value with key `accent_color` overrides after user change
+- `scanlines_enabled` -> `AppConfig.defaultScanlinesEnabled`:
+  - Passed into `PipBoySettingsNotifier(defaultScanlinesEnabled: ...)`
+  - Drives `PipBoyScanlineOverlay.enabled` via settings notifier
+- `scanline_width` -> `AppConfig.defaultScanlineWidth`:
+  - Passed into `PipBoySettingsNotifier(defaultScanlineWidth: ...)`
+  - Drives `PipBoyScanlineOverlay.lineWidth`
+- `scanline_distance` -> `AppConfig.defaultScanlineDistance`:
+  - Passed into `PipBoySettingsNotifier(defaultScanlineDistance: ...)`
+  - Drives `PipBoyScanlineOverlay.lineSpacing`
+- `scanline_speed` -> `AppConfig.scanlineSpeed`:
+  - Passed into `PipBoySettingsNotifier(defaultScanlineSpeed: ...)`
+  - Drives `PipBoyScanlineOverlay.scanSpeed`
+- `hum_enabled` -> `AppConfig.defaultHumEnabled`:
+  - Passed into `PipBoySettingsNotifier(defaultHumEnabled: ...)`
+  - Read in `HomeScreen.initState()` to decide whether to start ambient hum loop
+- `sfx_volume` -> `AppConfig.defaultSfxVolume`:
+  - Passed into `PipBoySettingsNotifier(defaultSfxVolume: ...)`
+  - Applied via `SfxPlayer().setVolume(settingsNotifier.sfxVolume)` on startup
+- `hum_volume` -> `AppConfig.defaultHumVolume`:
+  - Passed into `PipBoySettingsNotifier(defaultHumVolume: ...)`
+  - Applied via `SfxPlayer().setHumVolume(settingsNotifier.humVolume)` on startup
+- `main_volume` -> `AppConfig.defaultMainVolume`:
+  - Passed into `PipBoySettingsNotifier(defaultMainVolume: ...)`
+  - Applied via `radioPlayerService.setVolume(settingsNotifier.mainVolume)` on startup
+- All of the settings keys above are persisted by `PipBoySettingsNotifier` into `SharedPreferences` using the same key names, so `config.json` values seed defaults and then user preferences take precedence.
 
 ---
 
