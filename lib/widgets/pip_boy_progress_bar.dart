@@ -27,17 +27,24 @@ class PipBoyProgressBar extends StatefulWidget {
 }
 
 class _PipBoyProgressBarState extends State<PipBoyProgressBar> {
+  void _seekFromGlobalPosition(Offset globalPosition) {
+    if (!widget.interactive || widget.onSeek == null) return;
+
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null || box.size.width <= 0) return;
+
+    final localPosition = box.globalToLocal(globalPosition);
+    final newValue = (localPosition.dx / box.size.width).clamp(0.0, 1.0);
+    widget.onSeek!(newValue);
+  }
+
   void _handleHorizontalDragStart(DragStartDetails details) {
     if (!widget.interactive) return;
+    _seekFromGlobalPosition(details.globalPosition);
   }
 
   void _handleHorizontalDragUpdate(DragUpdateDetails details) {
-    if (!widget.interactive || widget.onSeek == null) return;
-
-    final box = context.findRenderObject() as RenderBox;
-    final localPosition = box.globalToLocal(details.globalPosition);
-    final newValue = (localPosition.dx / box.size.width).clamp(0.0, 1.0);
-    widget.onSeek!(newValue);
+    _seekFromGlobalPosition(details.globalPosition);
   }
 
   void _handleHorizontalDragEnd(DragEndDetails details) {
@@ -51,6 +58,12 @@ class _PipBoyProgressBarState extends State<PipBoyProgressBar> {
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
+      onTapDown: widget.interactive
+          ? (details) {
+              _seekFromGlobalPosition(details.globalPosition);
+              widget.onSeekEnd?.call();
+            }
+          : null,
       onHorizontalDragStart:
           widget.interactive ? _handleHorizontalDragStart : null,
       onHorizontalDragUpdate:

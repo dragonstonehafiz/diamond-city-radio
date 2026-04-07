@@ -6,6 +6,7 @@ import 'audio/audio_handler_impl.dart';
 import 'theme/pip_boy_settings_notifier.dart';
 import 'theme/pip_boy_theme.dart';
 import 'theme/pip_boy_colors.dart';
+import 'theme/pip_boy_typography.dart';
 import 'audio/sfx_player.dart';
 import 'audio/radio_player_service.dart';
 import 'radio/song_loader.dart';
@@ -16,9 +17,11 @@ import 'data/report_repository.dart';
 import 'data/asset_paths.dart';
 import 'models/app_config.dart';
 import 'widgets/pip_boy_tab_bar.dart';
+import 'widgets/pip_boy_button.dart';
 import 'dart:convert';
 import 'widgets/pip_boy_scanline_overlay.dart';
 import 'widgets/pip_boy_status_bar.dart';
+import 'widgets/pip_boy_divider.dart';
 import 'screens/player_screen.dart';
 import 'screens/queue_screen.dart';
 import 'screens/settings_screen.dart';
@@ -130,6 +133,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const double _desktopBreakpoint = 900;
   int _selectedTabIndex = 0;
 
   final List<String> _tabLabels = ['PLAYER', 'QUEUE', 'SETTINGS'];
@@ -151,42 +155,102 @@ class _HomeScreenState extends State<HomeScreen> {
     final settings = context.watch<PipBoySettingsNotifier>();
     return Scaffold(
       backgroundColor: PipBoyColors.background,
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 360),
+      body: SafeArea(
+        bottom: false,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth >= _desktopBreakpoint) {
+              return _buildDesktopShell(settings);
+            }
+            return _buildMobileShell(settings);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMobileShell(PipBoySettingsNotifier settings) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 360),
+        child: Column(
+          children: [
+            // Top navigation tabs
+            PipBoyTabBar(
+              labels: _tabLabels,
+              selectedIndex: _selectedTabIndex,
+              onTabSelected: (index) {
+                setState(() {
+                  _selectedTabIndex = index;
+                });
+              },
+            ),
+            // Main content area with scanline overlay
+            Expanded(
+              child: PipBoyScanlineOverlay(
+                enabled: settings.scanlinesEnabled,
+                child: _buildTabContent(),
+              ),
+            ),
+            // Bottom status bar
+            const PipBoyStatusBar(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopShell(PipBoySettingsNotifier settings) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1240),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              SizedBox(height: MediaQuery.of(context).padding.top),
-              // Top navigation tabs
-              PipBoyTabBar(
-                labels: _tabLabels,
-                selectedIndex: _selectedTabIndex,
-                onTabSelected: (index) {
-                  setState(() {
-                    _selectedTabIndex = index;
-                  });
-                },
-              ),
-              // Main content area with scanline overlay
               Expanded(
-                child: PipBoyScanlineOverlay(
-                  enabled: settings.scanlinesEnabled,
-                  child: IndexedStack(
-                    index: _selectedTabIndex,
-                    children: [
-                      _buildPlayerTab(),
-                      _buildQueueTab(),
-                      _buildSettingsTab(),
-                    ],
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      width: 220,
+                      child: _DesktopSidebar(
+                        tabLabels: _tabLabels,
+                        selectedTabIndex: _selectedTabIndex,
+                        onTabSelected: (index) {
+                          setState(() {
+                            _selectedTabIndex = index;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: PipBoyScanlineOverlay(
+                        enabled: settings.scanlinesEnabled,
+                        child: _buildTabContent(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // Bottom status bar
+              const SizedBox(height: 12),
               const PipBoyStatusBar(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTabContent() {
+    return IndexedStack(
+      index: _selectedTabIndex,
+      children: [
+        _buildPlayerTab(),
+        _buildQueueTab(),
+        _buildSettingsTab(),
+      ],
     );
   }
 
@@ -200,6 +264,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildSettingsTab() {
     return const SettingsScreen();
+  }
+}
+
+class _DesktopSidebar extends StatelessWidget {
+  final List<String> tabLabels;
+  final int selectedTabIndex;
+  final ValueChanged<int> onTabSelected;
+
+  const _DesktopSidebar({
+    required this.tabLabels,
+    required this.selectedTabIndex,
+    required this.onTabSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<PipBoySettingsNotifier>();
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: settings.dim,
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              'DIAMOND CITY RADIO',
+              style: PipBoyTypography.subheading(settings.accent),
+            ),
+          ),
+          const PipBoyDivider(margin: EdgeInsets.zero),
+          const SizedBox(height: 8),
+          for (int i = 0; i < tabLabels.length; i++) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: PipBoyButton(
+                label: tabLabels[i],
+                width: double.infinity,
+                isActive: i == selectedTabIndex,
+                variant: PipBoyButtonVariant.outlined,
+                onPressed: () => onTabSelected(i),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
   }
 }
 

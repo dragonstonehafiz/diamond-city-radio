@@ -10,194 +10,253 @@ import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_progress_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
+  static const double _desktopBreakpoint = 1000;
+
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<PipBoySettingsNotifier>();
 
-    return Listener(
-      child: SingleChildScrollView(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= _desktopBreakpoint) {
+          return _buildDesktopLayout(context, settings);
+        }
+        return _buildMobileLayout(context, settings);
+      },
+    );
+  }
+
+  Widget _buildMobileLayout(
+    BuildContext context,
+    PipBoySettingsNotifier settings,
+  ) {
+    return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(PipBoyConstants.spacingM),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Display color panel
-            PipBoyPanel(
-              title: 'DISPLAY COLOR',
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: PipBoyConstants.spacingM,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (final color in PipBoySettingsNotifier.presets)
-                      _ColorPreset(
-                        color: color,
-                        isSelected: color.toARGB32() == settings.accent.toARGB32(),
-                        onTap: () {
-                          settings.setAccent(color);
-                        },
-                      ),
-                  ],
-                ),
-              ),
-            ),
+            _buildDisplayColorPanel(settings),
             const SizedBox(height: PipBoyConstants.spacingL),
-
-            // Visual panel
-            PipBoyPanel(
-              title: 'VISUAL',
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: PipBoyConstants.spacingS,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'SCANLINES',
-                        style: PipBoyTypography.body(settings.accent),
-                      ),
-                    ),
-                    PipBoyButton(
-                      label: settings.scanlinesEnabled ? 'ON' : 'OFF',
-                      isActive: settings.scanlinesEnabled,
-                      variant: PipBoyButtonVariant.outlined,
-                      width: 60,
-                      onPressed: () {
-                        settings.setScanlinesEnabled(!settings.scanlinesEnabled);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _buildVisualPanel(settings),
             const SizedBox(height: PipBoyConstants.spacingL),
-
-            // Audio panel
-            PipBoyPanel(
-              title: 'AUDIO',
-              child: Column(
-                children: [
-                  // Ambient hum toggle
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: PipBoyConstants.spacingS,
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'AMBIENT HUM',
-                            style: PipBoyTypography.body(settings.accent),
-                          ),
-                        ),
-                        PipBoyButton(
-                          label: settings.humEnabled ? 'ON' : 'OFF',
-                          isActive: settings.humEnabled,
-                          variant: PipBoyButtonVariant.outlined,
-                          width: 60,
-                          onPressed: () async {
-                            await settings.setHumEnabled(!settings.humEnabled);
-                            if (settings.humEnabled) {
-                              await SfxPlayer().playLoop();
-                            } else {
-                              await SfxPlayer().stopLoop();
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingM),
-
-                  // SFX volume
-                  Text(
-                    'SFX VOLUME',
-                    style: PipBoyTypography.body(settings.accent),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingS),
-                  PipBoyProgressBar(
-                    value: settings.sfxVolume,
-                    interactive: true,
-                    onSeek: (newValue) {
-                      settings.setSfxVolume(newValue);
-                      SfxPlayer().setVolume(newValue);
-                    },
-                    onSeekEnd: () {
-                      SfxPlayer().play(PipBoySfx.mapRollover);
-                    },
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingM),
-
-                  // Hum volume
-                  Text(
-                    'HUM VOLUME',
-                    style: PipBoyTypography.body(settings.accent),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingS),
-                  PipBoyProgressBar(
-                    value: settings.humVolume,
-                    interactive: true,
-                    onSeek: (newValue) {
-                      settings.setHumVolume(newValue);
-                      SfxPlayer().setHumVolume(newValue);
-                    },
-                    onSeekEnd: () {
-                      SfxPlayer().play(PipBoySfx.mapRollover);
-                    },
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingM),
-
-                  // Main audio volume
-                  Text(
-                    'AUDIO VOLUME',
-                    style: PipBoyTypography.body(settings.accent),
-                  ),
-                  const SizedBox(height: PipBoyConstants.spacingS),
-                  PipBoyProgressBar(
-                    value: settings.mainVolume,
-                    interactive: true,
-                    onSeek: (newValue) {
-                      settings.setMainVolume(newValue);
-                      context.read<RadioPlayerService>().setVolume(newValue);
-                    },
-                    onSeekEnd: () {
-                      SfxPlayer().play(PipBoySfx.mapRollover);
-                    },
-                  ),
-                ],
-              ),
-            ),
+            _buildAudioPanel(context, settings),
             const SizedBox(height: PipBoyConstants.spacingL),
+            _buildAboutPanel(settings),
+          ],
+        ),
+      ),
+    );
+  }
 
-            // About panel
-            PipBoyPanel(
-              title: 'ABOUT',
-              width: double.infinity,
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'DIAMOND CITY RADIO',
-                      style: PipBoyTypography.body(settings.accent),
-                    ),
-                    const SizedBox(height: PipBoyConstants.spacingS),
-                    Text(
-                      'Version 1.0.0',
-                      style: PipBoyTypography.body(settings.accent),
-                    ),
-                  ],
+  Widget _buildDesktopLayout(
+    BuildContext context,
+    PipBoySettingsNotifier settings,
+  ) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(PipBoyConstants.spacingL),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildDisplayColorPanel(settings),
+            const SizedBox(height: PipBoyConstants.spacingL),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildVisualPanel(settings),
+                      const SizedBox(height: PipBoyConstants.spacingL),
+                      _buildAboutPanel(settings),
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(width: PipBoyConstants.spacingL),
+                Expanded(
+                  flex: 7,
+                  child: _buildAudioPanel(context, settings),
+                ),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDisplayColorPanel(PipBoySettingsNotifier settings) {
+    return PipBoyPanel(
+      title: 'DISPLAY COLOR',
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingM),
+        child: Row(
+          children: [
+            for (final color in PipBoySettingsNotifier.presets)
+              Expanded(
+                child: Center(
+                  child: _ColorPreset(
+                    color: color,
+                    isSelected: color.toARGB32() == settings.accent.toARGB32(),
+                    onTap: () => settings.setAccent(color),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVisualPanel(PipBoySettingsNotifier settings) {
+    return PipBoyPanel(
+      title: 'VISUAL',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'SCANLINES',
+                style: PipBoyTypography.body(settings.accent),
+              ),
+            ),
+            PipBoyButton(
+              label: settings.scanlinesEnabled ? 'ON' : 'OFF',
+              isActive: settings.scanlinesEnabled,
+              variant: PipBoyButtonVariant.outlined,
+              width: 80,
+              onPressed: () {
+                settings.setScanlinesEnabled(!settings.scanlinesEnabled);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAudioPanel(
+    BuildContext context,
+    PipBoySettingsNotifier settings,
+  ) {
+    return PipBoyPanel(
+      title: 'AUDIO',
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'AMBIENT HUM',
+                    style: PipBoyTypography.body(settings.accent),
+                  ),
+                ),
+                PipBoyButton(
+                  label: settings.humEnabled ? 'ON' : 'OFF',
+                  isActive: settings.humEnabled,
+                  variant: PipBoyButtonVariant.outlined,
+                  width: 80,
+                  onPressed: () async {
+                    await settings.setHumEnabled(!settings.humEnabled);
+                    if (settings.humEnabled) {
+                      await SfxPlayer().playLoop();
+                    } else {
+                      await SfxPlayer().stopLoop();
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: PipBoyConstants.spacingM),
+          _buildVolumeControl(
+            label: 'SFX VOLUME',
+            accent: settings.accent,
+            value: settings.sfxVolume,
+            onChanged: (newValue) {
+              settings.setSfxVolume(newValue);
+              SfxPlayer().setVolume(newValue);
+            },
+          ),
+          const SizedBox(height: PipBoyConstants.spacingM),
+          _buildVolumeControl(
+            label: 'HUM VOLUME',
+            accent: settings.accent,
+            value: settings.humVolume,
+            onChanged: (newValue) {
+              settings.setHumVolume(newValue);
+              SfxPlayer().setHumVolume(newValue);
+            },
+          ),
+          const SizedBox(height: PipBoyConstants.spacingM),
+          _buildVolumeControl(
+            label: 'AUDIO VOLUME',
+            accent: settings.accent,
+            value: settings.mainVolume,
+            onChanged: (newValue) {
+              settings.setMainVolume(newValue);
+              context.read<RadioPlayerService>().setVolume(newValue);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVolumeControl({
+    required String label,
+    required Color accent,
+    required double value,
+    required ValueChanged<double> onChanged,
+  }) {
+    return Column(
+      children: [
+        Text(
+          label,
+          style: PipBoyTypography.body(accent),
+        ),
+        const SizedBox(height: PipBoyConstants.spacingS),
+        PipBoyProgressBar(
+          value: value,
+          interactive: true,
+          onSeek: onChanged,
+          onSeekEnd: () {
+            SfxPlayer().play(PipBoySfx.mapRollover);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAboutPanel(PipBoySettingsNotifier settings) {
+    return PipBoyPanel(
+      title: 'ABOUT',
+      width: double.infinity,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'DIAMOND CITY RADIO',
+              style: PipBoyTypography.body(settings.accent),
+            ),
+            const SizedBox(height: PipBoyConstants.spacingS),
+            Text(
+              'Version 1.0.0',
+              style: PipBoyTypography.body(settings.accent),
+            ),
+          ],
+        ),
       ),
     );
   }
