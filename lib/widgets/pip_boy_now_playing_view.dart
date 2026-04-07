@@ -51,8 +51,7 @@ class PipBoyNowPlayingView extends StatelessWidget {
     final currentItem = item ?? player.currentItem;
     final resolvedIconSize =
         iconSize ?? (displayHeight * 0.78).clamp(120.0, 320.0).toDouble();
-    final resolvedFallbackIconSize =
-        fallbackIconSize ?? (resolvedIconSize * 0.52).clamp(72.0, 140.0).toDouble();
+    final resolvedFallbackIconSize = fallbackIconSize ?? resolvedIconSize;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

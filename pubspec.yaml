@@ -49,9 +49,9 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/icons/dcr_icon_color.png"
+  image_path: "assets/images/icons/app_icon.png"
   web:
     generate: true
-    image_path: "assets/images/icons/dcr_icon_color.png"
+    image_path: "assets/images/icons/app_icon.png"
     background_color: "#141614"
     theme_color: "#6bff6b"

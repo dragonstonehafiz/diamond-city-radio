@@ -5,9 +5,10 @@ import '../theme/pip_boy_colors.dart';
 import '../audio/radio_player_service.dart';
 import '../data/report_repository.dart';
 import '../models/app_config.dart';
-import 'pip_boy_icon.dart';
 
 class PipBoyItemIcon extends StatelessWidget {
+  static const String _songIconPath = 'assets/images/icons/song_icon.png';
+
   final RadioQueueItem item;
   final double size;
   final bool dimmed;
@@ -62,10 +63,17 @@ class PipBoyItemIcon extends StatelessWidget {
       );
     }
 
-    return PipBoyIcon(
-      icon: Icons.music_note,
-      size: size > 80 ? 80 : size,
-      dimmed: dimmed,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: size,
+        maxHeight: size,
+      ),
+      child: Image.asset(
+        _songIconPath,
+        fit: BoxFit.contain,
+        color: accentColor,
+        colorBlendMode: BlendMode.srcIn,
+      ),
     );
   }
 }

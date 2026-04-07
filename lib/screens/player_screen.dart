@@ -22,7 +22,6 @@ class PlayerScreen extends StatelessWidget {
         final double iconSize = isDesktop
             ? (displayHeight * 0.78).clamp(170.0, 320.0)
             : 150.0;
-        final double fallbackIconSize = isDesktop ? 110.0 : 80.0;
 
         return SingleChildScrollView(
           child: Padding(
@@ -31,7 +30,6 @@ class PlayerScreen extends StatelessWidget {
               player: player,
               displayHeight: displayHeight,
               iconSize: iconSize,
-              fallbackIconSize: fallbackIconSize,
               showClipBadge: true,
               showProgressBar: true,
               showTransportControls: true,
