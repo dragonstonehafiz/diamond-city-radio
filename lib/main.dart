@@ -98,7 +98,11 @@ class DiamondCityRadioApp extends StatelessWidget {
       providers: [
         Provider(create: (_) => reportRepo),
         Provider(create: (_) => appConfig),
-        ChangeNotifierProvider(create: (_) => PipBoySettingsNotifier()..load()),
+        ChangeNotifierProvider(
+          create: (_) =>
+              PipBoySettingsNotifier(defaultScanlineSpeed: appConfig.scanlineSpeed)
+                ..load(),
+        ),
         ChangeNotifierProvider(
           create: (_) => RadioPlayerService()
             ..init(audioHandler, songRepo, reportRepo, songBank, reportBank, appConfig),
@@ -189,6 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: PipBoyScanlineOverlay(
                 enabled: settings.scanlinesEnabled,
+                lineWidth: settings.scanlineWidth,
+                lineSpacing: settings.scanlineDistance,
+                scanSpeed: settings.scanlineSpeed,
                 child: _buildTabContent(),
               ),
             ),
@@ -228,6 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: PipBoyScanlineOverlay(
                         enabled: settings.scanlinesEnabled,
+                        lineWidth: settings.scanlineWidth,
+                        lineSpacing: settings.scanlineDistance,
+                        scanSpeed: settings.scanlineSpeed,
                         child: _buildTabContent(),
                       ),
                     ),

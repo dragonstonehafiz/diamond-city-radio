@@ -7,9 +7,10 @@
 - Utility: `dimmed(Color, factor)` — lerps accent toward black for muted/disabled states
 
 **PipBoySettingsNotifier** (`lib/theme/pip_boy_settings_notifier.dart`)
-- ChangeNotifier managing all app settings: accent color, scanlines enabled, hum enabled, SFX volume (0.0–1.0, default 0.8), hum volume (0.0–1.0, default 0.5), main audio volume (0.0–1.0, default 1.0)
-- Persists to SharedPreferences with keys: `accent_color`, `scanlines_enabled`, `hum_enabled`, `sfx_volume`, `hum_volume`, `main_volume`
-- Methods: `setAccent()`, `setScanlinesEnabled()`, `setHumEnabled()`, `setSfxVolume()`, `setHumVolume()`, `setMainVolume()`
+- ChangeNotifier managing all app settings: accent color, scanlines enabled, scanline width, scanline distance, scanline speed, hum enabled, SFX volume (0.0–1.0, default 0.8), hum volume (0.0–1.0, default 0.5), main audio volume (0.0–1.0, default 1.0)
+- Scanline ranges: width 1.0–10.0, distance 2.0–18.0, speed 0.0–80.0
+- Persists to SharedPreferences with keys: `accent_color`, `scanlines_enabled`, `scanline_width`, `scanline_distance`, `scanline_speed`, `hum_enabled`, `sfx_volume`, `hum_volume`, `main_volume`
+- Methods: `setAccent()`, `setScanlinesEnabled()`, `setScanlineWidth()`, `setScanlineDistance()`, `setScanlineSpeed()`, `setHumEnabled()`, `setSfxVolume()`, `setHumVolume()`, `setMainVolume()`
 - Accessed via `context.watch<PipBoySettingsNotifier>()`
 
 **PipBoyTypography** (`lib/theme/pip_boy_typography.dart`)
@@ -53,8 +54,9 @@
 - Color always `borderDim` (enforces consistency, no color param)
 
 **PipBoyScanlineOverlay** (`lib/widgets/pip_boy_scanline_overlay.dart`)
-- CRT effect: wraps `child` with horizontal scanlines via CustomPaint
-- Constructor: `child`, `enabled` boolean
+- CRT effect: wraps `child` with animated horizontal scanlines via CustomPaint
+- Constructor: `child`, `enabled`, `lineWidth`, `lineSpacing`, `scanSpeed`
+- Scanlines drift downward continuously when `scanSpeed > 0`; `scanSpeed = 0` renders static scanlines
 - Wrapped in `IgnorePointer` so taps pass through
 
 **PipBoyStatusBar** (`lib/widgets/pip_boy_status_bar.dart`)
@@ -65,6 +67,19 @@
 **PipBoyIcon** (`lib/widgets/pip_boy_icon.dart`)
 - Icon wrapper: enforces monochrome tint from settings notifier
 - Constructor: `icon`, `size`, `dimmed`, `disabled` flags
+
+**PipBoyItemIcon** (`lib/widgets/pip_boy_item_icon.dart`)
+- Resolves and renders the correct now-playing visual for a `RadioQueueItem`
+- Report clips: uses `ReportRepository` image when available
+- Intro/outro clips: uses `AppConfig.appIconPath`
+- Song clips or fallback: uses `PipBoyIcon(Icons.music_note)`
+- Constructor: `item`, `size`, optional `dimmed`
+
+**PipBoyNowPlayingView** (`lib/widgets/pip_boy_now_playing_view.dart`)
+- Reusable now-playing UI block used by player layouts
+- Displays optional clip badge, display panel/icon area, marquee title/artist, seekable progress bar, and transport controls
+- Supports layout variants via constructor flags: `showClipBadge`, `showProgressBar`, `showTransportControls`, `framedDisplay`, `squareDisplay`
+- Constructor also supports sizing controls: `displayHeight`, `iconSize`, `fallbackIconSize`
 
 **PipBoyMarqueeText** (`lib/widgets/pip_boy_marquee_text.dart`)
 - Scrolling text widget for display of long titles/labels on a single line
@@ -80,6 +95,8 @@
 **PlayerScreen** (`lib/screens/player_screen.dart`)
 - Radio now-playing display: clip badge, dynamic image/icon, track name/artist, seekable progress bar, prev/play/next buttons
 - Uses `RadioPlayerService` for playback state
+- Responsive layout via `LayoutBuilder`: mobile and desktop variants
+- Desktop breakpoint: `maxWidth >= 900`
 - Progress bar: duration reactive via nested `StreamBuilder` on `player.durationStream`; `interactive: true` with `onSeek` callback to `player.seek()`
 - Display logic via `_buildDisplayImage()`: shows report image if available, white icon (tinted with accent color) for intros/outros, music note icon for songs
 - AppConfig `appIconPath` configures intro/outro icon path
@@ -89,10 +106,18 @@
 - Active item marked with `>`, dimmed accent for future items
 - All items separated by dividers
 - Uses `RadioPlayerService` for live queue data
+- Responsive layout via `LayoutBuilder`: mobile and desktop variants
+- Desktop breakpoint: `maxWidth >= 900`
 
 **SettingsScreen** (`lib/screens/settings_screen.dart`)
 - DISPLAY COLOR: 6 color circle presets (tappable, plays SFX)
-- VISUAL panel: SCANLINES toggle (on/off)
+- VISUAL panel:
+  - SCANLINES toggle (on/off)
+  - SCANLINE WIDTH slider (1.0–10.0)
+  - SCANLINE DISTANCE slider (2.0–18.0)
+  - SCAN SPEED slider (0.0–80.0)
+- Responsive layout via `LayoutBuilder`: mobile and desktop variants
+- Desktop breakpoint: `maxWidth >= 1000`
 - AUDIO panel:
   - AMBIENT HUM toggle (on/off)
   - SFX VOLUME slider (0.0–1.0) — controls UI sound effects volume, plays mapRollover SFX on release
@@ -119,7 +144,7 @@
 - Duration pulled at runtime from audio file via `just_audio`
 
 **AppConfig** (`lib/models/app_config.dart`)
-- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/dcr_icon.png`)
+- Fields: `songsPerSet` (default 3), `refillThreshold` (default 5), `refillCount` (default 10), `appIconPath` (default `images/icons/dcr_icon.png`), `scanlineSpeed` (default 24.0)
 - Factory: `fromJson()`
 
 ---
@@ -251,6 +276,7 @@
 - Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
 - Constructor: `audioHandler`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`
 - Passes all parameters to `RadioPlayerService.init()` so the service builds its own initial queue
+- Initializes `PipBoySettingsNotifier` with `defaultScanlineSpeed` from `AppConfig.scanlineSpeed`; saved preference overrides after first user change
 - Uses `Consumer2<PipBoySettingsNotifier, RadioPlayerService>` to apply saved volumes on startup:
   - `SfxPlayer().setVolume(settingsNotifier.sfxVolume)`
   - `SfxPlayer().setHumVolume(settingsNotifier.humVolume)`
@@ -259,6 +285,8 @@
 
 **HomeScreen** (`lib/main.dart`)
 - Main layout: `PipBoyTabBar` (top) + `IndexedStack` (three tabs) + `PipBoyStatusBar` (bottom)
-- All wrapped in `PipBoyScanlineOverlay`
-- UI constrained to 360dp max width (phone aspect ratio)
+- Responsive shell via `LayoutBuilder`: mobile and desktop variants
+- Desktop breakpoint: `maxWidth >= 900`
+- `PipBoyScanlineOverlay` receives settings-driven `lineWidth`, `lineSpacing`, and `scanSpeed`
+- Mobile shell constrained to 360dp max width (phone aspect ratio)
 - `initState()` starts ambient hum loop if enabled via `SfxPlayer().playLoop()`

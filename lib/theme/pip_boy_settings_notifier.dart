@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'pip_boy_constants.dart';
 
 class PipBoySettingsNotifier extends ChangeNotifier {
   static const String _prefKeyAccent = 'accent_color';
   static const String _prefKeyScanlinesEnabled = 'scanlines_enabled';
+  static const String _prefKeyScanlineWidth = 'scanline_width';
+  static const String _prefKeyScanlineDistance = 'scanline_distance';
+  static const String _prefKeyScanlineSpeed = 'scanline_speed';
   static const String _prefKeySfxVolume = 'sfx_volume';
   static const String _prefKeyHumEnabled = 'hum_enabled';
   static const String _prefKeyHumVolume = 'hum_volume';
   static const String _prefKeyMainVolume = 'main_volume';
 
+  static const double minScanlineWidth = 1.0;
+  static const double maxScanlineWidth = 10.0;
+  static const double minScanlineDistance = 2.0;
+  static const double maxScanlineDistance = 18.0;
+  static const double minScanlineSpeed = 0.0;
+  static const double maxScanlineSpeed = 80.0;
+
   Color _accent = const Color(0xFF59FF47); // CRT phosphor green
   bool _scanlinesEnabled = true;
+  double _scanlineWidth = PipBoyConstants.scanlineThickness;
+  double _scanlineDistance = PipBoyConstants.scanlineSpacing;
+  final double _defaultScanlineSpeed;
+  double _scanlineSpeed;
   double _sfxVolume = 0.8;
   bool _humEnabled = true;
   double _humVolume = 0.5;
   double _mainVolume = 1.0;
+
+  PipBoySettingsNotifier({
+    double defaultScanlineSpeed = 24.0,
+  })  : _defaultScanlineSpeed =
+            defaultScanlineSpeed.clamp(minScanlineSpeed, maxScanlineSpeed),
+        _scanlineSpeed =
+            defaultScanlineSpeed.clamp(minScanlineSpeed, maxScanlineSpeed);
 
   Color get accent => _accent;
   Color get dim => Color.lerp(Colors.black, _accent, 0.35)!;
@@ -22,12 +44,15 @@ class PipBoySettingsNotifier extends ChangeNotifier {
   Color get glow => _accent.withValues(alpha: 0.25);
 
   bool get scanlinesEnabled => _scanlinesEnabled;
+  double get scanlineWidth => _scanlineWidth;
+  double get scanlineDistance => _scanlineDistance;
+  double get scanlineSpeed => _scanlineSpeed;
   double get sfxVolume => _sfxVolume;
   bool get humEnabled => _humEnabled;
   double get humVolume => _humVolume;
   double get mainVolume => _mainVolume;
 
-  // Preset palette — the 6 canonical Pip-Boy display colors
+  // Preset palette - the 6 canonical Pip-Boy display colors
   static const List<Color> presets = [
     Color(0xFF59FF47), // Fallout green (default)
     Color(0xFF4FC3F7), // Blue (Pip-Boy 3000A)
@@ -46,6 +71,15 @@ class PipBoySettingsNotifier extends ChangeNotifier {
         _accent = Color(colorValue);
       }
       _scanlinesEnabled = prefs.getBool(_prefKeyScanlinesEnabled) ?? true;
+      _scanlineWidth = (prefs.getDouble(_prefKeyScanlineWidth) ??
+              PipBoyConstants.scanlineThickness)
+          .clamp(minScanlineWidth, maxScanlineWidth);
+      _scanlineDistance = (prefs.getDouble(_prefKeyScanlineDistance) ??
+              PipBoyConstants.scanlineSpacing)
+          .clamp(minScanlineDistance, maxScanlineDistance);
+      _scanlineSpeed = (prefs.getDouble(_prefKeyScanlineSpeed) ??
+              _defaultScanlineSpeed)
+          .clamp(minScanlineSpeed, maxScanlineSpeed);
       _sfxVolume = prefs.getDouble(_prefKeySfxVolume) ?? 0.8;
       _humEnabled = prefs.getBool(_prefKeyHumEnabled) ?? true;
       _humVolume = prefs.getDouble(_prefKeyHumVolume) ?? 0.5;
@@ -79,6 +113,45 @@ class PipBoySettingsNotifier extends ChangeNotifier {
       await prefs.setBool(_prefKeyScanlinesEnabled, enabled);
     } catch (e) {
       debugPrint('Error saving scanlines setting: $e');
+    }
+  }
+
+  /// Set scanline line width and persist to SharedPreferences.
+  Future<void> setScanlineWidth(double width) async {
+    _scanlineWidth = width.clamp(minScanlineWidth, maxScanlineWidth);
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefKeyScanlineWidth, _scanlineWidth);
+    } catch (e) {
+      debugPrint('Error saving scanline width: $e');
+    }
+  }
+
+  /// Set scanline spacing and persist to SharedPreferences.
+  Future<void> setScanlineDistance(double distance) async {
+    _scanlineDistance = distance.clamp(minScanlineDistance, maxScanlineDistance);
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefKeyScanlineDistance, _scanlineDistance);
+    } catch (e) {
+      debugPrint('Error saving scanline distance: $e');
+    }
+  }
+
+  /// Set scanline movement speed and persist to SharedPreferences.
+  Future<void> setScanlineSpeed(double speed) async {
+    _scanlineSpeed = speed.clamp(minScanlineSpeed, maxScanlineSpeed);
+    notifyListeners();
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(_prefKeyScanlineSpeed, _scanlineSpeed);
+    } catch (e) {
+      debugPrint('Error saving scanline speed: $e');
     }
   }
 

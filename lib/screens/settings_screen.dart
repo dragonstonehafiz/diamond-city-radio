@@ -119,22 +119,53 @@ class SettingsScreen extends StatelessWidget {
       title: 'VISUAL',
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: Text(
-                'SCANLINES',
-                style: PipBoyTypography.body(settings.accent),
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'SCANLINES',
+                    style: PipBoyTypography.body(settings.accent),
+                  ),
+                ),
+                PipBoyButton(
+                  label: settings.scanlinesEnabled ? 'ON' : 'OFF',
+                  isActive: settings.scanlinesEnabled,
+                  variant: PipBoyButtonVariant.outlined,
+                  width: 80,
+                  onPressed: () {
+                    settings.setScanlinesEnabled(!settings.scanlinesEnabled);
+                  },
+                ),
+              ],
             ),
-            PipBoyButton(
-              label: settings.scanlinesEnabled ? 'ON' : 'OFF',
-              isActive: settings.scanlinesEnabled,
-              variant: PipBoyButtonVariant.outlined,
-              width: 80,
-              onPressed: () {
-                settings.setScanlinesEnabled(!settings.scanlinesEnabled);
-              },
+            const SizedBox(height: PipBoyConstants.spacingM),
+            _buildScanlineControl(
+              label: 'SCANLINE WIDTH',
+              accent: settings.accent,
+              min: PipBoySettingsNotifier.minScanlineWidth,
+              max: PipBoySettingsNotifier.maxScanlineWidth,
+              value: settings.scanlineWidth,
+              onChanged: settings.setScanlineWidth,
+            ),
+            const SizedBox(height: PipBoyConstants.spacingM),
+            _buildScanlineControl(
+              label: 'SCANLINE DISTANCE',
+              accent: settings.accent,
+              min: PipBoySettingsNotifier.minScanlineDistance,
+              max: PipBoySettingsNotifier.maxScanlineDistance,
+              value: settings.scanlineDistance,
+              onChanged: settings.setScanlineDistance,
+            ),
+            const SizedBox(height: PipBoyConstants.spacingM),
+            _buildScanlineControl(
+              label: 'SCAN SPEED',
+              accent: settings.accent,
+              min: PipBoySettingsNotifier.minScanlineSpeed,
+              max: PipBoySettingsNotifier.maxScanlineSpeed,
+              value: settings.scanlineSpeed,
+              onChanged: settings.setScanlineSpeed,
             ),
           ],
         ),
@@ -235,6 +266,48 @@ class SettingsScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildScanlineControl({
+    required String label,
+    required Color accent,
+    required double min,
+    required double max,
+    required double value,
+    required ValueChanged<double> onChanged,
+  }) {
+    final normalizedValue = _normalize(value, min, max);
+    return Column(
+      children: [
+        Text(
+          '$label: ${value.toStringAsFixed(1)}',
+          style: PipBoyTypography.body(accent),
+        ),
+        const SizedBox(height: PipBoyConstants.spacingS),
+        PipBoyProgressBar(
+          value: normalizedValue,
+          leftLabel: min.toStringAsFixed(1),
+          rightLabel: max.toStringAsFixed(1),
+          interactive: true,
+          onSeek: (seekValue) {
+            onChanged(_denormalize(seekValue, min, max));
+          },
+          onSeekEnd: () {
+            SfxPlayer().play(PipBoySfx.mapRollover);
+          },
+        ),
+      ],
+    );
+  }
+
+  double _normalize(double value, double min, double max) {
+    if (max <= min) return 0.0;
+    return ((value - min) / (max - min)).clamp(0.0, 1.0);
+  }
+
+  double _denormalize(double normalizedValue, double min, double max) {
+    final clamped = normalizedValue.clamp(0.0, 1.0);
+    return min + ((max - min) * clamped);
   }
 
   Widget _buildAboutPanel(PipBoySettingsNotifier settings) {

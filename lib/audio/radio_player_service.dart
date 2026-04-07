@@ -182,7 +182,7 @@ class RadioPlayerService extends ChangeNotifier {
     if (item.clipType == RadioClipType.song) {
       return _songs.getById(item.itemId)?.artist ?? '?';
     }
-    return 'Diamond City Radio';
+    return 'Travis Miles';
   }
 
   Future<void> _loadAndPlay(int index, {bool autoPlay = true}) async {

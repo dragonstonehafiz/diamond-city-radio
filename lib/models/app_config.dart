@@ -3,12 +3,14 @@ class AppConfig {
   final int refillThreshold;
   final int refillCount;
   final String appIconPath;
+  final double scanlineSpeed;
 
   const AppConfig({
     required this.songsPerSet,
     required this.refillThreshold,
     required this.refillCount,
     required this.appIconPath,
+    required this.scanlineSpeed,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class AppConfig {
       refillThreshold: json['refill_threshold'] as int? ?? 5,
       refillCount: json['refill_count'] as int? ?? 10,
       appIconPath: json['app_icon_path'] as String? ?? 'images/icons/dcr_icon.png',
+      scanlineSpeed: (json['scanline_speed'] as num?)?.toDouble() ?? 24.0,
     );
   }
 }
