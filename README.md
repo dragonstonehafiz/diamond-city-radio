@@ -9,6 +9,16 @@ The app loads songs and DJ reports from local JSON data, builds rotating radio s
 - Settings for display color, scanlines, scanline animation, and audio volumes
 - Desktop and mobile layouts
 
+## Screenshots
+
+Desktop:
+
+![Desktop Screenshot](screenshots/screenshotDesktop.png)
+
+Mobile:
+
+![Mobile Screenshot](screenshots/screenshotMobile.png)
+
 ## Important Repository Note
 
 Audio files are not included in this Git repository.

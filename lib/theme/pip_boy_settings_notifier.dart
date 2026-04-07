@@ -20,23 +20,58 @@ class PipBoySettingsNotifier extends ChangeNotifier {
   static const double minScanlineSpeed = 0.0;
   static const double maxScanlineSpeed = 80.0;
 
-  Color _accent = const Color(0xFF59FF47); // CRT phosphor green
-  bool _scanlinesEnabled = true;
-  double _scanlineWidth = PipBoyConstants.scanlineThickness;
-  double _scanlineDistance = PipBoyConstants.scanlineSpacing;
+  final Color _defaultAccent;
+  final bool _defaultScanlinesEnabled;
+  final double _defaultScanlineWidth;
+  final double _defaultScanlineDistance;
   final double _defaultScanlineSpeed;
+  final double _defaultSfxVolume;
+  final bool _defaultHumEnabled;
+  final double _defaultHumVolume;
+  final double _defaultMainVolume;
+
+  Color _accent;
+  bool _scanlinesEnabled;
+  double _scanlineWidth;
+  double _scanlineDistance;
   double _scanlineSpeed;
-  double _sfxVolume = 0.8;
-  bool _humEnabled = true;
-  double _humVolume = 0.5;
-  double _mainVolume = 1.0;
+  double _sfxVolume;
+  bool _humEnabled;
+  double _humVolume;
+  double _mainVolume;
 
   PipBoySettingsNotifier({
+    Color defaultAccent = const Color(0xFF59FF47),
+    bool defaultScanlinesEnabled = true,
+    double defaultScanlineWidth = PipBoyConstants.scanlineThickness,
+    double defaultScanlineDistance = PipBoyConstants.scanlineSpacing,
     double defaultScanlineSpeed = 24.0,
-  })  : _defaultScanlineSpeed =
+    double defaultSfxVolume = 0.8,
+    bool defaultHumEnabled = true,
+    double defaultHumVolume = 0.5,
+    double defaultMainVolume = 1.0,
+  })  : _defaultAccent = defaultAccent,
+        _defaultScanlinesEnabled = defaultScanlinesEnabled,
+        _defaultScanlineWidth =
+            defaultScanlineWidth.clamp(minScanlineWidth, maxScanlineWidth),
+        _defaultScanlineDistance =
+            defaultScanlineDistance.clamp(minScanlineDistance, maxScanlineDistance),
+        _defaultScanlineSpeed =
             defaultScanlineSpeed.clamp(minScanlineSpeed, maxScanlineSpeed),
-        _scanlineSpeed =
-            defaultScanlineSpeed.clamp(minScanlineSpeed, maxScanlineSpeed);
+        _defaultSfxVolume = defaultSfxVolume.clamp(0.0, 1.0),
+        _defaultHumEnabled = defaultHumEnabled,
+        _defaultHumVolume = defaultHumVolume.clamp(0.0, 1.0),
+        _defaultMainVolume = defaultMainVolume.clamp(0.0, 1.0),
+        _accent = defaultAccent,
+        _scanlinesEnabled = defaultScanlinesEnabled,
+        _scanlineWidth = defaultScanlineWidth.clamp(minScanlineWidth, maxScanlineWidth),
+        _scanlineDistance =
+            defaultScanlineDistance.clamp(minScanlineDistance, maxScanlineDistance),
+        _scanlineSpeed = defaultScanlineSpeed.clamp(minScanlineSpeed, maxScanlineSpeed),
+        _sfxVolume = defaultSfxVolume.clamp(0.0, 1.0),
+        _humEnabled = defaultHumEnabled,
+        _humVolume = defaultHumVolume.clamp(0.0, 1.0),
+        _mainVolume = defaultMainVolume.clamp(0.0, 1.0);
 
   Color get accent => _accent;
   Color get dim => Color.lerp(Colors.black, _accent, 0.35)!;
@@ -69,21 +104,24 @@ class PipBoySettingsNotifier extends ChangeNotifier {
       final colorValue = prefs.getInt(_prefKeyAccent);
       if (colorValue != null) {
         _accent = Color(colorValue);
+      } else {
+        _accent = _defaultAccent;
       }
-      _scanlinesEnabled = prefs.getBool(_prefKeyScanlinesEnabled) ?? true;
+      _scanlinesEnabled =
+          prefs.getBool(_prefKeyScanlinesEnabled) ?? _defaultScanlinesEnabled;
       _scanlineWidth = (prefs.getDouble(_prefKeyScanlineWidth) ??
-              PipBoyConstants.scanlineThickness)
+              _defaultScanlineWidth)
           .clamp(minScanlineWidth, maxScanlineWidth);
       _scanlineDistance = (prefs.getDouble(_prefKeyScanlineDistance) ??
-              PipBoyConstants.scanlineSpacing)
+              _defaultScanlineDistance)
           .clamp(minScanlineDistance, maxScanlineDistance);
       _scanlineSpeed = (prefs.getDouble(_prefKeyScanlineSpeed) ??
               _defaultScanlineSpeed)
           .clamp(minScanlineSpeed, maxScanlineSpeed);
-      _sfxVolume = prefs.getDouble(_prefKeySfxVolume) ?? 0.8;
-      _humEnabled = prefs.getBool(_prefKeyHumEnabled) ?? true;
-      _humVolume = prefs.getDouble(_prefKeyHumVolume) ?? 0.5;
-      _mainVolume = prefs.getDouble(_prefKeyMainVolume) ?? 1.0;
+      _sfxVolume = prefs.getDouble(_prefKeySfxVolume) ?? _defaultSfxVolume;
+      _humEnabled = prefs.getBool(_prefKeyHumEnabled) ?? _defaultHumEnabled;
+      _humVolume = prefs.getDouble(_prefKeyHumVolume) ?? _defaultHumVolume;
+      _mainVolume = prefs.getDouble(_prefKeyMainVolume) ?? _defaultMainVolume;
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading settings: $e');

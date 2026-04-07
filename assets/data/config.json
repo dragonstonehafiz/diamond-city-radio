@@ -5,5 +5,13 @@
   "song_icon_path": "assets/images/icons/song_icon.png",
   "intro_icon_path": "assets/images/icons/dcr_icon.png",
   "outro_icon_path": "assets/images/icons/dcr_icon.png",
-  "scanline_speed": 24.0
+  "accent_color": "0xFF59FF47",
+  "scanlines_enabled": true,
+  "scanline_width": 5.0,
+  "scanline_distance": 7.0,
+  "scanline_speed": 5.0,
+  "hum_enabled": false,
+  "sfx_volume": 0.8,
+  "hum_volume": 0.5,
+  "main_volume": 1.0
 }

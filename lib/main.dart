@@ -99,9 +99,17 @@ class DiamondCityRadioApp extends StatelessWidget {
         Provider(create: (_) => reportRepo),
         Provider(create: (_) => appConfig),
         ChangeNotifierProvider(
-          create: (_) =>
-              PipBoySettingsNotifier(defaultScanlineSpeed: appConfig.scanlineSpeed)
-                ..load(),
+          create: (_) => PipBoySettingsNotifier(
+            defaultAccent: appConfig.defaultAccentColor,
+            defaultScanlinesEnabled: appConfig.defaultScanlinesEnabled,
+            defaultScanlineWidth: appConfig.defaultScanlineWidth,
+            defaultScanlineDistance: appConfig.defaultScanlineDistance,
+            defaultScanlineSpeed: appConfig.scanlineSpeed,
+            defaultSfxVolume: appConfig.defaultSfxVolume,
+            defaultHumEnabled: appConfig.defaultHumEnabled,
+            defaultHumVolume: appConfig.defaultHumVolume,
+            defaultMainVolume: appConfig.defaultMainVolume,
+          )..load(),
         ),
         ChangeNotifierProvider(
           create: (_) => RadioPlayerService()
