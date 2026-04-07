@@ -2,14 +2,18 @@ class AppConfig {
   final int songsPerSet;
   final int refillThreshold;
   final int refillCount;
-  final String appIconPath;
+  final String songIconPath;
+  final String introIconPath;
+  final String outroIconPath;
   final double scanlineSpeed;
 
   const AppConfig({
     required this.songsPerSet,
     required this.refillThreshold,
     required this.refillCount,
-    required this.appIconPath,
+    required this.songIconPath,
+    required this.introIconPath,
+    required this.outroIconPath,
     required this.scanlineSpeed,
   });
 
@@ -18,7 +22,12 @@ class AppConfig {
       songsPerSet: json['songs_per_set'] as int? ?? 3,
       refillThreshold: json['refill_threshold'] as int? ?? 5,
       refillCount: json['refill_count'] as int? ?? 10,
-      appIconPath: json['app_icon_path'] as String? ?? 'images/icons/dcr_icon.png',
+      songIconPath:
+          json['song_icon_path'] as String? ?? 'assets/images/icons/song_icon.png',
+      introIconPath:
+          json['intro_icon_path'] as String? ?? 'assets/images/icons/dcr_icon.png',
+      outroIconPath:
+          json['outro_icon_path'] as String? ?? 'assets/images/icons/dcr_icon.png',
       scanlineSpeed: (json['scanline_speed'] as num?)?.toDouble() ?? 24.0,
     );
   }

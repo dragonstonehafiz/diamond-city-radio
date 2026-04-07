@@ -7,8 +7,6 @@ import '../data/report_repository.dart';
 import '../models/app_config.dart';
 
 class PipBoyItemIcon extends StatelessWidget {
-  static const String _songIconPath = 'assets/images/icons/song_icon.png';
-
   final RadioQueueItem item;
   final double size;
   final bool dimmed;
@@ -23,6 +21,7 @@ class PipBoyItemIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = context.watch<PipBoySettingsNotifier>();
+    final config = context.read<AppConfig>();
     final accentColor = dimmed
         ? PipBoyColors.dimmed(settings.accent, factor: 0.6)
         : settings.accent;
@@ -48,14 +47,16 @@ class PipBoyItemIcon extends StatelessWidget {
 
     if (item.clipType == RadioClipType.intro ||
         item.clipType == RadioClipType.outro) {
-      final config = context.read<AppConfig>();
+      final iconPath = item.clipType == RadioClipType.intro
+          ? config.introIconPath
+          : config.outroIconPath;
       return ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: size,
           maxHeight: size,
         ),
         child: Image.asset(
-          config.appIconPath,
+          iconPath,
           fit: BoxFit.contain,
           color: accentColor,
           colorBlendMode: BlendMode.srcIn,
@@ -69,7 +70,7 @@ class PipBoyItemIcon extends StatelessWidget {
         maxHeight: size,
       ),
       child: Image.asset(
-        _songIconPath,
+        config.songIconPath,
         fit: BoxFit.contain,
         color: accentColor,
         colorBlendMode: BlendMode.srcIn,
