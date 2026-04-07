@@ -2,6 +2,6 @@
   "songs_per_set": 3,
   "refill_threshold": 5,
   "refill_count": 10,
-  "app_icon_path": "assets/images/icons/dcr_icon.png",
+  "app_icon_path": "assets/images/icons/app_icon.png",
   "scanline_speed": 24.0
 }
