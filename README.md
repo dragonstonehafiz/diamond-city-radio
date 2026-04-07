@@ -9,16 +9,6 @@ The app loads songs and DJ reports from local JSON data, builds rotating radio s
 - Settings for display color, scanlines, scanline animation, and audio volumes
 - Desktop and mobile layouts
 
-## Screenshots
-
-Desktop:
-
-![Desktop Screenshot](screenshots/screenshotDesktop.png)
-
-Mobile:
-
-![Mobile Screenshot](screenshots/screenshotMobile.png)
-
 ## Important Repository Note
 
 Audio files are not included in this Git repository.
@@ -64,3 +54,15 @@ Android build:
 ```bash
 flutter build apk
 ```
+
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/screenshotDesktop.png" alt="Desktop Screenshot" width="900">
+</p>
+<p align="center"><em>Figure 1. Desktop UI</em></p>
+
+<p align="center">
+  <img src="screenshots/screenshotMobile.png" alt="Mobile Screenshot" width="320">
+</p>
+<p align="center"><em>Figure 2. Mobile UI</em></p>
