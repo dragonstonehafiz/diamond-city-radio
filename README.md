@@ -55,6 +55,32 @@ Android build:
 flutter build apk
 ```
 
+## Docker Compose
+
+Build and run the web release container:
+
+```bash
+docker compose up --build
+```
+
+Run in detached mode:
+
+```bash
+docker compose up --build -d
+```
+
+Stop the container:
+
+```bash
+docker compose down
+```
+
+Open in browser:
+
+```text
+http://localhost:11120
+```
+
 ## Screenshots
 
 <p align="center">

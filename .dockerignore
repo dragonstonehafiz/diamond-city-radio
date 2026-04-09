@@ -1,0 +1,6 @@
+*
+!pubspec.yaml
+!pubspec.lock
+!lib/**
+!assets/**
+!web/**
