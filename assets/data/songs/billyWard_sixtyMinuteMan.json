@@ -1,14 +1,17 @@
 {
-  "id": "billyWard_sixtyMinuteMan",
-  "name": "Sixty Minute Man",
-  "song": "assets/audio/songs/billyWard_sixtyMinuteMan.ogg",
-  "intros": [
-    "assets/audio/intros/billyWard_sixtyMinuteMan1.ogg",
-    "assets/audio/intros/billyWard_sixtyMinuteMan2.ogg",
-    "assets/audio/intros/billyWard_sixtyMinuteMan3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/billyWard1.ogg"
-  ],
-  "artist": "Billy Ward"
+    "id":  "billyWard_sixtyMinuteMan",
+    "name":  "Sixty Minute Man",
+    "song":  "assets/audio/songs/billyWard_sixtyMinuteMan.ogg",
+    "intros":  [
+                   "assets/audio/intros/billyWard_sixtyMinuteMan1.ogg",
+                   "assets/audio/intros/billyWard_sixtyMinuteMan2.ogg",
+                   "assets/audio/intros/billyWard_sixtyMinuteMan3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/billyWard1.ogg"
+               ],
+    "artist":  "Billy Ward",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

@@ -1,14 +1,17 @@
 {
-  "id": "raySmith_rightBehindYouBaby",
-  "name": "Right Behind You Baby",
-  "song": "assets/audio/songs/raySmith_rightBehindYouBaby.ogg",
-  "intros": [
-    "assets/audio/intros/raySmith_rightBehindYouBaby1.ogg",
-    "assets/audio/intros/raySmith_rightBehindYouBaby2.ogg",
-    "assets/audio/intros/raySmith_rightBehindYouBaby3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/raySmith1.ogg"
-  ],
-  "artist": "Ray Smith"
+    "id":  "raySmith_rightBehindYouBaby",
+    "name":  "Right Behind You Baby",
+    "song":  "assets/audio/songs/raySmith_rightBehindYouBaby.ogg",
+    "intros":  [
+                   "assets/audio/intros/raySmith_rightBehindYouBaby1.ogg",
+                   "assets/audio/intros/raySmith_rightBehindYouBaby2.ogg",
+                   "assets/audio/intros/raySmith_rightBehindYouBaby3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/raySmith1.ogg"
+               ],
+    "artist":  "Ray Smith",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

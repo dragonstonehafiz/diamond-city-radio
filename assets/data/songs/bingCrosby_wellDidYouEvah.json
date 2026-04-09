@@ -1,11 +1,16 @@
 {
-  "id": "bingCrosby_wellDidYouEvah",
-  "name": "Well Did You Evah",
-  "song": "assets/audio/songs/bingCrosby_wellDidYouEvah.ogg",
-  "intros": [],
-  "outros": [
-    "assets/audio/outros/general4.ogg",
-    "assets/audio/outros/general5.ogg"
-  ],
-  "artist": "Bing Crosby"
+    "id":  "bingCrosby_wellDidYouEvah",
+    "name":  "Well Did You Evah",
+    "song":  "assets/audio/songs/bingCrosby_wellDidYouEvah.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+                   "assets/audio/outros/general4.ogg",
+                   "assets/audio/outros/general5.ogg"
+               ],
+    "artist":  "Bing Crosby",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

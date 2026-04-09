@@ -1,11 +1,16 @@
 {
-  "id": "bingCrosby_dontFenceMeIn",
-  "name": "Don't Fence Me In",
-  "song": "assets/audio/songs/bingCrosby_dontFenceMeIn.ogg",
-  "intros": [],
-  "outros": [
-    "assets/audio/outros/general3.ogg",
-    "assets/audio/outros/general4.ogg"
-  ],
-  "artist": "Bing Crosby"
+    "id":  "bingCrosby_dontFenceMeIn",
+    "name":  "Don\u0027t Fence Me In",
+    "song":  "assets/audio/songs/bingCrosby_dontFenceMeIn.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+                   "assets/audio/outros/general3.ogg",
+                   "assets/audio/outros/general4.ogg"
+               ],
+    "artist":  "Bing Crosby",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

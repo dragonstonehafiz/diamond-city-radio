@@ -1,15 +1,18 @@
 {
-  "id": "dannyKaye_civilization",
-  "name": "Civilization",
-  "song": "assets/audio/songs/dannyKaye_civilization.ogg",
-  "intros": [
-    "assets/audio/intros/dannyKaye_civilization1.ogg",
-    "assets/audio/intros/dannyKaye_civilization2.ogg",
-    "assets/audio/intros/dannyKaye_civilization3.ogg",
-    "assets/audio/intros/dannyKaye_civilization4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/dannyKaye_civilization1.ogg"
-  ],
-  "artist": "Danny Kaye"
+    "id":  "dannyKaye_civilization",
+    "name":  "Civilization",
+    "song":  "assets/audio/songs/dannyKaye_civilization.ogg",
+    "intros":  [
+                   "assets/audio/intros/dannyKaye_civilization1.ogg",
+                   "assets/audio/intros/dannyKaye_civilization2.ogg",
+                   "assets/audio/intros/dannyKaye_civilization3.ogg",
+                   "assets/audio/intros/dannyKaye_civilization4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/dannyKaye_civilization1.ogg"
+               ],
+    "artist":  "Danny Kaye",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

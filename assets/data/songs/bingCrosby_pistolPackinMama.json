@@ -1,13 +1,16 @@
 {
-  "id": "bingCrosby_pistolPackinMama",
-  "name": "Pistol Packin' Mama",
-  "song": "assets/audio/songs/bingCrosby_pistolPackinMama.ogg",
-  "intros": [
-    "assets/audio/intros/bingCrosby2.ogg",
-    "assets/audio/intros/bingCrosby_pistolPackinMama1.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/bingCrosby1.ogg"
-  ],
-  "artist": "Bing Crosby"
+    "id":  "bingCrosby_pistolPackinMama",
+    "name":  "Pistol Packin\u0027 Mama",
+    "song":  "assets/audio/songs/bingCrosby_pistolPackinMama.ogg",
+    "intros":  [
+                   "assets/audio/intros/bingCrosby2.ogg",
+                   "assets/audio/intros/bingCrosby_pistolPackinMama1.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/bingCrosby1.ogg"
+               ],
+    "artist":  "Bing Crosby",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

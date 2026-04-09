@@ -1,14 +1,17 @@
 {
-  "id": "wynonieHarris_grandmaPlaysTheNumbers",
-  "name": "Grandma Plays the Numbers",
-  "song": "assets/audio/songs/wynonieHarris_grandmaPlaysTheNumbers.ogg",
-  "intros": [
-    "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers1.ogg",
-    "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers2.ogg",
-    "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/wynonieHarris1.ogg"
-  ],
-  "artist": "Wynonie Harris"
+    "id":  "wynonieHarris_grandmaPlaysTheNumbers",
+    "name":  "Grandma Plays the Numbers",
+    "song":  "assets/audio/songs/wynonieHarris_grandmaPlaysTheNumbers.ogg",
+    "intros":  [
+                   "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers1.ogg",
+                   "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers2.ogg",
+                   "assets/audio/intros/wynonieHarries_grandmaPlaysTheNumbers3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/wynonieHarris1.ogg"
+               ],
+    "artist":  "Wynonie Harris",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

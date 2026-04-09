@@ -1,8 +1,15 @@
 {
-  "id": "TennesseeErnieFord_sixteenTons",
-  "name": "Sixteen Tons",
-  "song": "assets/audio/songs/TennesseeErnieFord_sixteenTons.ogg",
-  "intros": [],
-  "outros": [],
-  "artist": "Tennessee Ernie Ford"
+    "id":  "TennesseeErnieFord_sixteenTons",
+    "name":  "Sixteen Tons",
+    "song":  "assets/audio/songs/TennesseeErnieFord_sixteenTons.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+
+               ],
+    "artist":  "Tennessee Ernie Ford",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

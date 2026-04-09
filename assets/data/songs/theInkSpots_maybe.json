@@ -1,15 +1,18 @@
 {
-  "id": "theInkSpots_maybe",
-  "name": "Maybe",
-  "song": "assets/audio/songs/theInkSpots_maybe.ogg",
-  "intros": [
-    "assets/audio/intros/theInkSpots_maybe1.ogg",
-    "assets/audio/intros/theInkSpots_maybe2.ogg",
-    "assets/audio/intros/theInkSpots_maybe3.ogg",
-    "assets/audio/intros/theInkSpots_maybe4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/theInkSpots_maybe1.ogg"
-  ],
-  "artist": "The Ink Spots"
+    "id":  "theInkSpots_maybe",
+    "name":  "Maybe",
+    "song":  "assets/audio/songs/theInkSpots_maybe.ogg",
+    "intros":  [
+                   "assets/audio/intros/theInkSpots_maybe1.ogg",
+                   "assets/audio/intros/theInkSpots_maybe2.ogg",
+                   "assets/audio/intros/theInkSpots_maybe3.ogg",
+                   "assets/audio/intros/theInkSpots_maybe4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/theInkSpots_maybe1.ogg"
+               ],
+    "artist":  "The Ink Spots",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

@@ -129,9 +129,10 @@
 ## Models
 
 **SongModel** (`lib/models/song_model.dart`)
-- Fields: `id`, `name`, `artist`, `songFile` (full asset path), `intros` (List of full asset paths), `outros` (List of full asset paths)
+- Fields: `id`, `name`, `artist`, `songFile` (full asset path), `intros` (List of full asset paths), `outros` (List of full asset paths), `excludeFromMiddle`, `excludeFromIntro`, `excludeFromOutro`
 - Getters: `hasIntros`, `hasOutros`
-- Factory: `fromJson()` — maps JSON `song` field to `songFile`, JSON arrays to lists
+- Eligibility getters: `isAllowedInMiddle`, `isAllowedForIntro`, `isAllowedForOutro`
+- Factory: `fromJson()` — maps JSON `song` field to `songFile`, JSON arrays to lists, and reads optional exclusion flags (`exclude_from_middle`, `exclude_from_intro`, `exclude_from_outro`) defaulting to `false`
 - Example paths: `songFile: "assets/audio/songs/bettyHutton_hesADemon.ogg"`, `intros: ["assets/audio/intros/bettyHutton_itsAMan1.ogg", ...]`
 - Duration pulled at runtime from audio file via `just_audio`
 
@@ -281,7 +282,7 @@
 - Rotating pool of songs for set building
 - Fields: `_unplayedSongs` (pool), `_playedSongs` (recently-used), `_config`
 - Persists state to SharedPreferences as ID lists (survives app restart)
-- Methods: `init()`, `draw(int count)` (draw N random songs), `drawWithIntro(int count)` (draw N songs with intros), `drawWithOutro(int count)` (draw N songs with outros), `_refill()` (rotates old songs back when pool depletes)
+- Methods: `init()`, `draw(int count)` (draw N random songs allowed in middle slots), `drawWithIntro(int count)` (draw N songs allowed for intro slots and having intros), `drawWithOutro(int count)` (draw N songs allowed for outro slots and having outros), `_refill()` (rotates old songs back when pool depletes)
 - On first launch: shuffles all songs into bank
 - On app restart: restores from SharedPreferences via `_loadFromState()`
 

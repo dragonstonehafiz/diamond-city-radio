@@ -1,19 +1,22 @@
 {
-  "id": "bobCrosby_happyTimes",
-  "name": "Happy Times",
-  "song": "assets/audio/songs/bobCrosby_happyTimes.ogg",
-  "intros": [
-    "assets/audio/intros/bobCrosby1.ogg",
-    "assets/audio/intros/bobCrosby2.ogg",
-    "assets/audio/intros/bobCrosby3.ogg",
-    "assets/audio/intros/bobCrosby4.ogg",
-    "assets/audio/intros/bobCrosby5.ogg",
-    "assets/audio/intros/bobCrosby_happyTimes1.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/bobCrosby1.ogg",
-    "assets/audio/outros/bobCrosby2.ogg",
-    "assets/audio/outros/bobCrosby3.ogg"
-  ],
-  "artist": "Bob Crosby"
+    "id":  "bobCrosby_happyTimes",
+    "name":  "Happy Times",
+    "song":  "assets/audio/songs/bobCrosby_happyTimes.ogg",
+    "intros":  [
+                   "assets/audio/intros/bobCrosby1.ogg",
+                   "assets/audio/intros/bobCrosby2.ogg",
+                   "assets/audio/intros/bobCrosby3.ogg",
+                   "assets/audio/intros/bobCrosby4.ogg",
+                   "assets/audio/intros/bobCrosby5.ogg",
+                   "assets/audio/intros/bobCrosby_happyTimes1.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/bobCrosby1.ogg",
+                   "assets/audio/outros/bobCrosby2.ogg",
+                   "assets/audio/outros/bobCrosby3.ogg"
+               ],
+    "artist":  "Bob Crosby",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

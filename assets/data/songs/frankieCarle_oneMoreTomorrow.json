@@ -1,14 +1,17 @@
 {
-  "id": "frankieCarle_oneMoreTomorrow",
-  "name": "One More Tomorrow",
-  "song": "assets/audio/songs/frankieCarle_oneMoreTomorrow.ogg",
-  "intros": [
-    "assets/audio/intros/frankieCarle_oneMoreTomorrow1.ogg",
-    "assets/audio/intros/frankieCarle_oneMoreTomorrow2.ogg",
-    "assets/audio/intros/frankieCarle_oneMoreTomorrow3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/frankieCarle_oneMoreTomorrow1.ogg"
-  ],
-  "artist": "Frankie Carle"
+    "id":  "frankieCarle_oneMoreTomorrow",
+    "name":  "One More Tomorrow",
+    "song":  "assets/audio/songs/frankieCarle_oneMoreTomorrow.ogg",
+    "intros":  [
+                   "assets/audio/intros/frankieCarle_oneMoreTomorrow1.ogg",
+                   "assets/audio/intros/frankieCarle_oneMoreTomorrow2.ogg",
+                   "assets/audio/intros/frankieCarle_oneMoreTomorrow3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/frankieCarle_oneMoreTomorrow1.ogg"
+               ],
+    "artist":  "Frankie Carle",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

@@ -1,14 +1,17 @@
 {
-  "id": "theThreeSuns_worryWorryWorry",
-  "name": "Worry Worry Worry",
-  "song": "assets/audio/songs/theThreeSuns_worryWorryWorry.ogg",
-  "intros": [
-    "assets/audio/intros/theThreeSuns_worryWorryWorry1.ogg",
-    "assets/audio/intros/theThreeSuns_worryWorryWorry2.ogg",
-    "assets/audio/intros/theThreeSuns_worryWorryWorry3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/general1.ogg"
-  ],
-  "artist": "The Three Suns"
+    "id":  "theThreeSuns_worryWorryWorry",
+    "name":  "Worry Worry Worry",
+    "song":  "assets/audio/songs/theThreeSuns_worryWorryWorry.ogg",
+    "intros":  [
+                   "assets/audio/intros/theThreeSuns_worryWorryWorry1.ogg",
+                   "assets/audio/intros/theThreeSuns_worryWorryWorry2.ogg",
+                   "assets/audio/intros/theThreeSuns_worryWorryWorry3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/general1.ogg"
+               ],
+    "artist":  "The Three Suns",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

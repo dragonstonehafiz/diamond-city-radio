@@ -1,8 +1,15 @@
 {
-  "id": "deanMartin_kingOfTheRoad",
-  "name": "King of The Road",
-  "song": "assets/audio/songs/deanMartin_kingOfTheRoad.ogg",
-  "intros": [],
-  "outros": [],
-  "artist": "Dean Martin"
+    "id":  "deanMartin_kingOfTheRoad",
+    "name":  "King of The Road",
+    "song":  "assets/audio/songs/deanMartin_kingOfTheRoad.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+
+               ],
+    "artist":  "Dean Martin",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

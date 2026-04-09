@@ -1,7 +1,15 @@
 {
-  "id": "interruption1",
-  "name": "???????",
-  "song": "assets/audio/songs/interruption1.ogg",
-  "intros": [],
-  "outros": []
+    "id":  "interruption1",
+    "name":  "???????",
+    "song":  "assets/audio/songs/interruption1.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+
+               ],
+    "artist": "??????",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

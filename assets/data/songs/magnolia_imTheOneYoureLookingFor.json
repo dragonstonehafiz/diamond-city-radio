@@ -1,10 +1,15 @@
 {
-  "id": "magnolia_imTheOneYoureLookingFor",
-  "name": "I'm the One You're Looking For",
-  "song": "assets/audio/songs/magnolia_imTheOneYoureLookingFor.ogg",
-  "intros": [
-    "assets/audio/intros/magnolia_imTheOneYoureLookingFor.ogg"
-  ],
-  "outros": [],
-  "artist": "Magnolia"
+    "id":  "magnolia_imTheOneYoureLookingFor",
+    "name":  "I\u0027m the One You\u0027re Looking For",
+    "song":  "assets/audio/songs/magnolia_imTheOneYoureLookingFor.ogg",
+    "intros":  [
+                   "assets/audio/intros/magnolia_imTheOneYoureLookingFor.ogg"
+               ],
+    "outros":  [
+
+               ],
+    "artist":  "Magnolia",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  true,
+    "exclude_from_outro":  true
 }

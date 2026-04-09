@@ -1,16 +1,19 @@
 {
-  "id": "bettyHutton_hesADemon",
-  "name": "He's a Demon He's a Devil He's a Doll",
-  "song": "assets/audio/songs/bettyHutton_hesADemon.ogg",
-  "intros": [
-    "assets/audio/intros/bettyHutton_itsAMan1.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan2.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan3.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/bettyHutton1.ogg",
-    "assets/audio/outros/bettyHutton2.ogg"
-  ],
-  "artist": "Betty Hutton"
+    "id":  "bettyHutton_hesADemon",
+    "name":  "He\u0027s a Demon He\u0027s a Devil He\u0027s a Doll",
+    "song":  "assets/audio/songs/bettyHutton_hesADemon.ogg",
+    "intros":  [
+                   "assets/audio/intros/bettyHutton_itsAMan1.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan2.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan3.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/bettyHutton1.ogg",
+                   "assets/audio/outros/bettyHutton2.ogg"
+               ],
+    "artist":  "Betty Hutton",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

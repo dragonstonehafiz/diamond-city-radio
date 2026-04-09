@@ -1,16 +1,19 @@
 {
-  "id": "bettyHutton_itsAMan",
-  "name": "It's A Man",
-  "song": "assets/audio/songs/bettyHutton_itsAMan.ogg",
-  "intros": [
-    "assets/audio/intros/bettyHutton_itsAMan1.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan2.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan3.ogg",
-    "assets/audio/intros/bettyHutton_itsAMan4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/bettyHutton1.ogg",
-    "assets/audio/outros/bettyHutton2.ogg"
-  ],
-  "artist": "Betty Hutton"
+    "id":  "bettyHutton_itsAMan",
+    "name":  "It\u0027s A Man",
+    "song":  "assets/audio/songs/bettyHutton_itsAMan.ogg",
+    "intros":  [
+                   "assets/audio/intros/bettyHutton_itsAMan1.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan2.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan3.ogg",
+                   "assets/audio/intros/bettyHutton_itsAMan4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/bettyHutton1.ogg",
+                   "assets/audio/outros/bettyHutton2.ogg"
+               ],
+    "artist":  "Betty Hutton",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

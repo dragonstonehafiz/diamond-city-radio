@@ -1,14 +1,17 @@
 {
-  "id": "warrenSmith_uraniumRock",
-  "name": "Uranium Rock",
-  "song": "assets/audio/songs/warrenSmith_uraniumRock.ogg",
-  "intros": [
-    "assets/audio/intros/warrenSmith_uraniumRock1.ogg",
-    "assets/audio/intros/warrenSmith_uraniumRock2.ogg",
-    "assets/audio/intros/warrenSmith_uraniumRock3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/warrenSmith1.ogg"
-  ],
-  "artist": "Warren Smith"
+    "id":  "warrenSmith_uraniumRock",
+    "name":  "Uranium Rock",
+    "song":  "assets/audio/songs/warrenSmith_uraniumRock.ogg",
+    "intros":  [
+                   "assets/audio/intros/warrenSmith_uraniumRock1.ogg",
+                   "assets/audio/intros/warrenSmith_uraniumRock2.ogg",
+                   "assets/audio/intros/warrenSmith_uraniumRock3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/warrenSmith1.ogg"
+               ],
+    "artist":  "Warren Smith",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

@@ -1,15 +1,18 @@
 {
-  "id": "royBrown_mightyMightyMan",
-  "name": "Mighty Mighty Man",
-  "song": "assets/audio/songs/royBrown_mightyMightyMan.ogg",
-  "intros": [
-    "assets/audio/intros/royBrown_mightyMightyMan1.ogg",
-    "assets/audio/intros/royBrown_mightyMightyMan2.ogg",
-    "assets/audio/intros/royBrown_mightyMightyMan3.ogg",
-    "assets/audio/intros/royBrown_mightyMightyMan4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/royBrown_mightyMightyMan1.ogg"
-  ],
-  "artist": "Roy Brown"
+    "id":  "royBrown_mightyMightyMan",
+    "name":  "Mighty Mighty Man",
+    "song":  "assets/audio/songs/royBrown_mightyMightyMan.ogg",
+    "intros":  [
+                   "assets/audio/intros/royBrown_mightyMightyMan1.ogg",
+                   "assets/audio/intros/royBrown_mightyMightyMan2.ogg",
+                   "assets/audio/intros/royBrown_mightyMightyMan3.ogg",
+                   "assets/audio/intros/royBrown_mightyMightyMan4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/royBrown_mightyMightyMan1.ogg"
+               ],
+    "artist":  "Roy Brown",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

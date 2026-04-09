@@ -5,6 +5,9 @@ class SongModel {
   final String songFile;
   final List<String> intros;
   final List<String> outros;
+  final bool excludeFromMiddle;
+  final bool excludeFromIntro;
+  final bool excludeFromOutro;
 
   const SongModel({
     required this.id,
@@ -13,10 +16,16 @@ class SongModel {
     required this.songFile,
     required this.intros,
     required this.outros,
+    required this.excludeFromMiddle,
+    required this.excludeFromIntro,
+    required this.excludeFromOutro,
   });
 
   bool get hasIntros => intros.isNotEmpty;
   bool get hasOutros => outros.isNotEmpty;
+  bool get isAllowedInMiddle => !excludeFromMiddle;
+  bool get isAllowedForIntro => !excludeFromIntro && hasIntros;
+  bool get isAllowedForOutro => !excludeFromOutro && hasOutros;
 
   factory SongModel.fromJson(Map<String, dynamic> json) {
     return SongModel(
@@ -26,6 +35,9 @@ class SongModel {
       songFile: json['song'] as String? ?? '',
       intros: List<String>.from((json['intros'] as List<dynamic>?) ?? []),
       outros: List<String>.from((json['outros'] as List<dynamic>?) ?? []),
+      excludeFromMiddle: json['exclude_from_middle'] as bool? ?? false,
+      excludeFromIntro: json['exclude_from_intro'] as bool? ?? false,
+      excludeFromOutro: json['exclude_from_outro'] as bool? ?? false,
     );
   }
 }

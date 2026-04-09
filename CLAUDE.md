@@ -316,7 +316,7 @@
   6. `DiamondCityRadioApp` initializes `RadioPlayerService`, which builds its own initial queue from 3 sets
 
 **DiamondCityRadioApp** (`lib/main.dart`)
-- Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `RadioPlayerService` via MultiProvider
+- Root widget: provides `ReportRepository`, `AppConfig`, `PipBoySettingsNotifier`, and `R adioPlayerService` via MultiProvider
 - Constructor: `audioHandler`, `songRepo`, `reportRepo`, `appConfig`, `songBank`, `reportBank`
 - Passes all parameters to `RadioPlayerService.init()` so the service builds its own initial queue
 - Initializes `PipBoySettingsNotifier` with `defaultScanlineSpeed` from `AppConfig.scanlineSpeed`; saved preference overrides after first user change

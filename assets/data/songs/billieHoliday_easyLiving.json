@@ -1,16 +1,19 @@
 {
-  "id": "billieHoliday_easyLiving",
-  "name": "Easy Living",
-  "song": "assets/audio/songs/billieHoliday_easyLiving.ogg",
-  "intros": [
-    "assets/audio/intros/billieHoliday_easyLiving1.ogg",
-    "assets/audio/intros/billieHoliday_easyLiving2.ogg",
-    "assets/audio/intros/billieHoliday_easyLiving3.ogg",
-    "assets/audio/intros/billieHoliday_easyLiving4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/billieHoliday1.ogg",
-    "assets/audio/outros/billieHoliday2.ogg"
-  ],
-  "artist": "Billie Holiday"
+    "id":  "billieHoliday_easyLiving",
+    "name":  "Easy Living",
+    "song":  "assets/audio/songs/billieHoliday_easyLiving.ogg",
+    "intros":  [
+                   "assets/audio/intros/billieHoliday_easyLiving1.ogg",
+                   "assets/audio/intros/billieHoliday_easyLiving2.ogg",
+                   "assets/audio/intros/billieHoliday_easyLiving3.ogg",
+                   "assets/audio/intros/billieHoliday_easyLiving4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/billieHoliday1.ogg",
+                   "assets/audio/outros/billieHoliday2.ogg"
+               ],
+    "artist":  "Billie Holiday",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

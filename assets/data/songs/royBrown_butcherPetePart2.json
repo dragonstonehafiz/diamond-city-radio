@@ -1,14 +1,17 @@
 {
-  "id": "royBrown_butcherPetePart2",
-  "name": "Butcher Pete (Part 2)",
-  "song": "assets/audio/songs/royBrown_butcherPetePart2.ogg",
-  "intros": [
-    "assets/audio/intros/royBrown_ButcherPetePart2_1.ogg",
-    "assets/audio/intros/royBrown_ButcherPetePart2_2.ogg",
-    "assets/audio/intros/royBrown_ButcherPetePart2_3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/royBrown_butcherPete2.ogg"
-  ],
-  "artist": "Roy Brown"
+    "id":  "royBrown_butcherPetePart2",
+    "name":  "Butcher Pete (Part 2)",
+    "song":  "assets/audio/songs/royBrown_butcherPetePart2.ogg",
+    "intros":  [
+                   "assets/audio/intros/royBrown_ButcherPetePart2_1.ogg",
+                   "assets/audio/intros/royBrown_ButcherPetePart2_2.ogg",
+                   "assets/audio/intros/royBrown_ButcherPetePart2_3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/royBrown_butcherPete2.ogg"
+               ],
+    "artist":  "Roy Brown",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

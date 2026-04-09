@@ -1,14 +1,17 @@
 {
-  "id": "johnnyMercer_personality",
-  "name": "Personality",
-  "song": "assets/audio/songs/johnnyMercer_personality.ogg",
-  "intros": [
-    "assets/audio/intros/johnnyMercer_personality1.ogg",
-    "assets/audio/intros/johnnyMercer_personality2.ogg",
-    "assets/audio/intros/johnnyMercer_personality3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/johnnyMercer_personality1.ogg"
-  ],
-  "artist": "Johnny Mercer"
+    "id":  "johnnyMercer_personality",
+    "name":  "Personality",
+    "song":  "assets/audio/songs/johnnyMercer_personality.ogg",
+    "intros":  [
+                   "assets/audio/intros/johnnyMercer_personality1.ogg",
+                   "assets/audio/intros/johnnyMercer_personality2.ogg",
+                   "assets/audio/intros/johnnyMercer_personality3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/johnnyMercer_personality1.ogg"
+               ],
+    "artist":  "Johnny Mercer",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

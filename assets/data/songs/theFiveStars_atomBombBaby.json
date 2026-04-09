@@ -1,14 +1,17 @@
 {
-  "id": "theFiveStars_atomBombBaby",
-  "name": "Atom Bomb Baby",
-  "song": "assets/audio/songs/theFiveStars_atomBombBaby.ogg",
-  "intros": [
-    "assets/audio/intros/theFiveStars_atomBombBaby1.ogg",
-    "assets/audio/intros/theFiveStars_atomBombBaby2.ogg",
-    "assets/audio/intros/theFiveStars_atomBombBaby3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/theFiveStars1.ogg"
-  ],
-  "artist": "The Five Stars"
+    "id":  "theFiveStars_atomBombBaby",
+    "name":  "Atom Bomb Baby",
+    "song":  "assets/audio/songs/theFiveStars_atomBombBaby.ogg",
+    "intros":  [
+                   "assets/audio/intros/theFiveStars_atomBombBaby1.ogg",
+                   "assets/audio/intros/theFiveStars_atomBombBaby2.ogg",
+                   "assets/audio/intros/theFiveStars_atomBombBaby3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/theFiveStars1.ogg"
+               ],
+    "artist":  "The Five Stars",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

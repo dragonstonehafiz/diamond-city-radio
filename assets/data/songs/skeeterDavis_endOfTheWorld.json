@@ -1,15 +1,18 @@
 {
-  "id": "skeeterDavis_endOfTheWorld",
-  "name": "End of the World",
-  "song": "assets/audio/songs/skeeterDavis_endOfTheWorld.ogg",
-  "intros": [
-    "assets/audio/intros/skeeterDavis_endOfTheWorld1.ogg",
-    "assets/audio/intros/skeeterDavis_endOfTheWorld2.ogg",
-    "assets/audio/intros/skeeterDavis_endOfTheWorld3.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/skeeterDavis1.ogg",
-    "assets/audio/outros/skeeterDavis2.ogg"
-  ],
-  "artist": "Skeeter Davis"
+    "id":  "skeeterDavis_endOfTheWorld",
+    "name":  "End of the World",
+    "song":  "assets/audio/songs/skeeterDavis_endOfTheWorld.ogg",
+    "intros":  [
+                   "assets/audio/intros/skeeterDavis_endOfTheWorld1.ogg",
+                   "assets/audio/intros/skeeterDavis_endOfTheWorld2.ogg",
+                   "assets/audio/intros/skeeterDavis_endOfTheWorld3.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/skeeterDavis1.ogg",
+                   "assets/audio/outros/skeeterDavis2.ogg"
+               ],
+    "artist":  "Skeeter Davis",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

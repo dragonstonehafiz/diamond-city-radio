@@ -1,10 +1,15 @@
 {
-  "id": "magnolia_trainTrain",
-  "name": "Train Train",
-  "song": "assets/audio/songs/magnolia_trainTrain.ogg",
-  "intros": [
-    "assets/audio/intros/magnolia_trainTrain1.ogg"
-  ],
-  "outros": [],
-  "artist": "Magnolia"
+    "id":  "magnolia_trainTrain",
+    "name":  "Train Train",
+    "song":  "assets/audio/songs/magnolia_trainTrain.ogg",
+    "intros":  [
+                   "assets/audio/intros/magnolia_trainTrain1.ogg"
+               ],
+    "outros":  [
+
+               ],
+    "artist":  "Magnolia",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  true,
+    "exclude_from_outro":  true
 }

@@ -1,15 +1,18 @@
 {
-  "id": "colePorter_anythingGoes",
-  "name": "Anything Goes",
-  "song": "assets/audio/songs/colePorter_anythingGoes.ogg",
-  "intros": [
-    "assets/audio/intros/colePorter_anythingGoes1.ogg",
-    "assets/audio/intros/colePorter_anythingGoes2.ogg",
-    "assets/audio/intros/colePorter_anythingGoes3.ogg",
-    "assets/audio/intros/colePorter_anythingGoes4.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/colePorter_anythingGoes1.ogg"
-  ],
-  "artist": "Cole Porter"
+    "id":  "colePorter_anythingGoes",
+    "name":  "Anything Goes",
+    "song":  "assets/audio/songs/colePorter_anythingGoes.ogg",
+    "intros":  [
+                   "assets/audio/intros/colePorter_anythingGoes1.ogg",
+                   "assets/audio/intros/colePorter_anythingGoes2.ogg",
+                   "assets/audio/intros/colePorter_anythingGoes3.ogg",
+                   "assets/audio/intros/colePorter_anythingGoes4.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/colePorter_anythingGoes1.ogg"
+               ],
+    "artist":  "Cole Porter",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

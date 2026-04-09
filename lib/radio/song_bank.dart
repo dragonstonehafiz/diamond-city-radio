@@ -36,16 +36,22 @@ class SongBank {
     }
   }
 
-    List<SongModel> draw(int drawCount) {
+  List<SongModel> draw(int drawCount) {
     assert(_unplayedSongs.isNotEmpty, 'SongBank.draw() called with empty bank');
     _unplayedSongs.shuffle(Random());
-    List<SongModel> drawn = [];
+    final drawn = <SongModel>[];
+    int i = 0;
 
-    while (drawn.length < drawCount) {
+    while (drawn.length < drawCount && i < _unplayedSongs.length) {
       if (_unplayedSongs.isEmpty) break;
-      final song = _unplayedSongs.removeAt(0);
-      _playedSongs.add(song);
-      drawn.add(song);
+      final song = _unplayedSongs[i];
+      if (!song.isAllowedInMiddle) {
+        ++i;
+      } else {
+        drawn.add(song);
+        _unplayedSongs.removeAt(i);
+        _playedSongs.add(song);
+      }
     }
     _refill();
     _saveToState(); // fire-and-forget
@@ -55,14 +61,14 @@ class SongBank {
   List<SongModel> drawWithIntro(int drawCount) {
     assert(_unplayedSongs.isNotEmpty, 'SongBank.drawWithIntro() called with empty bank');
     _unplayedSongs.shuffle(Random());
-    List<SongModel> drawn = [];
+    final drawn = <SongModel>[];
 
     int i = 0;
     while (drawn.length < drawCount && i < _unplayedSongs.length) {
       if (_unplayedSongs.isEmpty) break;
-      SongModel song = _unplayedSongs[i];
+      final song = _unplayedSongs[i];
 
-      if (!song.hasIntros) {
+      if (!song.isAllowedForIntro) {
         ++i;
       } else {
         drawn.add(song);
@@ -76,16 +82,16 @@ class SongBank {
   }
 
   List<SongModel> drawWithOutro(int drawCount) {
-    assert(_unplayedSongs.isNotEmpty, 'SongBank.drawWithIntro() called with empty bank');
+    assert(_unplayedSongs.isNotEmpty, 'SongBank.drawWithOutro() called with empty bank');
     _unplayedSongs.shuffle(Random());
-    List<SongModel> drawn = [];
+    final drawn = <SongModel>[];
 
     int i = 0;
     while (drawn.length < drawCount && i < _unplayedSongs.length) {
       if (_unplayedSongs.isEmpty) break;
-      SongModel song = _unplayedSongs[i];
+      final song = _unplayedSongs[i];
 
-      if (!song.hasOutros) {
+      if (!song.isAllowedForOutro) {
         ++i;
       } else {
         drawn.add(song);

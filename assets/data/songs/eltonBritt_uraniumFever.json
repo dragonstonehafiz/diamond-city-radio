@@ -1,13 +1,16 @@
 {
-  "id": "eltonBritt_uraniumFever",
-  "name": "Uranium Fever",
-  "song": "assets/audio/songs/eltonBritt_uraniumFever.ogg",
-  "intros": [
-    "assets/audio/intros/eltonBritt_uraniumFever1.ogg",
-    "assets/audio/intros/eltonBritt_uraniumFever2.ogg"
-  ],
-  "outros": [
-    "assets/audio/outros/eltonBritt_uraniumFever1.ogg"
-  ],
-  "artist": "Elton Britt"
+    "id":  "eltonBritt_uraniumFever",
+    "name":  "Uranium Fever",
+    "song":  "assets/audio/songs/eltonBritt_uraniumFever.ogg",
+    "intros":  [
+                   "assets/audio/intros/eltonBritt_uraniumFever1.ogg",
+                   "assets/audio/intros/eltonBritt_uraniumFever2.ogg"
+               ],
+    "outros":  [
+                   "assets/audio/outros/eltonBritt_uraniumFever1.ogg"
+               ],
+    "artist":  "Elton Britt",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }

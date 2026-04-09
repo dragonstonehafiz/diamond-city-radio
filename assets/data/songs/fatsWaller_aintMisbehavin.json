@@ -1,11 +1,16 @@
 {
-  "id": "fatsWaller_aintMisbehavin",
-  "name": "Ain't Misbehavin'",
-  "song": "assets/audio/songs/fatsWaller_aintMisbehavin.ogg",
-  "intros": [],
-  "outros": [
-    "assets/audio/outros/general1.ogg",
-    "assets/audio/outros/general2.ogg"
-  ],
-  "artist": "Fats Waller"
+    "id":  "fatsWaller_aintMisbehavin",
+    "name":  "Ain\u0027t Misbehavin\u0027",
+    "song":  "assets/audio/songs/fatsWaller_aintMisbehavin.ogg",
+    "intros":  [
+
+               ],
+    "outros":  [
+                   "assets/audio/outros/general1.ogg",
+                   "assets/audio/outros/general2.ogg"
+               ],
+    "artist":  "Fats Waller",
+    "exclude_from_middle":  false,
+    "exclude_from_intro":  false,
+    "exclude_from_outro":  false
 }
