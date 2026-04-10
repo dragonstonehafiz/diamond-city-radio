@@ -70,6 +70,8 @@ class SfxPlayer {
   Future<void> playLoop() async {
     try {
       _loopPlayer ??= AudioPlayer();
+      // On mobile, low-latency mode reduces audible gaps at loop boundaries.
+      await _loopPlayer!.setPlayerMode(PlayerMode.lowLatency);
       // Don't request audio focus so hum doesn't interfere with main audio
       await _loopPlayer!.setAudioContext(
         AudioContext(
