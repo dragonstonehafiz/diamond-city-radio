@@ -55,24 +55,18 @@ Android build:
 flutter build apk
 ```
 
-## Docker Compose
+## Docker
 
-Build and run the web release container:
+Build the image:
 
 ```bash
-docker compose up --build
+docker build -t diamond-city-radio .
 ```
 
-Run in detached mode:
+Run the container on port 11120:
 
 ```bash
-docker compose up --build -d
-```
-
-Stop the container:
-
-```bash
-docker compose down
+docker run -p 11120:80 diamond-city-radio
 ```
 
 Open in browser:
