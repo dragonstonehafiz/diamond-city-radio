@@ -9,6 +9,7 @@ import '../widgets/pip_boy_panel.dart';
 import '../widgets/pip_boy_divider.dart';
 import '../widgets/pip_boy_item_icon.dart';
 import '../audio/radio_player_service.dart';
+import '../audio/sfx_player.dart';
 
 class QueueScreen extends StatelessWidget {
   static const double _desktopBreakpoint = 900;
@@ -44,6 +45,7 @@ class QueueScreen extends StatelessWidget {
             children: [
               for (int i = 0; i < allItems.length; i++) ...[
                 _QueueItem(
+                  index: i,
                   item: allItems[i],
                   isActive: i == player.currentIndex,
                   accentColor: settings.accent,
@@ -109,6 +111,7 @@ class QueueScreen extends StatelessWidget {
                       ),
                       itemBuilder: (context, i) {
                         return _QueueItem(
+                          index: i,
                           item: allItems[i],
                           isActive: i == player.currentIndex,
                           accentColor: settings.accent,
@@ -125,11 +128,13 @@ class QueueScreen extends StatelessWidget {
 }
 
 class _QueueItem extends StatelessWidget {
+  final int index;
   final RadioQueueItem item;
   final bool isActive;
   final Color accentColor;
   final RadioPlayerService playerService;
   const _QueueItem({
+    required this.index,
     required this.item,
     required this.isActive,
     required this.accentColor,
@@ -142,34 +147,43 @@ class _QueueItem extends StatelessWidget {
         isActive ? accentColor : PipBoyColors.dimmed(accentColor, factor: 0.6);
     final trackName = playerService.getTrackName(item);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 32,
-            height: 32,
-            child: PipBoyItemIcon(item: item, size: 32, dimmed: !isActive),
-          ),
-          const SizedBox(width: PipBoyConstants.spacingM),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.clipType.label,
-                  style: PipBoyTypography.caption(displayColor),
-                ),
-                Text(
-                  trackName,
-                  style: PipBoyTypography.body(displayColor),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: isActive
+          ? null
+          : () {
+              SfxPlayer().play(PipBoySfx.rotaryHorizontal);
+              playerService.playQueueItem(index);
+            },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: PipBoyConstants.spacingS),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 32,
+              height: 32,
+              child: PipBoyItemIcon(item: item, size: 32, dimmed: !isActive),
             ),
-          ),
-        ],
+            const SizedBox(width: PipBoyConstants.spacingM),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.clipType.label,
+                    style: PipBoyTypography.caption(displayColor),
+                  ),
+                  Text(
+                    trackName,
+                    style: PipBoyTypography.body(displayColor),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

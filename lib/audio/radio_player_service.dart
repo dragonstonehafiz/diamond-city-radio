@@ -232,6 +232,13 @@ class RadioPlayerService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> playQueueItem(int index) async {
+    if (index == _currentIndex || index < 0 || index >= _queue.length) {
+      return;
+    }
+    await _loadAndPlay(index);
+  }
+
   Future<void> play() async {
     await _audioHandler.play();
     notifyListeners();

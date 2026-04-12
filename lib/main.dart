@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_service/audio_service.dart';
@@ -128,6 +129,7 @@ class DiamondCityRadioApp extends StatelessWidget {
           return MaterialApp(
             title: 'Diamond City Radio',
             theme: buildPipBoyTheme(settingsNotifier.accent),
+            scrollBehavior: const _PipBoyScrollBehavior(),
             home: const HomeScreen(),
             debugShowCheckedModeBanner: false,
           );
@@ -333,6 +335,19 @@ class _DesktopSidebar extends StatelessWidget {
       ),
     );
   }
+}
+
+class _PipBoyScrollBehavior extends MaterialScrollBehavior {
+  const _PipBoyScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.invertedStylus,
+    PointerDeviceKind.trackpad,
+  };
 }
 
 Future<AppConfig> _loadConfig() async {
